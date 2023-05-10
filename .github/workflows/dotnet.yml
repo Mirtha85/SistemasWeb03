@@ -10,10 +10,9 @@ on:
     branches: [ "main" ]
 
 jobs:
-  build:
-
+  build_and_deploy:
+    # continuous integration
     runs-on: ubuntu-latest
-
     steps:
     - uses: actions/checkout@v3
     - name: Setup .NET
@@ -48,4 +47,3 @@ jobs:
         username: ${{ secrets.MAINSITE_USER }}
         passphrase: ${{ secrets.MAINSITE_PASSPHRASE }}
         privateKey: ${{ secrets.MAINSITE_PRIVATEKEY}}
-      
