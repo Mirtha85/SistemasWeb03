@@ -17,6 +17,92 @@ html {
   min-height: 100%;
 }
 
-body {
+/*body {
   margin-bottom: 60px;
+}*/
+
+
+
+
+
+.navbar {
+    background-color: #121725;
+    color: white;
 }
+
+.navbar-collapse {
+    font-size: 18px;
+    color: white;
+}
+
+.navbar-toggler i {
+    color: white;
+    font-size: 30px;
+}
+/*Logo de la empresa*/
+.logo {
+    max-width: 150px
+}
+.titulo-carrusel {
+    position: absolute;
+}
+.carousel {
+    color: white;
+    display: flex;
+    position: relative;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.c-item {
+    height: 65vh;
+    min-height: 300px;
+    background: no-repeat center center scroll;
+    background-size: cover;
+}
+
+.img-item {
+    height: 50vh;
+    min-height: 300px;
+    background: no-repeat center center scroll;
+    background-size: cover;
+}
+
+.c-img {
+    height: 100%;
+    object-fit: cover;
+    filter: brightness(0.6);
+}
+
+.img-about {
+    background-color: #0b0d0e;
+    width: 100%;
+    object-fit: cover;
+    height: 300px;
+    /*filter: brightness(0.6);*/
+}
+
+/* home*/
+.banner {
+    text-align: center;
+    margin-left: 0px;
+    margin-right: 0px;
+    background-color: aquamarine;
+    height: 300px;
+}
+
+.row {
+    height: auto;
+}
+
+.principal {
+    height: 300px;
+}
+
+.carousel-caption p {
+    margin-top: 120px;
+}
+/*.carousel-inner{
+    margin-top: 75px;
+}*/
