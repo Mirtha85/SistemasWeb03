@@ -6,6 +6,12 @@
         {
             BethesdaPieShopDbContext context = applicationBuilder.ApplicationServices.CreateScope().ServiceProvider.GetRequiredService<BethesdaPieShopDbContext>();
 
+            if (!context.Categorias.Any())
+            {
+                context.Categorias.AddRange(Categorias.Select(c => c.Value));
+            }
+
+
             if (!context.Categories.Any())
             {
                 context.Categories.AddRange(Categories.Select(c => c.Value));
@@ -61,6 +67,37 @@
                 }
 
                 return categories;
+            }
+        }
+
+        private static Dictionary<string, Categoria>? categorias;
+
+        public static Dictionary<string, Categoria> Categorias
+        {
+            get
+            {
+                if (categories == null)
+                {
+                    var genresList = new Categoria[]
+                    {
+                        new Categoria { Name = "Vestidos" },
+                        new Categoria { Name = "Camisetas y camisas" },
+                        new Categoria { Name = "Pantalones y monos" },
+                        new Categoria { Name = "Faldas" },
+                        new Categoria { Name = "Blazers y chaquetas" },
+                        new Categoria { Name = "Ropa Deportiva" },
+                        new Categoria { Name = "Premamá" },
+                    };
+
+                    categorias = new Dictionary<string, Categoria>();
+
+                    foreach (Categoria genre in genresList)
+                    {
+                        categorias.Add(genre.Name, genre);
+                    }
+                }
+
+                return categorias;
             }
         }
     }

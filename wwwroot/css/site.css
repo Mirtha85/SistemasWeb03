@@ -17,32 +17,8 @@ html {
   min-height: 100%;
 }
 
-/*body {
-  margin-bottom: 60px;
-}*/
 
 
-
-
-
-.navbar {
-    background-color: #121725;
-    color: white;
-}
-
-.navbar-collapse {
-    font-size: 18px;
-    color: white;
-}
-
-.navbar-toggler i {
-    color: white;
-    font-size: 30px;
-}
-/*Logo de la empresa*/
-.logo {
-    max-width: 150px
-}
 .titulo-carrusel {
     position: absolute;
 }

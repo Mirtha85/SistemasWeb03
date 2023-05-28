@@ -12,5 +12,12 @@ namespace SistemasWeb01.Models
 
         public DbSet<Category> Categories { get; set; }
         public DbSet<Pie> Pies { get; set; }
+        public DbSet<Categoria> Categorias { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+            modelBuilder.Entity<Categoria>().HasIndex(c => c.Name).IsUnique();
+        }
     }
 }
