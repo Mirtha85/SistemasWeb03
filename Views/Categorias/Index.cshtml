@@ -4,6 +4,8 @@
     ViewData["Title"] = "Index";
     //Layout = "~/Views/Shared/_Layout.cshtml";
 }
+@*<link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css" />*@
+
 <section class="container seccion">
     <h1>Listado de Categorías</h1>
 
@@ -23,36 +25,114 @@
     </div>
     @*<button type="button" class="btn btn-primary" data-toggle="ajax-modal" data-target="#myModal" data-url="@Url.Action("CrearCategoria")"> Crear Categoria</button>
     *@
-    <table class="table">
-        <thead>
-            <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model.Name)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Description)
-                </th>
-            </tr>
 
-        </thead>
-        <tbody>
-            @foreach (var item in Model)
-            {
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Name)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Description)
-                    </td>
-                    <td>
-                        <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-outline-warning"> <i class="bi bi-pencil"></i> Editar </a>
-                        <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-outline-info"><i class="bi bi-eye"></i> Detalle </a>
-                        <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-outline-danger"> <i class="bi bi-trash3"></i> Eliminar</a>
-                    </td>
-                </tr>
-            }
-        </tbody>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Categorias</h3>
+                </div>
+                <div class="panel-body">
+                    <table class="table table-hover table-responsive table-striped" id="MyTable">
+                        <thead>
+                            <tr>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Name)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Description)
+                                </th>
+                            </tr>
 
-    </table>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Name)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Description)
+                                    </td>
+                                    <td>
+                                        <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-outline-warning"> <i class="bi bi-pencil"></i> Editar </a>
+                                        <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-outline-info"><i class="bi bi-eye"></i> Detalle </a>
+                                        <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-outline-danger"> <i class="bi bi-trash3"></i> Eliminar</a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+
+                    </table>
+
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+    
 </section>
+
+@section Scripts{
+    <!-- ============================================================
+    =ESTILOS PARA USO DE DATATABLES JS
+    ===============================================================-->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.11.0/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.2.9/css/responsive.dataTables.min.css">
+
+    <!-- ============================================================
+    =LIBRERIAS PARA USO DE DATATABLES JS
+    ===============================================================-->
+    <script src="https://cdn.datatables.net/1.11.0/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/responsive/2.2.9/js/dataTables.responsive.min.js"></script>
+
+
+    <script>
+
+        $(document).ready(function () {
+
+            $("#MyTable").DataTable({
+                "processing": true,
+                "serverSide": true,
+                "ajax": {
+                    "url": "@Url.Action("GetCategorias","Categorias")",
+                    "type": "POST",
+                    "datatype": "json"
+                },
+                "columns": [
+                    { "data": "name" },
+                    { "data": "description" }
+                ]
+
+
+            });
+        })
+
+    </script>
+
+}
+
+@*@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+
+    <script src="~/js/showmodal.js"></script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#CountriesTable').DataTable({
+                "language": {
+                    "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json"
+                },
+                "aLengthMenu": [
+                    [4, 25, 50, 100, 200, -1],
+                    [4, 25, 50, 100, 200, "Todos"]
+                ]
+            });
+        });
+    </script>
+
+}*@

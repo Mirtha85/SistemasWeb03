@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using SistemasWeb01.Models;
 
 namespace SistemasWeb01.Controllers
@@ -18,6 +19,8 @@ namespace SistemasWeb01.Controllers
             IEnumerable<Categoria> categorias = _categoriaRepository.AllCategories;
             return View(categorias);
         }
+
+        
 
         public IActionResult Create()
         {

@@ -1,48 +1,31 @@
-﻿@{
+﻿@model HomeViewModel;
+@{
     ViewData["Title"] = "Home Page";
 }
 
 <section class="carousel slide" id="hero-carousel" data-bs-ride="carousel">
-    <!--Indicadores-->
-    <div class="carousel-indicators">
-        <button type="button" data-bs-target="#hero-carousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-        <button type="button" data-bs-target="#hero-carousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
-        <button type="button" data-bs-target="#hero-carousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
-        <button type="button" data-bs-target="#hero-carousel" data-bs-slide-to="3" aria-label="Slide 4"></button>
-        <button type="button" data-bs-target="#hero-carousel" data-bs-slide-to="4" aria-label="Slide 5"></button>
-    </div>
+    <partial name="_Carousel"></partial>
+</section>
 
-    <!--Imagenes-->
-    <div class="carousel-inner">
-        <div class="carousel-item active c-item">
-            <img src="~/images/p1-min.webp" class="d-block w-100 c-img" alt="laptop-1">
-        </div>
-        <div class="carousel-item c-item">
-            <img src="~/images/p2-min.webp" class="d-block w-100 c-img" alt="laptop-2">
-        </div>
-        <div class="carousel-item c-item">
-            <img src="~/images/p3-min.webp" class="d-block w-100 c-img" alt="laptop-3">
-        </div>
-        <div class="carousel-item c-item">
-            <img src="~/images/p4-min.webp" class="d-block w-100 c-img" alt="laptop-3">
-        </div>
-        <div class="carousel-item c-item">
-            <img src="~/images/p5-min.webp" class="d-block w-100 c-img" alt="laptop-3">
+<section class="section-products mt-3 mb-4">
+    <div class="text-center">
+        @*<img src="Images/bethanys-pie-shop-logomark.png" class="logo-mark mx-auto" />*@
+       <div class="logo">
+            <i class="bi bi-cup-hot"></i>
+       </div>
+        <h1>Pies of the week</h1>
+        <h5>Enjoy a weekly selection of our favorite pies</h5>
+
+        <div class="row pies-of-the-week">
+            <div class="row row-cols-1 row-cols-md-3 g-4">
+                @foreach (var pie in Model.PiesOfTheWeek)
+                {
+                    <partial name="_PieCard" model="pie" />
+                }
+            </div>
+
         </div>
     </div>
 
-    <!--Botones controladores-->
-    <button class="carousel-control-prev" type="button" data-bs-target="#hero-carousel" data-bs-slide="prev">
-        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Previous</span>
-    </button>
-    <button class="carousel-control-next" type="button" data-bs-target="#hero-carousel" data-bs-slide="next">
-        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Next</span>
-    </button>
-
-    <div class="titulo-carrusel">
-        <h1 class="texto-about fw-bolder text-capitalize">Shopping Unibeth</h1>
-    </div>
 </section>
 
