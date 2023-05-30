@@ -1,4 +1,6 @@
-﻿namespace SistemasWeb01.Models
+﻿using SistemasWeb01.Repository;
+
+namespace SistemasWeb01.Models
 {
     public class DbInitializer
     {

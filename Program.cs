@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using SistemasWeb01.Models;
-using SistemasWeb01;
+using SistemasWeb01.Repository.IRepository;
+using SistemasWeb01.Repository;
 
 var builder = WebApplication.CreateBuilder(args);
 

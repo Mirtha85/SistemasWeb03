@@ -1,6 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using SistemasWeb01.Models;
+using SistemasWeb01.Repository.IRepository;
 
-namespace SistemasWeb01.Models
+namespace SistemasWeb01.Repository
 {
     public class PieRepository : IPieRepository
     {

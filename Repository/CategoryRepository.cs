@@ -1,6 +1,7 @@
 ﻿using SistemasWeb01.Models;
+using SistemasWeb01.Repository.IRepository;
 
-namespace SistemasWeb01
+namespace SistemasWeb01.Repository
 {
     public class CategoryRepository : ICategoryRepository
     {

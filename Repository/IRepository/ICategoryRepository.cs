@@ -1,4 +1,6 @@
-﻿namespace SistemasWeb01.Models
+﻿using SistemasWeb01.Models;
+
+namespace SistemasWeb01.Repository.IRepository
 {
     public interface ICategoryRepository
     {

@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using SistemasWeb01.Repository;
 
 namespace SistemasWeb01.Models
 {

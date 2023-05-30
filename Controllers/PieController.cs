@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using SistemasWeb01.Models;
+using SistemasWeb01.Repository.IRepository;
 using SistemasWeb01.ViewModels;
 
 namespace SistemasWeb01.Controllers
