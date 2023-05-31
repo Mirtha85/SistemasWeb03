@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using SistemasWeb01.Models;
 using SistemasWeb01.Repository.IRepository;
 using SistemasWeb01.ViewModels;
 
@@ -13,12 +14,41 @@ namespace SistemasWeb01.Controllers
             _pieRepository = pieRepository;
             _categoryRepository = categoryRepository;
         }
-        public IActionResult List()
+        //public IActionResult List()
+        //{
+        //    PieListViewModel pieListViewModel = new PieListViewModel(_pieRepository.AllPies, "Cheese cakes");
+        //    return View(pieListViewModel);
+        //}
+        public ViewResult List(string category)
         {
-            //ViewBag.CurrentCategory = "Cheese cakes";
-            //return View(_pieRepository.AllPies);
-            PieListViewModel pieListViewModel = new PieListViewModel(_pieRepository.AllPies, "Cheese cakes");
-            return View(pieListViewModel);
+            IEnumerable<Pie> pies;
+            string? currentCategory;
+
+            if (string.IsNullOrEmpty(category))
+            {
+                pies = _pieRepository.AllPies.OrderBy(p => p.PieId);
+                currentCategory = "All pies";
+            }
+            else
+            {
+                pies = _pieRepository.AllPies.Where(p => p.Category.CategoryName == category)
+                    .OrderBy(p => p.PieId);
+                currentCategory = _categoryRepository.AllCategories.FirstOrDefault(c => c.CategoryName == category)?.CategoryName;
+            }
+
+            return View(new PieListViewModel(pies, currentCategory));
         }
+
+        //Detail
+        public IActionResult Details(int id)
+        {
+            var pie = _pieRepository.GetPieById(id);
+            if (pie == null)
+                return NotFound();
+
+            return View(pie);
+        }
+
+
     }
 }
