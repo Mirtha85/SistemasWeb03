@@ -8,14 +8,19 @@ namespace SistemasWeb01.Repository
     {
         private readonly BethesdaPieShopDbContext _bethesdaPieShopDbContext;
 
+        //almacena el GUI
         public string? ShoppingCartId { get; set; }
 
         public List<ShoppingCartItem> ShoppingCartItems { get; set; } = default!;
+
 
         private ShoppingCart(BethesdaPieShopDbContext bethesdaPieShopDbContext)
         {
             _bethesdaPieShopDbContext = bethesdaPieShopDbContext;
         }
+
+
+
         /*This method we didn't have on our interface, it is a static method
          * It will return me a fully created ShoppingCart
          * I am passing a services colletion
