@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using SistemasWeb01.Repository;
+using SistemasWeb01.Models;
 using SistemasWeb01.Repository.IRepository;
 
 namespace SistemasWeb01.Controllers

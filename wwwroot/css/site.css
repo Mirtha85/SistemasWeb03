@@ -18,6 +18,9 @@ html {
 }
 
 
+#barra-navegacion {
+    background-color: #7DAE98;
+}
 
 .titulo-carrusel {
     position: absolute;
@@ -86,4 +89,3 @@ html {
 .seccion{
     margin-top: 100px;
 }
-/*Footer*/

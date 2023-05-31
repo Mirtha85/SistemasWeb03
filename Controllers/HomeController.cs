@@ -10,17 +10,20 @@ public class HomeController : Controller
 {
     private readonly ILogger<HomeController> _logger;
     private readonly IPieRepository _pieRepository;
+    private readonly IProductRepository _productRepository;
 
-    public HomeController(ILogger<HomeController> logger, IPieRepository pieRepository)
+    public HomeController(ILogger<HomeController> logger, IPieRepository pieRepository, IProductRepository productRepository)
     {
         _logger = logger;
         _pieRepository = pieRepository;
+        _productRepository = productRepository;
     }
 
     public IActionResult Index()
     {
         var piesOfTheWeek = _pieRepository.PiesOfTheWeek;
-        var homeViewModel = new HomeViewModel(piesOfTheWeek);
+        var products = _productRepository.AllProducts;
+        var homeViewModel = new HomeViewModel(piesOfTheWeek, products);
         return View(homeViewModel);
     }
 

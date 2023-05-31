@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace SistemasWeb01.Repository
+namespace SistemasWeb01.Models
 {
     public class Categoria
     {
@@ -10,6 +10,11 @@ namespace SistemasWeb01.Repository
         [MaxLength(50, ErrorMessage = "El campo {0} debe tener máximo {1} caractéres.")]
         [Required(ErrorMessage = "El campo {0} es obligatorio.")]
         public string Name { get; set; }
-        public string Description { get; set; } = string.Empty;
+        
+        [DataType(DataType.MultilineText)]
+        [Display(Name = "Descripción")]
+        [MaxLength(500, ErrorMessage = "El campo {0} debe tener máximo {1} caractéres.")]
+        public string? Description { get; set; }
+        public List<Product>? Products { get; set; }
     }
 }

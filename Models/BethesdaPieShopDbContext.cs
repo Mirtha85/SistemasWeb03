@@ -1,5 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using SistemasWeb01.Repository;
 
 namespace SistemasWeb01.Models
 {
@@ -14,11 +13,7 @@ namespace SistemasWeb01.Models
         public DbSet<Category> Categories { get; set; }
         public DbSet<Pie> Pies { get; set; }
         public DbSet<Categoria> Categorias { get; set; }
-
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            base.OnModelCreating(modelBuilder);
-            modelBuilder.Entity<Categoria>().HasIndex(c => c.Name).IsUnique();
-        }
+        public DbSet<Product> Products { get; set; }
+        public DbSet<ProductImage> ProductImages { get; set; }
     }
 }
