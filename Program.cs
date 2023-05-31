@@ -14,6 +14,11 @@ builder.Services.AddScoped<IPieRepository, PieRepository>();
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
 builder.Services.AddScoped<IProductImageRepository, ProductImageRepository>();
 
+//add session shoping cart
+builder.Services.AddScoped<IShoppingCart, ShoppingCart>(sp => ShoppingCart.GetCart(sp));
+builder.Services.AddSession();
+builder.Services.AddHttpContextAccessor();
+
 //conexion
 builder.Services.AddDbContext<BethesdaPieShopDbContext>(options => {
     options.UseSqlite(
@@ -32,6 +37,9 @@ if (!app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
+
+//
+app.UseSession();
 
 app.UseRouting();
 
