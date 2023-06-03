@@ -6,6 +6,11 @@
         {
             BethesdaPieShopDbContext context = applicationBuilder.ApplicationServices.CreateScope().ServiceProvider.GetRequiredService<BethesdaPieShopDbContext>();
 
+            if (!context.Sections.Any())
+            {
+                context.Sections.AddRange(Sections.Select(c => c.Value));
+            }
+
             if (!context.Categorias.Any())
             {
                 context.Categorias.AddRange(Categorias.Select(c => c.Value));
@@ -129,6 +134,37 @@
                 }
 
                 return categorias;
+            }
+        }
+
+
+
+        //
+        private static Dictionary<string, Section>? sections;
+
+        public static Dictionary<string, Section> Sections
+        {
+            get
+            {
+                if (sections == null)
+                {
+                    var genresList = new Section[]
+                    {
+                        new Section { Name = "Hombre" },
+                        new Section { Name = "Mujer" },
+                        new Section { Name = "Infantil" },
+
+                    };
+
+                   sections  = new Dictionary<string, Section>();
+
+                    foreach (Section genre in genresList)
+                    {
+                        sections.Add(genre.Name, genre);
+                    }
+                }
+
+                return sections;
             }
         }
     }

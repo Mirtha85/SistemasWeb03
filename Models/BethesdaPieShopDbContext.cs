@@ -16,5 +16,15 @@ namespace SistemasWeb01.Models
         public DbSet<Product> Products { get; set; }
         public DbSet<ProductImage> ProductImages { get; set; }
         public DbSet<ShoppingCartItem> ShoppingCartItems { get; set;}
+
+        public DbSet<Section> Sections { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<Section>().HasIndex(c => c.Name).IsUnique();
+
+        }
     }
 }
