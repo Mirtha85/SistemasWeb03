@@ -159,25 +159,6 @@ namespace SistemasWeb01.Migrations
                     b.ToTable("ProductImages");
                 });
 
-            modelBuilder.Entity("SistemasWeb01.Models.Section", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("TEXT");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("Name")
-                        .IsUnique();
-
-                    b.ToTable("Sections");
-                });
-
             modelBuilder.Entity("SistemasWeb01.Models.ShoppingCartItem", b =>
                 {
                     b.Property<int>("ShoppingCartItemId")
