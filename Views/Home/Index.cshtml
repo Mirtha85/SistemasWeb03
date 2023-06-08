@@ -1,31 +1,10 @@
-﻿@model HomeViewModel;
-@{
+﻿@{
     ViewData["Title"] = "Home Page";
 }
 
-<section class="carousel slide" id="hero-carousel" data-bs-ride="carousel">
-    <partial name="_Carousel"></partial>
-</section>
-
-<section class="section-products mt-3 mb-4">
-    <div class="text-center mb-5">
-        <img src="~/images/shop-min.png" class="logo-mark mx-auto" style="max-width: 200px" />
-       @*<div class="logo">
-            <i class="bi bi-cup-hot"></i>
-       </div>*@
-        <h1>Ropa de Mujer</h1>
-        <h5>Para todos los estilos</h5>
-
-        <div class="row pies-of-the-week">
-            <div class="row row-cols-1 row-cols-md-3 g-4">
-                @foreach (var product in Model.Products)
-                {
-                    <partial name="_ProductCard" model="product" />
-                }
-            </div>
-
-        </div>
-    </div>
-
-</section>
-
+<div class="text-center">
+    <h1 class="display-4">Welcome</h1>
+    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    Created by Brayan and his bank account and in the  web,
+    Salteñas are the best
+</div>
