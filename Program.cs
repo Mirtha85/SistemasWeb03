@@ -1,7 +1,20 @@
+using Microsoft.EntityFrameworkCore;
+using SistemasWeb01.DataAccess;
+using SistemasWeb01.Repository.Implementations;
+using SistemasWeb01.Repository.Interfaces;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
+
+//conexion
+builder.Services.AddDbContext<ShoppingDbContext>(options => {
+    options.UseSqlite(
+        builder.Configuration["ConnectionStrings:DbShoppingConnection"]);
+});
 
 var app = builder.Build();
 

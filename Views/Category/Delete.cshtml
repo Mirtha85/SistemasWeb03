@@ -1,0 +1,30 @@
+﻿@model Category
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<section class="container seccion">
+    <h1>Eliminar</h1>
+
+    <h3>¿Estas seguro de que quieres eliminar?</h3>
+    <div>
+        <h4>Categoría</h4>
+        <hr />
+        <dl class="row">
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Name)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Name)
+            </dd>
+        </dl>
+
+        <form asp-action="Delete">
+            <input type="hidden" asp-for="Id" />
+            <input type="submit" value="Eliminar" class="btn btn-outline-primary" />
+            <a class="btn btn-outline-success" asp-action="Index"> Regresar</a>
+        </form>
+    </div>
+
+</section>
