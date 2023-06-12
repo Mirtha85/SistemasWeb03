@@ -1,6 +1,7 @@
 ﻿using SistemasWeb01.DataAccess;
 using SistemasWeb01.Models;
 using SistemasWeb01.Repository.Implementations;
+using SistemasWeb01.ViewModels;
 using static System.Collections.Specialized.BitVector32;
 
 namespace SistemasWeb01.Repository.Interfaces
@@ -15,10 +16,15 @@ namespace SistemasWeb01.Repository.Interfaces
         }
         public IEnumerable<Category> AllCategories => _shoppingDbContext.Categories.ToList();
 
-        public void CreateCategory(Category category)
+        public void CreateCategory(CategoryViewModel categoryViewModel)
         {
             try
             {
+                Category category = new()
+                {
+                    Name = categoryViewModel.Name,
+                    ThumbnailImage = categoryViewModel.ThumbnailImage
+                };
                 _shoppingDbContext.Categories.Add(category);
                 _shoppingDbContext.SaveChanges();
             }
@@ -43,10 +49,16 @@ namespace SistemasWeb01.Repository.Interfaces
             }
         }
 
-        public void EditCategory(Category category)
+        public void EditCategory(CategoryViewModel categoryViewModel)
         {
             try
             {
+                Category category = new()
+                {
+                    Id = categoryViewModel.Id,
+                    Name = categoryViewModel.Name,
+                    ThumbnailImage = categoryViewModel.ThumbnailImage
+                };
                 _shoppingDbContext.Categories.Update(category);
                 _shoppingDbContext.SaveChanges();
             }

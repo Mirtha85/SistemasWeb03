@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using SistemasWeb01.DataAccess;
+using SistemasWeb01.Helpers;
 using SistemasWeb01.Repository.Implementations;
 using SistemasWeb01.Repository.Interfaces;
 
@@ -9,6 +10,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 
 builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
+builder.Services.AddScoped<IFormFileHelper, FormFileHelper>();
 
 //conexion
 builder.Services.AddDbContext<ShoppingDbContext>(options => {

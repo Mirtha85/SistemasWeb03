@@ -1,4 +1,5 @@
 ﻿using SistemasWeb01.Models;
+using SistemasWeb01.ViewModels;
 
 namespace SistemasWeb01.Repository.Implementations
 {
@@ -7,9 +8,9 @@ namespace SistemasWeb01.Repository.Implementations
         IEnumerable<Category> AllCategories { get; }
         Category? GetCategoryById(int id);
 
-        void CreateCategory(Category category);
+        void CreateCategory(CategoryViewModel categoryViewModel);
 
-        void EditCategory(Category category);
+        void EditCategory(CategoryViewModel categoryViewModel);
 
         void DeleteCategory(Category category);
     }
