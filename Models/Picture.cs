@@ -9,6 +9,8 @@ namespace SistemasWeb01.Models
 
         [Display(Name = "Foto")]
         public string? PictureName { get; set; }
+        public int ProductId { get; set; }
+        public Product? Product { get; set; }
 
         [Display(Name = "Foto")]
         public string ImageFullPath => PictureName == string.Empty
