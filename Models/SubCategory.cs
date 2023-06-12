@@ -3,16 +3,15 @@ using System.Xml.Linq;
 
 namespace SistemasWeb01.Models
 {
-    public class Category
+    public class SubCategory
     {
         public int Id { get; set; }
 
-        [Display(Name = "Categoría")]
+        [Display(Name = "SubCategoría")]
         [MaxLength(50, ErrorMessage = "El campo {0} debe tener máximo {1} caractéres.")]
         [Required(ErrorMessage = "El campo {0} es obligatorio.")]
         public string Name { get; set; }
-        public string? ThumbnailImage { get; set; }
-        public List<SubCategory>? SubCategories { get; set; }
+        public int CategoryId { get; set; }
+        public Category? Category { get; set; }
     }
-
 }

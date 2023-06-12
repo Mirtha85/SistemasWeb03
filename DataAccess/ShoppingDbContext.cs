@@ -13,6 +13,7 @@ namespace SistemasWeb01.DataAccess
         }
 
         public DbSet<Category> Categories { get; set; }
+        public DbSet<SubCategory> SubCategories { get; set; }
 
 
 
