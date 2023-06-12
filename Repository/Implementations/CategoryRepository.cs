@@ -1,10 +1,11 @@
-﻿using SistemasWeb01.DataAccess;
+﻿using Microsoft.EntityFrameworkCore;
+using SistemasWeb01.DataAccess;
 using SistemasWeb01.Models;
-using SistemasWeb01.Repository.Implementations;
+using SistemasWeb01.Repository.Interfaces;
 using SistemasWeb01.ViewModels;
 using static System.Collections.Specialized.BitVector32;
 
-namespace SistemasWeb01.Repository.Interfaces
+namespace SistemasWeb01.Repository.Implementations
 {
     
     public class CategoryRepository : ICategoryRepository
@@ -71,7 +72,9 @@ namespace SistemasWeb01.Repository.Interfaces
 
         public Category? GetCategoryById(int id)
         {
-            return _shoppingDbContext.Categories.FirstOrDefault(c => c.Id == id);
+            return _shoppingDbContext.Categories
+                .Include(c => c.SubCategories)
+                .FirstOrDefault(c => c.Id == id);
         }
     }
 }

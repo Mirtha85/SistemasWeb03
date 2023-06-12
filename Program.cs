@@ -11,6 +11,7 @@ builder.Services.AddControllersWithViews();
 
 builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
 builder.Services.AddScoped<IFormFileHelper, FormFileHelper>();
+builder.Services.AddScoped<ISubCategoryRepository, SubCategoryRepository>();
 
 //conexion
 builder.Services.AddDbContext<ShoppingDbContext>(options => {

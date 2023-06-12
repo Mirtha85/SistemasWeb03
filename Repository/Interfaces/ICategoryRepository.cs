@@ -1,7 +1,7 @@
 ﻿using SistemasWeb01.Models;
 using SistemasWeb01.ViewModels;
 
-namespace SistemasWeb01.Repository.Implementations
+namespace SistemasWeb01.Repository.Interfaces
 {
     public interface ICategoryRepository
     {

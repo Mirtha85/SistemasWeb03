@@ -1,0 +1,34 @@
+﻿@model SubCategory
+@{
+    ViewData["Title"] = "EditCategory";
+}
+
+<section class="container seccion">
+    <h1>Editar SubCategoría</h1>
+    <hr />
+    <div class="row">
+        <div class="col-md-12">
+            <form asp-action="EditSubCategory">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" asp-for="Id" />
+                <input type="hidden" asp-for="CategoryId" />
+                <div class="form-group">
+                    <label asp-for="Name" class="control-label"></label>
+                    <input asp-for="Name" class="form-control" />
+                    <span asp-validation-for="Name" class="text-danger"></span>
+                </div>
+                <div class="form-group mt-5">
+                    <input type="submit" value="Guardar" class="btn btn-outline-primary" />
+                    <a class="btn btn-outline-success" asp-action="Details" asp-route-id="@Model.CategoryId"> Regresar</a>
+                </div>
+            </form>
+
+        </div>
+    </div>
+</section>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

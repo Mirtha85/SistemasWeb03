@@ -22,6 +22,7 @@ namespace SistemasWeb01.DataAccess
             base.OnModelCreating(modelBuilder);
 
             modelBuilder.Entity<Category>().HasIndex(c => c.Name).IsUnique();
+            modelBuilder.Entity<SubCategory>().HasIndex("Name", "CategoryId").IsUnique();
 
         }
     }
