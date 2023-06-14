@@ -5,12 +5,12 @@ namespace SistemasWeb01.Repository.Interfaces
 {
     public interface IBrandRepository
     {
-        IEnumerable<Brand> AllBrand { get; }
+        IEnumerable<Brand> AllBrands { get; }
         Brand? GetBrandById(int id);
 
-        void CreateBrand(Brand brand);
+        void CreateBrand(BrandViewModel brandViewModel);
 
-        void EditBrand(Brand brand);
+        void EditBrand(BrandViewModel brandViewModel);
 
         void DeleteBrand(Brand brand);
     }

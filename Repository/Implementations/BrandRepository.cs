@@ -1,6 +1,7 @@
 ﻿using SistemasWeb01.DataAccess;
 using SistemasWeb01.Models;
 using SistemasWeb01.Repository.Interfaces;
+using SistemasWeb01.ViewModels;
 
 namespace SistemasWeb01.Repository.Implementations
 {
@@ -11,12 +12,17 @@ namespace SistemasWeb01.Repository.Implementations
         {
             _shoppingDbContext = shoppingDbContext;
         }
-        public IEnumerable<Brand> AllBrand => _shoppingDbContext.Brands.ToList();
+        public IEnumerable<Brand> AllBrands => _shoppingDbContext.Brands.ToList();
 
-        public void CreateBrand(Brand brand)
+        public void CreateBrand(BrandViewModel brandViewModel)
         {
             try
             {
+                Brand brand = new()
+                {
+                    Name = brandViewModel.Name,
+                    ThumbnailImage = brandViewModel.ThumbnailImage
+                };
                 _shoppingDbContext.Brands.Add(brand);
                 _shoppingDbContext.SaveChanges();
             }
@@ -33,10 +39,16 @@ namespace SistemasWeb01.Repository.Implementations
             _shoppingDbContext.SaveChanges();
         }
 
-        public void EditBrand(Brand brand)
+        public void EditBrand(BrandViewModel brandViewModel)
         {
             try
             {
+                Brand brand = new()
+                {
+                    Id = brandViewModel.Id,
+                    Name = brandViewModel.Name,
+                    ThumbnailImage = brandViewModel.ThumbnailImage
+                };
                 _shoppingDbContext.Brands.Update(brand);
                 _shoppingDbContext.SaveChanges();
             }
