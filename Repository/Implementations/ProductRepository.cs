@@ -17,7 +17,10 @@ namespace SistemasWeb01.Repository.Implementations
             .Include(p => p.Pictures)
             .Include(p => p.Brand)
             .Include(p => p.ProductSizes)
-            .ThenInclude(p => p.Talla.ProductSizes).ToList();
+            .ThenInclude(p => p.Talla)
+            .Include(p => p.SubCategory)
+            .ThenInclude(p => p.Category)
+            .ToList();
 
         public IEnumerable<Product> ProductsNotDeleted
         {
