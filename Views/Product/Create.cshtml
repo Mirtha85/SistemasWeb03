@@ -1,0 +1,113 @@
+﻿@model SistemasWeb01.ViewModels.CreateProductViewModel
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Crear</h1>
+
+<h4>Producto</h4>
+<hr />
+<div class="row">
+    <div class="col-md-12">
+        <form asp-action="Create" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Tallas" />
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="Name" class="control-label"></label>
+                        <input asp-for="Name" class="form-control" />
+                        <span asp-validation-for="Name" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="Description" class="control-label"></label>
+                        <input asp-for="Description" class="form-control" />
+                        <span asp-validation-for="Description" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="TallaId" class="control-label"></label>
+                        <select asp-for="TallaId" asp-items="@(new SelectList(Model.Tallas,"Id","Name"))" class="form-control">
+                            <option value=""> Seleccionar talla</option>
+                        </select>
+                        <option value=""></option>
+                        <span asp-validation-for="TallaId" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Price" class="control-label"></label>
+                        <input asp-for="Price" class="form-control" />
+                        <span asp-validation-for="Price" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+
+                    <div class="form-group">
+                        <label asp-for="InStock" class="control-label"></label>
+                        <input asp-for="InStock" class="form-control" />
+                        <span asp-validation-for="InStock" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="ImageFile" class="control-label"></label>
+                        <input asp-for="ImageFile" class="form-control" type="file" />
+                        <span asp-validation-for="ImageFile" class="text-danger"></span>
+                    </div>
+
+                    <label asp-for="CategoryId"></label>
+                    <select class="form-select" asp-for="CategoryId" asp-items="@(new SelectList(Model.Categories,"Id","Name"))">
+                        <option value=""> Seleccinar Categoría</option>
+                    </select>
+
+                    <label asp-for="SubCategoryId"></label>
+                    <select class="form-select" asp-for="SubCategoryId" asp-items="@(new SelectList(Model.SubCategories,"Id","Name"))">
+                        <option value=""> Seleccionar SubCategoría</option>
+                    </select>
+
+                </div>
+            </div>
+            <div class="form-group mt-2">
+                <input type="submit" value="Crear" class="btn btn-outline-primary" />
+                <a asp-action="Index" class="btn btn-outline-success">Regresar</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts{
+
+    <script>
+        $(document).ready(function () {
+
+            $('#CategoryId').on('change', function () {
+
+                var categoryId = $(this).val();
+                var SubCategoryList = $('#SubCategoryId');
+                SubCategoryList.empty();
+                SubCategoryList.append('<option>Seleccionar Subcategoría</option>');
+
+                if (categoryId != 0) {
+                    $.ajax(
+                        {
+                            url: '/Product/GetSubCategoriesByCategory?categoryId=' + categoryId,
+                            success: function (subCategories) {
+                                $.each(subCategories, function (i, subcategory) {
+                                    SubCategoryList.append($('<option></option>').attr('value', subcategory.id).text(subcategory.name));
+
+                                })
+                            },
+                            error: function (error) {
+                                alert(error);
+                            }
+                        });
+                }
+
+            });
+
+
+        });
+
+    </script>
+}

@@ -48,6 +48,11 @@ namespace SistemasWeb01.Repository.Implementations
             }
         }
 
+        public IEnumerable<SubCategory> GetSubCategoriesByCategoryId(int categoryId)
+        {
+            return _shoppingDbContext.SubCategories.Where(s => s.CategoryId == categoryId).ToList();
+        }
+
         public SubCategory? GetSubCategoryById(int id)
         {
             SubCategory? subcategory = _shoppingDbContext.SubCategories

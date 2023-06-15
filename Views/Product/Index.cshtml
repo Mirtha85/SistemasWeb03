@@ -35,14 +35,12 @@
                                 @Html.DisplayNameFor(model => model.InStock)
                             </th>
                             <th>
-                                @Html.DisplayNameFor(model => model.PercentageDiscount)
+                                @Html.DisplayNameFor(model => model.SubCategory.CategoryId)
                             </th>
                             <th>
                                 @Html.DisplayNameFor(model => model.SubCategoryId)
                             </th>
-                            <th>
-                                @Html.DisplayNameFor(model => model.BrandId)
-                            </th>
+
                             <th></th>
                         </tr>
                     </thead>
@@ -50,6 +48,9 @@
                         @foreach (var item in Model)
                         {
                             <tr>
+                                <td>
+                                    <img src="@item.ImageFullPath" style="width:100px;" />
+                                </td>
                                 <td>
                                     @Html.DisplayFor(modelItem => item.Name)
                                 </td>
@@ -63,18 +64,16 @@
                                     @Html.DisplayFor(modelItem => item.InStock)
                                 </td>
                                 <td>
-                                    @Html.DisplayFor(modelItem => item.PercentageDiscount)
+                                    @Html.DisplayFor(modelItem => item.SubCategory.CategoryId)
                                 </td>
                                 <td>
                                     @Html.DisplayFor(modelItem => item.SubCategoryId)
                                 </td>
+                                
                                 <td>
-                                    <img src="@item.ImageFullPath" style="width:100px;" />
-                                </td>
-                                <td>
-                                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-outline-warning"><i class="fa-solid fa-pen-to-square"></i></a>
-                                    <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-outline-info"><i class="fa-solid fa-circle-info"></i></a>
-                                    <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-outline-danger"><i class="fa-solid fa-trash"></i></a>
+                                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-outline-warning"> <i class="bi bi-pencil"></i></a>
+                                    <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-outline-info"><i class="bi bi-eye"></i></a>
+                                    <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-outline-danger"> <i class="bi bi-trash3"></i></a>
                                 </td>
                             </tr>
                         }

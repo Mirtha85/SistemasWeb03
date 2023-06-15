@@ -48,7 +48,7 @@ namespace SistemasWeb01.Repository.Implementations
             }
         }
 
-        public Talla? GetTallaById(int id)
+        public Talla GetTallaById(int id)
         {
             return _shoppingDbContext.Tallas.FirstOrDefault(p => p.Id == id);
         }

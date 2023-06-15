@@ -1,4 +1,5 @@
 ﻿using SistemasWeb01.Models;
+using System.Security.Policy;
 
 namespace SistemasWeb01.Repository.Interfaces
 {
@@ -6,6 +7,7 @@ namespace SistemasWeb01.Repository.Interfaces
     {
         IEnumerable<SubCategory> AllSubCategories { get; }
         SubCategory? GetSubCategoryById(int id);
+        IEnumerable<SubCategory> GetSubCategoriesByCategoryId(int categoryId);
 
         void CreateSubCategory(SubCategory subcategory);
 
