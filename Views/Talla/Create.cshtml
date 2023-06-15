@@ -1,0 +1,44 @@
+﻿@model Talla
+@{
+    ViewData["Title"] = "Create";
+}
+
+<section class="container seccion">
+    <h1>Crear talla</h1>
+    <hr />
+    <div class="row">
+        <div class="col-md-4">
+            <form asp-action="Create">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                    <label asp-for="Name" class="control-label">Nombre de Talla</label>
+                    <input asp-for="Name" class="form-control" />
+                    <span asp-validation-for="Name" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="ShortName" class="control-label">Abreviación</label>
+                    <input asp-for="ShortName" class="form-control" />
+                    <span asp-validation-for="ShortName" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="SizeNumber" class="control-label">Abreviación</label>
+                    <input asp-for="SizeNumber" class="form-control" />
+                    <span asp-validation-for="SizeNumber" class="text-danger"></span>
+                </div>
+
+                <div class="form-group mt-5">
+                    <input type="submit" value="Guardar" class="btn btn-outline-primary" />
+                    <a class="btn btn-outline-success" asp-action="Index"> Regresar</a>
+                </div>
+            </form>
+
+        </div>
+    </div>
+</section>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
