@@ -12,6 +12,7 @@ namespace SistemasWeb01.Models
 
         [Display(Name = "Inicial")]
         public string? ShortName { get; set; }
+        public int? SizeNumber { get; set; }
 
         public ICollection<ProductSize>? ProductSizes { get; set; }
     }
