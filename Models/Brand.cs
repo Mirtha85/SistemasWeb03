@@ -11,7 +11,11 @@ namespace SistemasWeb01.Models
         [MaxLength(50, ErrorMessage = "El campo {0} debe tener máximo {1} caractéres.")]
         [Required(ErrorMessage = "El campo {0} es obligatorio.")]
         public string Name { get; set; }
+
+        [Display(Name = "Logo")]
         public string? ThumbnailImage { get; set; }
+
+        [Display(Name = "Productos")]
         public List<Product>? Products { get; set; }
     }
 }

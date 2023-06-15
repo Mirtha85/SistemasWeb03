@@ -10,9 +10,11 @@ namespace SistemasWeb01.Models
         [Display(Name = "Talla")]
         public string? Name { get; set; }
 
-        [Display(Name = "Inicial")]
+        [Display(Name = "Abreviación")]
         public string? ShortName { get; set; }
-        public int? SizeNumber { get; set; }
+
+        [Display(Name = "Número")]
+        public string? SizeNumber { get; set; }
 
         public ICollection<ProductSize>? ProductSizes { get; set; }
     }

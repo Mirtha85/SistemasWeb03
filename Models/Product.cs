@@ -30,18 +30,31 @@ namespace SistemasWeb01.Models
         [Display(Name = "Inventario")]
         public int? InStock { get; set; }
 
+        [Display(Name = "Activo")]
         public bool IsDeleted { get; set; } = false;
+
+        [Display(Name = "Nuevo")]
         public bool IsNew { get; set; } = false;
+
+        [Display(Name = "Más Vendido")]
         public bool IsBestSeller { get; set; } = false;
+
+        [Display(Name = "% Descuento")]
         public int? PercentageDiscount { get; set; }
 
         [Display(Name = "SubCategoría")]
         [Required(ErrorMessage = "El campo {0} es obligatorio.")]
         public int SubCategoryId { get; set; }
         public SubCategory? SubCategory { get; set; }
+
+        [Display(Name = "Marca")]
         public int? BrandId { get; set; }
         public Brand? Brand { get; set; }
+
+        [Display(Name = "Fotos")]
         public List<Picture>? Pictures { get; set; }
+
+        [Display(Name = "Tallas")]
         public List<ProductSize>? ProductSizes { get; set; }
 
         //read property

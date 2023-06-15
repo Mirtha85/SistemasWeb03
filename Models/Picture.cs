@@ -9,6 +9,8 @@ namespace SistemasWeb01.Models
 
         [Display(Name = "Foto")]
         public string? PictureName { get; set; }
+
+        [Display(Name = "Producto")]
         public int ProductId { get; set; }
         public Product? Product { get; set; }
 
