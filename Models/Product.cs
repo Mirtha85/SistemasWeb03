@@ -59,8 +59,6 @@ namespace SistemasWeb01.Models
 
         //read property
         [Display(Name = "Foto")]
-        public string ImageFullPath => Pictures == null || Pictures.Count == 0
-            ? $"https://localhost:57270/images/noimage.jpg"
-            : Pictures.FirstOrDefault().ImageFullPath;
+        public string ImageFullPath => Pictures.FirstOrDefault().PictureName;
     }
 }
