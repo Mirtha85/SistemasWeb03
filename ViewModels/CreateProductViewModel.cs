@@ -27,6 +27,7 @@ namespace SistemasWeb01.ViewModels
         public int TallaId { get; set; }
         public IEnumerable<Talla>? Tallas { get; set; }
 
+        [Display(Name = "Marca")]
         public int? BrandId { get; set; }
         public IEnumerable<Brand>? Brands { get; set; }
 

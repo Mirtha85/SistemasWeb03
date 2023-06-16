@@ -22,7 +22,7 @@ namespace SistemasWeb01.ViewModels
         [Required(ErrorMessage = "El campo {0} es obligatorio.")]
         public decimal Price { get; set; }
 
-        [Display(Name = "Inventario")]
+        [Display(Name = "Stock")]
         public int? InStock { get; set; }
 
         [Display(Name = "Activo")]
@@ -35,7 +35,7 @@ namespace SistemasWeb01.ViewModels
         public bool IsBestSeller { get; set; } = false;
 
         [Display(Name = "% Descuento")]
-        public int? PercentageDiscount { get; set; }
+        public int? PercentageDiscount { get; set; } = 0;
     }
 
 }

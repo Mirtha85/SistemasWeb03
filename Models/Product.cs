@@ -27,10 +27,10 @@ namespace SistemasWeb01.Models
         public decimal Price { get; set; }
 
 
-        [Display(Name = "Inventario")]
+        [Display(Name = "Stock")]
         public int? InStock { get; set; }
 
-        [Display(Name = "Activo")]
+        [Display(Name = "Estado")]
         public bool IsDeleted { get; set; } = false;
 
         [Display(Name = "Nuevo")]
