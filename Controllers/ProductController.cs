@@ -215,5 +215,52 @@ namespace SistemasWeb01.Controllers
             }
             return View(product);
         }
+
+        public IActionResult AddImage(int id)
+        {
+            Product? product =  _productRepository.GetProductById(id);
+            if (product == null)
+            {
+                return NotFound();
+            }
+
+            AddProductImageViewModel model = new()
+            {
+                ProductId = product.Id,
+            };
+
+            return View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AddImage(AddProductImageViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                model.PictureName =  await _formFileHelper.UploadFile(model.ImageFile);
+
+                Product? product =  _productRepository.GetProductById(model.ProductId);
+                if (product == null)
+                {
+                    return NotFound();
+                }
+                Picture picture = new()
+                {
+                    Product = product,
+                    PictureName = model.PictureName,
+                };
+                try
+                {
+                    _pictureRepository.CreatePicture(picture);
+                    return RedirectToAction(nameof(Details), new { Id = product.Id });
+                }
+                catch (Exception exception)
+                {
+                    ModelState.AddModelError(string.Empty, exception.Message);
+                }
+            }
+
+            return View(model);
+        }
     }
 }
