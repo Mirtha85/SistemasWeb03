@@ -3,10 +3,10 @@ using System.ComponentModel.DataAnnotations;
 
 namespace SistemasWeb01.ViewModels
 {
-    public class AddProductImageViewModel
+    public class ProductImageViewModel
     {
+        public int Id { get; set; }
         public int ProductId { get; set; }
-        public Product? Product { get; set; }
 
         [Display(Name = "Foto")]
         public string? PictureName { get; set; }

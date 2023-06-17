@@ -2,6 +2,7 @@
 using SistemasWeb01.DataAccess;
 using SistemasWeb01.Models;
 using SistemasWeb01.Repository.Interfaces;
+using SistemasWeb01.ViewModels;
 using static System.Collections.Specialized.BitVector32;
 
 namespace SistemasWeb01.Repository.Implementations
@@ -30,16 +31,22 @@ namespace SistemasWeb01.Repository.Implementations
             }
         }
 
-        public void DeleteImage(Picture picture)
+        public void DeletePicture(Picture picture)
         {
             _shoppingDbContext.Pictures.Remove(picture);
             _shoppingDbContext.SaveChanges();
         }
 
-        public void EditImage(Picture picture)
+        public void EditPicture(ProductImageViewModel productImageViewModel)
         {
             try
             {
+                Picture picture = new()
+                {
+                    Id = productImageViewModel.Id,
+                    PictureName = productImageViewModel.PictureName,
+                    ProductId = productImageViewModel.ProductId
+                };
                 _shoppingDbContext.Pictures.Update(picture);
                 _shoppingDbContext.SaveChanges();
             }

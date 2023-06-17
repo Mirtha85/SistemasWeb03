@@ -224,7 +224,7 @@ namespace SistemasWeb01.Controllers
                 return NotFound();
             }
 
-            AddProductImageViewModel model = new()
+            ProductImageViewModel model = new()
             {
                 ProductId = product.Id,
             };
@@ -233,7 +233,7 @@ namespace SistemasWeb01.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddImage(AddProductImageViewModel model)
+        public async Task<IActionResult> AddImage(ProductImageViewModel model)
         {
             if (ModelState.IsValid)
             {
@@ -261,6 +261,38 @@ namespace SistemasWeb01.Controllers
             }
 
             return View(model);
+        }
+
+        public IActionResult EditImage(int id)
+        {
+            Picture? picture = _pictureRepository.GetPictureById(id);
+            if (picture == null)
+            {
+                return NotFound();
+            }
+            ProductImageViewModel pictureViewModel = new()
+            {
+                Id = picture.Id,
+                PictureName = picture.PictureName,
+                ProductId = picture.ProductId,
+            };
+            return View(pictureViewModel);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> EditImage(ProductImageViewModel pictureViewModel)
+        {
+            if (ModelState.IsValid)
+            {
+                if (pictureViewModel.PictureName != null)
+                {
+                    _formFileHelper.DeleteFile(pictureViewModel.PictureName);
+                }
+                pictureViewModel.PictureName = await _formFileHelper.UploadFile(pictureViewModel.ImageFile);
+                _pictureRepository.EditPicture(pictureViewModel);
+                return RedirectToAction(nameof(Details), new { Id = pictureViewModel.ProductId });
+            }
+            return View(pictureViewModel);
         }
     }
 }
