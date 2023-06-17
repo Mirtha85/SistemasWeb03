@@ -1,0 +1,135 @@
+﻿@model SistemasWeb01.ViewModels.EditProductViewModel
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Editar</h1>
+
+<h4>Producto</h4>
+<hr />
+<div class="row">
+    <div class="col-md-12">
+        <form asp-action="Edit" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="Name" class="control-label"></label>
+                        <input asp-for="Name" class="form-control" />
+                        <span asp-validation-for="Name" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group mb-3">
+                        <label asp-for="Description" class="control-label"></label>
+                        <textarea asp-for="Description" class="form-control" id="floatingTextarea" style="height: 80px;"></textarea>
+                        <span asp-validation-for="Description" class="text-danger"></span>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label asp-for="CategoryId"></label>
+                        <select class="form-select" asp-for="CategoryId" asp-items="@(new SelectList(Model.Categories,"Id","Name"))">
+                            <option value=""> --Seleccinar Categoría--</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group mb-3">
+                        <label asp-for="SubCategoryId"></label>
+                        <select class="form-select mb-3" asp-for="SubCategoryId" asp-items="@(new SelectList(Model.SubCategories,"Id","Name"))">
+                            <option value=""> --Seleccionar SubCategoría--</option>
+                        </select>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label asp-for="Price" class="control-label"></label>
+                        <input asp-for="Price" class="form-control" />
+                        <span asp-validation-for="Price" class="text-danger"></span>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label asp-for="PercentageDiscount" class="control-label"></label>
+                        <input asp-for="PercentageDiscount" class="form-control" />
+                        <span asp-validation-for="PercentageDiscount" class="text-danger"></span>
+                    </div>
+
+                </div>
+
+                <div class="col-md-6">
+                    <div class="form-group mb-3">
+                        <label asp-for="InStock" class="control-label"></label>
+                        <input asp-for="InStock" class="form-control" />
+                        <span asp-validation-for="InStock" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group mb-3">
+                        <label asp-for="BrandId" class="control-label"></label>
+                        <select asp-for="BrandId" asp-items="@(new SelectList(Model.Brands,"Id","Name"))" class="form-select">
+                            <option value=""> --Seleccionar Marca--</option>
+                        </select>
+                        <option value=""></option>
+                        <span asp-validation-for="BrandId" class="text-danger"></span>
+                    </div>
+                    <div class="form-group form-check">
+                        <input asp-for="IsNew" class="form-check-input" type="checkbox" id="gridCheck1">
+                        <label class="form-check-label" for="gridCheck1">
+                            Es Nuevo?
+                        </label>
+                    </div>
+                    <div class="form-group form-check">
+                        <input asp-for="IsBestSeller" class="form-check-input" type="checkbox" id="gridCheck1">
+                        <label class="form-check-label" for="gridCheck1">
+                            Es más vendido?
+                        </label>
+                    </div>
+                    <div class="form-group form-check">
+                        <input asp-for="IsDeleted" class="form-check-input" type="checkbox" id="gridCheck1">
+                        <label class="form-check-label" for="gridCheck1">
+                            Estado Activo/Inactivo
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group mt-4 ">
+                <input type="submit" value="Guardar" class="btn btn-outline-primary" />
+                <a asp-action="Index" class="btn btn-outline-success">Regresar</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts{
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+
+    <script>
+        $(document).ready(function () {
+
+            $('#CategoryId').on('change', function () {
+
+                var categoryId = $(this).val();
+                var SubCategoryList = $('#SubCategoryId');
+                SubCategoryList.empty();
+                SubCategoryList.append('<option>Seleccionar Subcategoría</option>');
+
+                if (categoryId != 0) {
+                    $.ajax(
+                        {
+                            url: '/Product/GetSubCategoriesByCategory?categoryId=' + categoryId,
+                            success: function (subCategories) {
+                                $.each(subCategories, function (i, subcategory) {
+                                    SubCategoryList.append($('<option></option>').attr('value', subcategory.id).text(subcategory.name));
+
+                                })
+                            },
+                            error: function (error) {
+                                alert(error);
+                            }
+                        });
+                }
+
+            });
+
+
+        });
+
+    </script>
+}

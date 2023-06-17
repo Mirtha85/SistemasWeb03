@@ -20,6 +20,7 @@ namespace SistemasWeb01.Repository.Implementations
             .ThenInclude(p => p.Talla)
             .Include(p => p.SubCategory)
             .ThenInclude(p => p.Category)
+            .OrderByDescending(p => p.Id)
             .ToList();
 
         public IEnumerable<Product> ProductsNotDeleted
@@ -109,7 +110,11 @@ namespace SistemasWeb01.Repository.Implementations
 
         public Product? GetProductById(int id)
         {
-            return _shoppingDbContext.Products.FirstOrDefault(b => b.Id == id);
+            return _shoppingDbContext.Products
+                .Include(p => p.Brand)
+                .Include(p => p.SubCategory)
+                .ThenInclude(p => p.Category)
+                .FirstOrDefault(p => p.Id == id);
         }
     }
 }

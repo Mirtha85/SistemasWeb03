@@ -1,4 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using SistemasWeb01.Models;
+using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.Xml.Linq;
 
 namespace SistemasWeb01.ViewModels
@@ -16,6 +18,22 @@ namespace SistemasWeb01.ViewModels
         [MaxLength(500, ErrorMessage = "El campo {0} debe tener máximo {1} caractéres.")]
         [Required(ErrorMessage = "El campo {0} es obligatorio.")]
         public string? Description { get; set; }
+
+
+        [Display(Name = "Categoría")]
+        [Range(1, int.MaxValue, ErrorMessage = "Debes seleccionar una categoría.")]
+        [Required(ErrorMessage = "El campo {0} es obligatorio.")]
+        public int CategoryId { get; set; }
+        public IEnumerable<Category>? Categories { get; set; }
+
+        [DisplayName("SubCategoría")]
+        public int SubCategoryId { get; set; }
+        public IEnumerable<SubCategory>? SubCategories { get; set; } = new List<SubCategory>();
+
+        [Display(Name = "Marca")]
+        public int? BrandId { get; set; }
+        public IEnumerable<Brand>? Brands { get; set; } = new List<Brand>();
+
 
         [DisplayFormat(DataFormatString = "{0:C2}")]
         [Display(Name = "Precio")]

@@ -38,46 +38,45 @@ namespace SistemasWeb01.Controllers
 
         public IActionResult Create()
         {
-            CreateProductViewModel model = new()
+            CreateProductViewModel createProductViewModel = new()
             {
                 Categories =  _categoryRepository.AllCategories,
                 Brands = _brandRepository.AllBrands,
                 Tallas = _tallaRepository.AllTallas,
             };
 
-            return View(model);
+            return View(createProductViewModel);
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(CreateProductViewModel model)
+        public async Task<IActionResult> Create(CreateProductViewModel createProductViewModel)
         {
             if (ModelState.IsValid)
             {
                 string imageName = string.Empty;
-                if (model.ImageFile != null)
+                if (createProductViewModel.ImageFile != null)
                 {
-                    imageName =  await _formFileHelper.UploadFile(model.ImageFile);
+                    imageName =  await _formFileHelper.UploadFile(createProductViewModel.ImageFile);
                 }
 
                 Product product = new()
                 {
-                    Description = model.Description,
-                    Name = model.Name,
-                    Price = model.Price,
-                    InStock = model.InStock,
-                    IsNew = model.IsNew,
-                    IsBestSeller = model.IsBestSeller,
-                    PercentageDiscount = model.PercentageDiscount,
-                    SubCategoryId = model.SubCategoryId,
-                    BrandId = model.BrandId,
+                    Description = createProductViewModel.Description,
+                    Name = createProductViewModel.Name,
+                    Price = createProductViewModel.Price,
+                    InStock = createProductViewModel.InStock,
+                    IsNew = createProductViewModel.IsNew,
+                    IsBestSeller = createProductViewModel.IsBestSeller,
+                    PercentageDiscount = createProductViewModel.PercentageDiscount,
+                    SubCategoryId = createProductViewModel.SubCategoryId,
+                    BrandId = createProductViewModel.BrandId,
                 };
 
                 product.ProductSizes = new List<ProductSize>()
                 {
                     new ProductSize
                     {
-                        Talla =  _tallaRepository.GetTallaById(model.TallaId)
+                        Talla =  _tallaRepository.GetTallaById(createProductViewModel.TallaId)
                     }
                 };
 
@@ -88,10 +87,10 @@ namespace SistemasWeb01.Controllers
                         new Picture { PictureName = imageName }
                     };
                 }
-
                 try
                 {
                     _productRepository.CreateProduct(product);
+                    TempData["mensaje"] = "El producto se creó correctamente";
                     return RedirectToAction(nameof(Index));
                 }
                 //validation for duplicate names
@@ -112,8 +111,8 @@ namespace SistemasWeb01.Controllers
                 }
             }
 
-            model.Categories = _categoryRepository.AllCategories;
-            return View(model);
+            createProductViewModel.Categories = _categoryRepository.AllCategories;
+            return View(createProductViewModel);
         }
 
         [HttpGet]
@@ -125,5 +124,86 @@ namespace SistemasWeb01.Controllers
             return Ok(subCategories);
         }
 
+
+        public IActionResult Edit(int id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            Product? product = _productRepository.GetProductById(id);
+            if (product == null)
+            {
+                return NotFound();
+            }
+
+            EditProductViewModel editProductViewModel = new()
+            {
+                Id = product.Id,
+                Name = product.Name,
+                Description = product.Description,
+                Price = product.Price,
+                InStock = product.InStock,
+                IsDeleted = product.IsDeleted,
+                IsNew = product.IsNew,
+                IsBestSeller = product.IsBestSeller,
+                PercentageDiscount = product.PercentageDiscount,
+                SubCategoryId = product.SubCategoryId,
+                BrandId = product.BrandId,
+                CategoryId = product.SubCategory.CategoryId,
+                Categories = _categoryRepository.AllCategories,
+                SubCategories = _subCategoryRepository.AllSubCategories,
+                Brands = _brandRepository.AllBrands
+            };
+
+            return View(editProductViewModel);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(EditProductViewModel editProductViewModel)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    Product product = new()
+                    {
+                        Id = editProductViewModel.Id,
+                        Name = editProductViewModel.Name,
+                        Description = editProductViewModel.Description,
+                        Price = editProductViewModel.Price,
+                        InStock = editProductViewModel.InStock,
+                        IsDeleted = editProductViewModel.IsDeleted,
+                        IsNew = editProductViewModel.IsNew,
+                        IsBestSeller = editProductViewModel.IsBestSeller,
+                        PercentageDiscount = editProductViewModel.PercentageDiscount,
+                        SubCategoryId = editProductViewModel.SubCategoryId,
+                        BrandId = editProductViewModel.BrandId,
+                    };
+                    _productRepository.EditProduct(product);
+                    TempData["mensaje"] = "El producto se actualizó correctamente";
+                    return RedirectToAction(nameof(Index));
+                }
+                //validation for duplicate names
+                catch (DbUpdateException dbUpdateException)
+                {
+                    if (dbUpdateException.InnerException.Message.Contains("UNIQUE constraint failed: Products.Name"))
+                    {
+                        ModelState.AddModelError(string.Empty, "Ya existe una producto con el mismo nombre.");
+                    }
+                    else
+                    {
+                        ModelState.AddModelError(string.Empty, dbUpdateException.InnerException.Message);
+                    }
+                }
+                catch (Exception exception)
+                {
+                    ModelState.AddModelError(string.Empty, exception.Message);
+                }
+            }
+            return View(editProductViewModel);
+        }
     }
+
 }
