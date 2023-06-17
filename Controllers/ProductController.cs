@@ -204,6 +204,16 @@ namespace SistemasWeb01.Controllers
             }
             return View(editProductViewModel);
         }
-    }
 
+
+        public async Task<IActionResult> Details(int id)
+        {
+            Product? product = _productRepository.GetProductById(id);
+            if (product == null)
+            {
+                return NotFound();
+            }
+            return View(product);
+        }
+    }
 }
