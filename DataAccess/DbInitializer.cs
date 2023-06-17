@@ -56,8 +56,8 @@ namespace SistemasWeb01.DataAccess
                 {
                     var genresList = new Category[]
                     {
-                        new Category { Name = "Ropa" },
-                        new Category { Name = "Calzados" },
+                        new Category { Name = "Ropa",  ThumbnailImage = "cat_rop.webp" },
+                        new Category { Name = "Calzados",  ThumbnailImage = "cat_zapatos.webp" },
                     };
 
                     categories = new Dictionary<string, Category>();
@@ -117,12 +117,12 @@ namespace SistemasWeb01.DataAccess
                 {
                     var genresList = new Brand[]
                     {
-                        new Brand { Name = "Zara" },
-                        new Brand { Name = "Armani" },
-                        new Brand { Name = "Calvin Klein" },
-                        new Brand { Name = "Chanel" },
-                        new Brand { Name = "LaCoste" },
-                        new Brand { Name = "Gucci" },
+                        new Brand { Name = "Zara", ThumbnailImage = "brand_5.png" },
+                        new Brand { Name = "Armani", ThumbnailImage = "brand_4.png" },
+                        new Brand { Name = "Calvin Klein", ThumbnailImage = "brand_1.png" },
+                        new Brand { Name = "Chanel", ThumbnailImage = "brand_2.png" },
+                        new Brand { Name = "LaCoste" , ThumbnailImage = "brand_6.png"},
+                        new Brand { Name = "Gucci" , ThumbnailImage = "brand_3.png"},
                     };
 
                     brands = new Dictionary<string, Brand>();
@@ -200,9 +200,9 @@ namespace SistemasWeb01.DataAccess
                         new Product { Name = "Falda Pantalón Romal Vichy - Verde", Description = "Un toque fresco y chic para tus looks de temporada. Esta falda pantalón de cuadro vichy es lap renda que buscabas. Tiene la parte delantera de corte pareo con botoncitos nacarados. Lleva cremallera invisible en un lateral. La modelo mide 1,62 m y lleva la talla 34. 100%Algodón", Price = 55, InStock = 10, IsDeleted = false, IsNew = true, SubCategory = SubCategories["Pantalones y monos"]},
                         new Product { Name = "Pantalón Gabriel - Kaki", Description = "La opción de colores tierra y naturales nos parece ideal también para primavera. Crea tus looks en estos tonos con este pantalón que es una pasada. Favorece 100%, su tiro es alto, lleva bolsillos y es de corte flare. Una auténtica pasada. La modelo de la talla 36 mide 1,57 m y la modelo de la talla 48 mide 1,58 m. 95%Algodón 5%Elastán", Price = 55, InStock = 10, IsDeleted = false, IsNew = true, SubCategory = SubCategories["Pantalones y monos"] },
 
-                        new Product { Name = "Biker Taran - Verde", Description = "Inauguramos por todo lo alto la temporada de bikers. En un tono verde ideal y de suave antelina elástica, esta es la biker que más vas a amar. Combínala con vestido, con vaqueros o con faldas, tienes el rollazo asegurado. Lleva bolsillos. La modelo de la talla 34 mide 1,62 m y la modelo de la talla 44 mide 1,58 m.", Price = 55, InStock = 10, IsDeleted = false, IsNew = true, SubCategory = SubCategories["Blazers y chaquetas"] },
-                        new Product { Name = "Biker Taran - Negro", Description = "Inauguramos por todo lo alto la temporada de bikers. Imprescindible en negro y de suave antelina elastica, esta es la biker que más vas a amar. Combínala con vestido, con vaqueros o con faldas, tienes el rollazo asegurado. Lleva bolsillos. La modelo de la talla 34 mide 1,62 m y la modelo de la talla 44 mide 1,58 m. 95%Poliéster 5%Elastán", Price = 55, InStock = 10, IsDeleted = false, IsNew = true, SubCategory = SubCategories["Blazers y chaquetas"] },
-                        new Product { Name = "Cárdigan Bego - Beige", Description = "Con la forma de un trench y la fluidez de un cárdigan, hemos creado el mix perfecto. Finito, no pesa y no se arruga, tu compañero perfecto para cuando se esconde el sol. Lleva cinturón del mismo tejido y manga sardineta, juega con su largo. La modelo de la talla 36 mide 1,57 m y la modelo de la talla 44 mide 1,58 m. 100%Poliéster", Price = 55, InStock = 10, IsDeleted = false, IsNew = true, SubCategory = SubCategories["Blazers y chaquetas"] }
+                        new Product { Name = "Biker Taran - Verde", Description = "Inauguramos por todo lo alto la temporada de bikers. En un tono verde ideal y de suave antelina elástica, esta es la biker que más vas a amar. Combínala con vestido, con vaqueros o con faldas, tienes el rollazo asegurado. Lleva bolsillos. La modelo de la talla 34 mide 1,62 m y la modelo de la talla 44 mide 1,58 m.", Price = 55, InStock = 10, IsDeleted = false, IsNew = true, SubCategory = SubCategories["Blazers y Chaquetas"] },
+                        new Product { Name = "Biker Taran - Negro", Description = "Inauguramos por todo lo alto la temporada de bikers. Imprescindible en negro y de suave antelina elastica, esta es la biker que más vas a amar. Combínala con vestido, con vaqueros o con faldas, tienes el rollazo asegurado. Lleva bolsillos. La modelo de la talla 34 mide 1,62 m y la modelo de la talla 44 mide 1,58 m. 95%Poliéster 5%Elastán", Price = 55, InStock = 10, IsDeleted = false, IsNew = true, SubCategory = SubCategories["Blazers y Chaquetas"] },
+                        new Product { Name = "Cárdigan Bego - Beige", Description = "Con la forma de un trench y la fluidez de un cárdigan, hemos creado el mix perfecto. Finito, no pesa y no se arruga, tu compañero perfecto para cuando se esconde el sol. Lleva cinturón del mismo tejido y manga sardineta, juega con su largo. La modelo de la talla 36 mide 1,57 m y la modelo de la talla 44 mide 1,58 m. 100%Poliéster", Price = 55, InStock = 10, IsDeleted = false, IsNew = true, SubCategory = SubCategories["Blazers y Chaquetas"] }
 
                     };
 
