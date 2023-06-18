@@ -10,6 +10,6 @@ namespace SistemasWeb01.Repository.Interfaces
 
         void EditProductSize(ProductSize productSize);
 
-        void DeleteProductSiza(ProductSize productSize);
+        void DeleteProductSize(ProductSize productSize);
     }
 }

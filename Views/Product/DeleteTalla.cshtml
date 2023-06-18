@@ -1,0 +1,46 @@
+﻿@model ProductSize
+
+@{
+    ViewData["Title"] = "DeleteTalla";
+}
+
+<section class="container seccion">
+    <h1>Eliminar</h1>
+    <h3>¿Estas seguro de que quieres eliminar?</h3>
+    <div>
+        <h4>Talla del producto</h4>
+        <hr />
+        <dl class="row">
+            <dt class="col-sm-3">
+                @Html.DisplayNameFor(model => model.ProductId)
+            </dt>
+            <dd class="col-sm-9">
+                @Html.DisplayFor(model => model.Product.Name)
+            </dd>
+            <dt class="col-sm-3">
+                @Html.DisplayNameFor(model => model.TallaId)
+            </dt>
+            <dd class="col-sm-9">
+                @Html.DisplayFor(model => model.Talla.ShortName)
+            </dd>
+            <dt class="col-sm-3">
+                @Html.DisplayNameFor(model => model.Quantity)
+            </dt>
+            <dd class="col-sm-9">
+                @Html.DisplayFor(model => model.Quantity)
+            </dd>
+        </dl>
+
+        <form asp-action="DeleteTalla">
+            <input type="hidden" asp-for="Id" />
+            <input type="hidden" asp-for="ProductId" />
+            <input type="hidden" asp-for="Product" />
+            <input type="hidden" asp-for="TallaId" />
+            <input type="hidden" asp-for="Talla" />
+            <input type="hidden" asp-for="Quantity" />
+            <input type="submit" value="Eliminar" class="btn btn-outline-primary" />
+            <a asp-action="Details" asp-route-id="@Model.ProductId" class="btn btn-outline-success">Regresar</a>
+        </form>
+    </div>
+
+</section>

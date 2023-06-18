@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore.Metadata.Internal;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using SistemasWeb01.DataAccess;
 using SistemasWeb01.Models;
 using SistemasWeb01.Repository.Interfaces;
@@ -28,7 +29,7 @@ namespace SistemasWeb01.Repository.Implementations
             }
         }
 
-        public void DeleteProductSiza(ProductSize productSize)
+        public void DeleteProductSize(ProductSize productSize)
         {
             _shoppingDbContext.ProductSizes.Remove(productSize);
             _shoppingDbContext.SaveChanges();
@@ -50,7 +51,10 @@ namespace SistemasWeb01.Repository.Implementations
 
         public ProductSize? GetProductSizeById(int id)
         {
-            return _shoppingDbContext.ProductSizes.FirstOrDefault(p => p.Id == id);
+            return _shoppingDbContext.ProductSizes
+                .Include(p => p.Product)
+                .Include(p => p.Talla)
+                .FirstOrDefault(p => p.Id == id);
         }
     }
 }

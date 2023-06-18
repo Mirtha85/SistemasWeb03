@@ -398,5 +398,22 @@ namespace SistemasWeb01.Controllers
             return View(productSizeViewModel);
         }
 
+        public IActionResult DeleteTalla(int id) 
+        {
+            ProductSize? productSize = _productSizeRepository.GetProductSizeById(id);
+            if (productSize == null)
+            {
+                return NotFound();
+            }
+            return View(productSize);
+        }
+
+        [HttpPost]
+        public IActionResult DeleteTalla(ProductSize productSize) 
+        {
+            _productSizeRepository.DeleteProductSize(productSize);
+            return RedirectToAction(nameof(Details), new { Id = productSize.ProductId });
+        }
+
     }
 }
