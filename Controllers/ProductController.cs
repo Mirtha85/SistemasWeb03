@@ -319,5 +319,48 @@ namespace SistemasWeb01.Controllers
             return RedirectToAction(nameof(Details), new { Id = picture.ProductId });
         }
 
+
+        public IActionResult AddTalla(int id)
+        {
+            Product? product = _productRepository.GetProductById(id);
+            if (product == null)
+            {
+                return NotFound();
+            }
+
+            ProductSizeViewModel model = new()
+            {
+                ProductId = product.Id,
+                Tallas = _tallaRepository.AllTallas
+            };
+            return View(model);
+        }
+
+        [HttpPost]
+        public IActionResult AddTalla(ProductSizeViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                Product? product = _productRepository.GetProductById(model.ProductId);
+                ProductSize productsize = new()
+                {
+                    Talla = _tallaRepository.GetTallaById(model.TallaId),
+                    Product = product,
+                    Quantity = model.Quantity
+                };
+                try
+                {
+                    _productSizeRepository.CreateProductSize(productsize);
+                    return RedirectToAction(nameof(Details), new { Id = product.Id });
+                }
+                catch (Exception exception)
+                {
+                    ModelState.AddModelError(string.Empty, exception.Message);
+                }
+            }
+
+            return View(model);
+        }
+
     }
 }

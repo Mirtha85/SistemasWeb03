@@ -12,7 +12,7 @@
 
 <div>
     <a asp-action="AddImage" asp-route-id="@Model?.Id" class="btn btn-outline-primary">Adicionar Imagen</a>
-    <a asp-action="AddTallas" asp-route-id="@Model?.Id" class="btn btn-outline-secondary">Adicionar Tallas</a>
+    <a asp-action="AddTalla" asp-route-id="@Model?.Id" class="btn btn-outline-secondary">Adicionar Tallas</a>
     <a asp-action="Edit" asp-route-id="@Model?.Id" class="btn btn-outline-warning">Editar Producto</a>
     <a asp-action="Index" class="btn btn-outline-success">Regresar</a>
 </div>
@@ -44,10 +44,8 @@
                                     <img src="/images/@item.PictureName" style="width:100px;" />
                                 </td>
                                 <td>
-                                    <a asp-action="EditImage" asp-route-id="@item.Id" class="btn btn-outline-warning"><i class="bi bi-pencil"></i></a>
-                                </td>
-                                <td>
-                                    <a asp-action="DeleteImage" asp-route-id="@item.Id" class="btn btn-outline-danger"><i class="bi bi-trash3"></i></a>
+                                    <a asp-action="EditImage" asp-route-id="@item.Id" class="btn btn-outline-warning"><i class="bi bi-pencil"></i> Editar</a>
+                                    <a asp-action="DeleteImage" asp-route-id="@item.Id" class="btn btn-outline-danger"><i class="bi bi-trash3"></i> Borrar</a>
                                 </td>
                             </tr>
                         }
@@ -97,10 +95,8 @@
                                     @Html.DisplayFor(modelItem => item.Quantity)
                                 </td>
                                 <td>
-                                    <a asp-action="EditTalla" asp-route-id="@item.Id" class="btn btn-outline-warning"><i class="bi bi-pencil"></i></a>
-                                </td>
-                                <td>
-                                    <a asp-action="DeleteTalla" asp-route-id="@item.Id" class="btn btn-outline-danger"><i class="bi bi-trash3"></i></a>
+                                    <a asp-action="EditTalla" asp-route-id="@item.Id" class="btn btn-outline-warning"><i class="bi bi-pencil"></i> Editar</a>
+                                    <a asp-action="DeleteTalla" asp-route-id="@item.Id" class="btn btn-outline-danger"><i class="bi bi-trash3"></i> Borrar</a>
                                 </td>
                             </tr>
                         }
