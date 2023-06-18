@@ -9,7 +9,6 @@ namespace SistemasWeb01.Repository.Interfaces
         IEnumerable<Product> BestSellingProducts { get; }
         IEnumerable<Product> NewProducts { get; }
         Product? GetProductById(int id);
-
         void CreateProduct(Product product);
 
         void EditProduct(Product product);

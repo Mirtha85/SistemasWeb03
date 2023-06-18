@@ -76,8 +76,16 @@ namespace SistemasWeb01.Repository.Implementations
 
         public void DeleteProduct(Product product)
         {
-            _shoppingDbContext.Products.Remove(product);
-            _shoppingDbContext.SaveChanges();
+            try
+            {
+                _shoppingDbContext.Products.Remove(product);
+                _shoppingDbContext.SaveChanges();
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
         }
 
         public void DisableProduct(Product product)

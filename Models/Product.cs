@@ -57,8 +57,13 @@ namespace SistemasWeb01.Models
         [Display(Name = "Tallas")]
         public List<ProductSize>? ProductSizes { get; set; }
 
-        //read property
+        ////read property
+        //[Display(Name = "Foto")]
+        //public string? ImageFullPath => Pictures.FirstOrDefault().PictureName;
+        
         [Display(Name = "Foto")]
-        public string ImageFullPath => Pictures.FirstOrDefault().PictureName;
+        public string ImageFullPath => Pictures == null || Pictures.Count == 0
+            ? $"noimage.png"
+            : Pictures.FirstOrDefault().PictureName;
     }
 }

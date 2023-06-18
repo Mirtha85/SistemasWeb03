@@ -216,6 +216,29 @@ namespace SistemasWeb01.Controllers
             return View(product);
         }
 
+        public IActionResult Delete(int id)
+        {
+            Product? product = _productRepository.GetProductById(id);
+            if (product == null)
+            {
+                return NotFound();
+            }
+            
+            return View(product);
+        }
+        [HttpPost]
+        public IActionResult Delete(Product model)
+        {
+            Product? product = _productRepository.GetProductById(model.Id);
+            _productRepository.DeleteProduct(product);
+            foreach (Picture picture in product.Pictures)
+            {
+                _formFileHelper.DeleteFile(picture.PictureName);
+            }
+            return RedirectToAction(nameof(Index));
+        }
+
+        // -------------------------------------------------------
         public IActionResult AddImage(int id)
         {
             Product? product =  _productRepository.GetProductById(id);
@@ -328,10 +351,19 @@ namespace SistemasWeb01.Controllers
                 return NotFound();
             }
 
+            List<Talla> currentTallas = product.ProductSizes.Select(ps => new Talla
+            {
+                Id = ps.Talla.Id,
+                Name = ps.Talla.Name,
+                ShortName = ps.Talla.ShortName,
+                SizeNumber = ps.Talla.SizeNumber
+            }).ToList();
+
+            //
             ProductSizeViewModel model = new()
             {
                 ProductId = product.Id,
-                Tallas = _tallaRepository.AllTallas
+                Tallas = _tallaRepository.TallasFiltered(currentTallas),
             };
             return View(model);
         }
@@ -353,6 +385,18 @@ namespace SistemasWeb01.Controllers
                     _productSizeRepository.CreateProductSize(productsize);
                     return RedirectToAction(nameof(Details), new { Id = product.Id });
                 }
+                ////validation for duplicate ProductId and TallaId
+                //catch (DbUpdateException dbUpdateException)
+                //{
+                //    if (dbUpdateException.InnerException.Message.Contains("UNIQUE constraint failed: ProductSizes.ProductId, ProductSizes.TallaId"))
+                //    {
+                //        ModelState.AddModelError(string.Empty, "El producto ya tiene esa talla.");
+                //    }
+                //    else
+                //    {
+                //        ModelState.AddModelError(string.Empty, dbUpdateException.InnerException.Message);
+                //    }
+                //}
                 catch (Exception exception)
                 {
                     ModelState.AddModelError(string.Empty, exception.Message);

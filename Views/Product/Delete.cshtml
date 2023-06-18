@@ -1,0 +1,20 @@
+﻿@model Product
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<section class="container seccion">
+    <h1>Eliminar</h1>
+    <h3>¿Estas seguro de que quieres eliminar?</h3>
+    <div>
+        <partial name="_ProductDetails" />
+        <form asp-action="Delete">
+            <input type="hidden" asp-for="Id" />
+            <input type="hidden" asp-for="Pictures" />
+            <input type="submit" value="Eliminar" class="btn btn-outline-primary" />
+            <a class="btn btn-outline-success" asp-action="Index"> Regresar</a>
+        </form>
+    </div>
+
+</section>

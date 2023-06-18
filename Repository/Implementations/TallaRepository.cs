@@ -52,6 +52,20 @@ namespace SistemasWeb01.Repository.Implementations
         {
             return _shoppingDbContext.Tallas.FirstOrDefault(p => p.Id == id);
         }
+
+        public IEnumerable<Talla> TallasFiltered(IEnumerable<Talla> filter)
+        {
+            List<Talla> tallas = _shoppingDbContext.Tallas.ToList();
+            List<Talla> tallasFiltered = new();
+            foreach(Talla talla in tallas)
+            {
+                if(!filter.Any(t => t.Id == talla.Id))
+                {
+                    tallasFiltered.Add(talla);
+                }
+            }
+            return tallasFiltered;
+        }
     }
 
         
