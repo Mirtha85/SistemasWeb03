@@ -59,7 +59,9 @@ namespace SistemasWeb01.Repository.Implementations
 
         public Picture? GetPictureById(int id)
         {
-            return _shoppingDbContext.Pictures.FirstOrDefault(p => p.Id == id);
+            return _shoppingDbContext.Pictures
+                .Include(p => p.Product)
+                .FirstOrDefault(p => p.Id == id);
         }
 
         public IEnumerable<Picture> GetPicturesByProductId(int productId)

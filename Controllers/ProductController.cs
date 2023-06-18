@@ -294,5 +294,30 @@ namespace SistemasWeb01.Controllers
             }
             return View(pictureViewModel);
         }
+
+        public IActionResult DeleteImage(int id)
+        {
+
+            Picture? picture = _pictureRepository.GetPictureById(id);
+            if (picture == null)
+            {
+                return NotFound();
+            }
+            return View(picture);
+        }
+
+        [HttpPost]
+        public IActionResult DeleteImage(Picture picture)
+        {
+            if (picture == null)
+            {
+                return NotFound();
+            }
+
+            _formFileHelper.DeleteFile(picture.PictureName);
+            _pictureRepository.DeletePicture(picture);
+            return RedirectToAction(nameof(Details), new { Id = picture.ProductId });
+        }
+
     }
 }
