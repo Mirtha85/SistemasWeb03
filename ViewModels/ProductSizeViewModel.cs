@@ -7,6 +7,7 @@ namespace SistemasWeb01.ViewModels
 {
     public class ProductSizeViewModel
     {
+        public int Id { get; set; }
         public int ProductId { get; set; }
 
         [Display(Name = "Talla")]
