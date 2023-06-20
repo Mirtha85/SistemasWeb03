@@ -16,7 +16,7 @@ namespace SistemasWeb01.Repository.Implementations
         public IEnumerable<Product> AllProducts => _shoppingDbContext.Products
             .Include(p => p.Pictures)
             .Include(p => p.Brand)
-            .Include(p => p.ProductSizes)
+            .Include(p => p.ProductSizes!)
             .ThenInclude(p => p.Talla)
             .Include(p => p.SubCategory)
             .ThenInclude(p => p.Category)
@@ -118,14 +118,16 @@ namespace SistemasWeb01.Repository.Implementations
 
         public Product? GetProductById(int id)
         {
-            return _shoppingDbContext.Products
+            var product = _shoppingDbContext.Products
                 .Include(p => p.Brand)
                 .Include(p => p.Pictures)
-                .Include(p => p.ProductSizes)
+                .Include(p => p.ProductSizes!)
                 .ThenInclude(ps => ps.Talla)
                 .Include(p => p.SubCategory)
                 .ThenInclude(p => p.Category)
                 .FirstOrDefault(p => p.Id == id);
+
+            return product;
         }
     }
 }
