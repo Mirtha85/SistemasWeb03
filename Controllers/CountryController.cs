@@ -12,10 +12,13 @@ namespace SistemasWeb01.Controllers
     {
         private readonly ICountryRepository _countryRepository;
         private readonly IStateRepository _stateRepository;
-        public CountryController(ICountryRepository countryRepository, IStateRepository stateRepository)
+        private readonly ICityRepository _cityRepository;
+        public CountryController(ICountryRepository countryRepository, IStateRepository stateRepository, ICityRepository cityRepository)
         {
             _countryRepository = countryRepository;
             _stateRepository = stateRepository;
+            _cityRepository = cityRepository;
+
         }
         public IActionResult Index()
         {
@@ -256,6 +259,132 @@ namespace SistemasWeb01.Controllers
         }
 
 
-       
+        //3er Nivel Create
+        public IActionResult AddCity(int id)
+        {
+            State? state = _stateRepository.GetStateById(id);
+            if (state == null)
+            {
+                return NotFound();
+            }
+            City city = new()
+            {
+                StateId = id,
+            };
+
+            return View(city);
+        }
+
+
+        [HttpPost]
+        public IActionResult AddCity(City model)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    City city = new()
+                    {
+                        //Users = new List<User>(),
+                        State = _stateRepository.GetStateById(model.StateId),
+                        Name = model.Name,
+                    };
+                    _cityRepository.CreateCity(city);
+
+                    TempData["mensaje"] = "La ciudad se agregó correctamente";
+                    return RedirectToAction(nameof(DetailsState), new { Id = model.StateId });
+                }
+                //validation for duplicate names
+                catch (DbUpdateException dbUpdateException)
+                {
+                    if (dbUpdateException.InnerException!.Message.Contains("UNIQUE constraint failed: Cities.Name"))
+                    {
+                        ModelState.AddModelError(string.Empty, "Ya existe una ciudad con el mismo nombre.");
+                    }
+                    else
+                    {
+                        ModelState.AddModelError(string.Empty, dbUpdateException.InnerException.Message);
+                    }
+                }
+                catch (Exception exception)
+                {
+                    ModelState.AddModelError(string.Empty, exception.Message);
+                }
+
+            }
+            return View(model);
+        }
+
+        public IActionResult EditCity(int id)
+        {
+            City? city = _cityRepository.GetCityById(id);
+            if (city == null)
+            {
+                return NotFound();
+            }
+            return View(city);
+        }
+
+        [HttpPost]
+        public IActionResult EditCity(City city)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    _cityRepository.EditCity(city);
+                    TempData["mensaje"] = "La ciudad se actualizó correctamente";
+                    return RedirectToAction(nameof(DetailsState), new { Id = city.StateId });
+                }
+                catch (DbUpdateException dbUpdateException)
+                {
+                    if (dbUpdateException.InnerException!.Message.Contains("UNIQUE constraint failed: Cities.Name"))
+                    {
+                        ModelState.AddModelError(string.Empty, "Ya existe una subcategoría con el mismo nombre en esta sección.");
+                    }
+                    else
+                    {
+                        ModelState.AddModelError(string.Empty, dbUpdateException.InnerException.Message);
+                    }
+                }
+                catch (Exception exception)
+                {
+                    ModelState.AddModelError(string.Empty, exception.Message);
+                }
+            }
+            return View(city);
+        }
+
+
+        public IActionResult DetailsCity(int id)
+        {
+            City? city = _cityRepository.GetCityById(id);
+            if (city == null)
+            {
+                return NotFound();
+            }
+            return View(city);
+        }
+
+
+        public IActionResult DeleteCity(int id)
+        {
+            City? city = _cityRepository.GetCityById(id);
+            if (city == null)
+            {
+                return NotFound();
+            }
+            return View(city);
+        }
+
+        [HttpPost]
+        public IActionResult DeleteCity(City city)
+        {
+            _cityRepository.DeleteCity(city);
+            TempData["mensaje"] = "La ciudad se eliminó correctamente";
+            return RedirectToAction(nameof(DetailsState), new { Id = city.StateId });
+        }
+
+
     }
 }
