@@ -20,6 +20,10 @@ namespace SistemasWeb01.DataAccess
         public DbSet<Product> Products { get; set; }
         public DbSet<ProductSize> ProductSizes { get; set; }
 
+        public DbSet<Country> Countries { get; set; }
+        public DbSet<State> States { get; set; }
+        public DbSet<City> Cities { get; set; }
+
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -33,6 +37,10 @@ namespace SistemasWeb01.DataAccess
             modelBuilder.Entity<Product>().HasIndex(p => p.Name).IsUnique();
             modelBuilder.Entity<Product>().HasIndex("Name", "SubCategoryId").IsUnique();
             modelBuilder.Entity<ProductSize>().HasIndex("ProductId", "TallaId").IsUnique();
+
+            modelBuilder.Entity<Country>().HasIndex(c => c.Name).IsUnique();
+            modelBuilder.Entity<State>().HasIndex("Name", "CountryId").IsUnique();
+            modelBuilder.Entity<City>().HasIndex("Name", "StateId").IsUnique();
 
         }
     }
