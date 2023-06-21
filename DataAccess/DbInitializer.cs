@@ -42,6 +42,21 @@ namespace SistemasWeb01.DataAccess
             {
                 context.Pictures.AddRange(Pictures.Select(p => p.Value));
             }
+            //Countries
+            if (!context.Countries.Any())
+            {
+                context.Countries.AddRange(Countries.Select(c => c.Value));
+            }
+            //States
+            if (!context.States.Any())
+            {
+                context.States.AddRange(States.Select(s => s.Value));
+            }
+            //Cities
+            if (!context.Cities.Any())
+            {
+                context.Cities.AddRange(Cities.Select(c => c.Value));
+            }
 
             context.SaveChanges();
         }
@@ -266,6 +281,444 @@ namespace SistemasWeb01.DataAccess
                 }
 
                 return pictures;
+            }
+        }
+
+
+        private static Dictionary<string, Country>? countries;
+
+        public static Dictionary<string, Country> Countries
+        {
+            get
+            {
+                if (countries == null)
+                {
+                    var genresList = new Country[]
+                    {
+                        new Country { Name = "Bolivia"},
+                        new Country { Name = "Brasil"},
+                        new Country { Name = "Argentina"},
+                        new Country { Name = "Chile"},
+                        new Country { Name = "Paraguay"},
+                        new Country { Name = "Uruguay"},
+                        new Country { Name = "Perú"},
+                        new Country { Name = "Venezuela"},
+                        new Country { Name = "Colombia"},
+                        new Country { Name = "Ecuador"},
+                        new Country { Name = "México"},
+                        new Country { Name = "Extranjero"},
+
+                    };
+
+                    countries = new Dictionary<string, Country>();
+
+                    foreach (Country genre in genresList)
+                    {
+                        countries.Add(genre.Name, genre);
+                    }
+                }
+
+                return countries;
+            }
+        }
+
+        private static Dictionary<string, State>? states;
+
+        public static Dictionary<string, State> States
+        {
+            get
+            {
+                if (states == null)
+                {
+                    var genresList = new State[]
+                    {
+                        new State { Name = "La Paz", Country = Countries["Bolivia"]},
+                        new State { Name = "Oruro", Country = Countries["Bolivia"]},
+                        new State { Name = "Potosi", Country = Countries["Bolivia"]},
+                        new State { Name = "Cochabamba", Country = Countries["Bolivia"]},
+                        new State { Name = "Chuquisaca", Country = Countries["Bolivia"]},
+                        new State { Name = "Tarija", Country = Countries["Bolivia"]},
+                        new State { Name = "Pando", Country = Countries["Bolivia"]},
+                        new State { Name = "Beni", Country = Countries["Bolivia"]},
+                        new State { Name = "Santa Cruz", Country = Countries["Bolivia"]},
+
+                    };
+
+                    states = new Dictionary<string, State>();
+
+                    foreach (State genre in genresList)
+                    {
+                        states.Add(genre.Name, genre);
+                    }
+                }
+
+                return states;
+            }
+        }
+
+        private static Dictionary<string, City>? cities;
+
+        public static Dictionary<string, City> Cities
+        {
+            get
+            {
+                if (cities == null)
+                {
+                    var genresList = new City[]
+                    {
+                        new City { Name = "Achacachi", State = States["La Paz"]},
+                        new City { Name = "Achocalla", State = States["La Paz"]},
+                        new City { Name = "Ancoraimes", State = States["La Paz"]},
+                        new City { Name = "Andrés de Machaca", State = States["La Paz"]},
+                        new City { Name = "Apolo", State = States["La Paz"]},
+                        new City { Name = "Aucapata", State = States["La Paz"]},
+                        new City { Name = "Ayata", State = States["La Paz"]},
+                        new City { Name = "Ayo Ayo", State = States["La Paz"]},
+                        new City { Name = "Batallas", State = States["La Paz"]},
+                        new City { Name = "Cairoma", State = States["La Paz"]},
+                        new City { Name = "Cajuata", State = States["La Paz"]},
+                        new City { Name = "Calacoto", State = States["La Paz"]},
+                        new City { Name = "Calamarca", State = States["La Paz"]},
+                        new City { Name = "Caquiaviri", State = States["La Paz"]},
+                        new City { Name = "Caranavi", State = States["La Paz"]},
+                        new City { Name = "Catacora", State = States["La Paz"]},
+                        new City { Name = "Chacarilla", State = States["La Paz"]},
+                        new City { Name = "Charaña", State = States["La Paz"]},
+                        new City { Name = "Chulumani", State = States["La Paz"]},
+                        new City { Name = "Chuma", State = States["La Paz"]},
+                        new City { Name = "Collana", State = States["La Paz"]},
+                        new City { Name = "Colquencha", State = States["La Paz"]},
+                        new City { Name = "Colquiri", State = States["La Paz"]},
+                        new City { Name = "Comanche", State = States["La Paz"]},
+                        new City { Name = "Combaya", State = States["La Paz"]},
+                        new City { Name = "Copacabana", State = States["La Paz"]},
+                        new City { Name = "Coripata", State = States["La Paz"]},
+                        new City { Name = "Coro Coro", State = States["La Paz"]},
+                        new City { Name = "Coroico", State = States["La Paz"]},
+                        new City { Name = "Curva", State = States["La Paz"]},
+                        new City { Name = "Desaguadero", State = States["La Paz"]},
+                        new City { Name = "El Alto", State = States["La Paz"]},
+                        new City { Name = "Gral. Juan José Perez", State = States["La Paz"]},
+                        new City { Name = "Guanay", State = States["La Paz"]},
+                        new City { Name = "Guaqui", State = States["La Paz"]},
+                        new City { Name = "Ichoca", State = States["La Paz"]},
+                        new City { Name = "Inquisivi", State = States["La Paz"]},
+                        new City { Name = "Irupana", State = States["La Paz"]},
+                        new City { Name = "Ixiamas", State = States["La Paz"]},
+                        new City { Name = "Jesús de Machaca", State = States["La Paz"]},
+                        new City { Name = "La Asunta", State = States["La Paz"]},
+                        new City { Name = "La Paz", State = States["La Paz"]},
+                        new City { Name = "Laja", State = States["La Paz"]},
+                        new City { Name = "Licoma Pampa", State = States["La Paz"]},
+                        new City { Name = "Luribay", State = States["La Paz"]},
+                        new City { Name = "Malla", State = States["La Paz"]},
+                        new City { Name = "Mapiri", State = States["La Paz"]},
+                        new City { Name = "Mecapaca (1)", State = States["La Paz"]},
+                        new City { Name = "Mocomoco", State = States["La Paz"]},
+                        new City { Name = "Nazacara de Pacajes", State = States["La Paz"]},
+                        new City { Name = "Palca (1)", State = States["La Paz"]},
+                        new City { Name = "Palos Blancos", State = States["La Paz"]},
+                        new City { Name = "Papel Pampa", State = States["La Paz"]},
+                        new City { Name = "Patacamaya", State = States["La Paz"]},
+                        new City { Name = "Pelechuco", State = States["La Paz"]},
+                        new City { Name = "Pucarani", State = States["La Paz"]},
+                        new City { Name = "Puerto Acosta", State = States["La Paz"]},
+                        new City { Name = "Puerto Carabuco", State = States["La Paz"]},
+                        new City { Name = "Puerto Pérez", State = States["La Paz"]},
+                        new City { Name = "Quiabaya", State = States["La Paz"]},
+                        new City { Name = "Quime", State = States["La Paz"]},
+                        new City { Name = "San Buena Ventura", State = States["La Paz"]},
+                        new City { Name = "San Pedro de Curahuara", State = States["La Paz"]},
+                        new City { Name = "San Pedro de Tiquina", State = States["La Paz"]},
+                        new City { Name = "Santiago de Callapa", State = States["La Paz"]},
+                        new City { Name = "Santiago de Machaca", State = States["La Paz"]},
+                        new City { Name = "Sapahaqui", State = States["La Paz"]},
+                        new City { Name = "Sica Sica", State = States["La Paz"]},
+                        new City { Name = "Sorata", State = States["La Paz"]},
+                        new City { Name = "Tacacoma", State = States["La Paz"]},
+                        new City { Name = "Taraco", State = States["La Paz"]},
+                        new City { Name = "Teoponte", State = States["La Paz"]},
+                        new City { Name = "Tiahuanacu", State = States["La Paz"]},
+                        new City { Name = "Tipuani", State = States["La Paz"]},
+                        new City { Name = "Tito Yupanqui", State = States["La Paz"]},
+                        new City { Name = "Umala", State = States["La Paz"]},
+                        new City { Name = "Viacha", State = States["La Paz"]},
+                        new City { Name = "Waldo Ballivián", State = States["La Paz"]},
+                        new City { Name = "Yaco", State = States["La Paz"]},
+                        new City { Name = "Yanacachi", State = States["La Paz"]},
+                        new City { Name = "Huarina", State = States["La Paz"]},
+                        new City { Name = "Santiago de Huata", State = States["La Paz"]},
+                        new City { Name = "Escoma", State = States["La Paz"]},
+                        new City { Name = "Humanata", State = States["La Paz"]},
+                        new City { Name = "Alto Beni", State = States["La Paz"]},
+                        new City { Name = "Aiquile", State = States["Cochabamba"]},
+                        new City { Name = "Alalay", State = States["Cochabamba"]},
+                        new City { Name = "Anzaldo", State = States["Cochabamba"]},
+                        new City { Name = "Arani ", State = States["Cochabamba"]},
+                        new City { Name = "Arbieto", State = States["Cochabamba"]},
+                        new City { Name = "Arque", State = States["Cochabamba"]},
+                        new City { Name = "Bolívar", State = States["Cochabamba"]},
+                        new City { Name = "Capinota", State = States["Cochabamba"]},
+                        new City { Name = "Chimoré", State = States["Cochabamba"]},
+                        new City { Name = "Cliza", State = States["Cochabamba"]},
+                        new City { Name = "Cochabamba", State = States["Cochabamba"]},
+                        new City { Name = "Colcapirhua", State = States["Cochabamba"]},
+                        new City { Name = "Colomi", State = States["Cochabamba"]},
+                        new City { Name = "Cuchumuela", State = States["Cochabamba"]},
+                        new City { Name = "Entre Ríos (Bulo Bulo)", State = States["Cochabamba"]},
+                        new City { Name = "Independencia", State = States["Cochabamba"]},
+                        new City { Name = "Mizque", State = States["Cochabamba"]},
+                        new City { Name = "Morochata", State = States["Cochabamba"]},
+                        new City { Name = "Omereque", State = States["Cochabamba"]},
+                        new City { Name = "Pasorapa", State = States["Cochabamba"]},
+                        new City { Name = "Pocona", State = States["Cochabamba"]},
+                        new City { Name = "Pojo", State = States["Cochabamba"]},
+                        new City { Name = "Puerto Villarroel", State = States["Cochabamba"]},
+                        new City { Name = "Punata ", State = States["Cochabamba"]},
+                        new City { Name = "Quillacollo", State = States["Cochabamba"]},
+                        new City { Name = "Sacaba", State = States["Cochabamba"]},
+                        new City { Name = "Sacabamba", State = States["Cochabamba"]},
+                        new City { Name = "San Benito", State = States["Cochabamba"]},
+                        new City { Name = "Santivañez", State = States["Cochabamba"]},
+                        new City { Name = "Sicaya", State = States["Cochabamba"]},
+                        new City { Name = "Sipe Sipe", State = States["Cochabamba"]},
+                        new City { Name = "Tacachi", State = States["Cochabamba"]},
+                        new City { Name = "Tacopaya", State = States["Cochabamba"]},
+                        new City { Name = "Tapacarí", State = States["Cochabamba"]},
+                        new City { Name = "Tarata", State = States["Cochabamba"]},
+                        new City { Name = "Tiquipaya", State = States["Cochabamba"]},
+                        new City { Name = "Tiraque", State = States["Cochabamba"]},
+                        new City { Name = "Toco", State = States["Cochabamba"]},
+                        new City { Name = "Tolata", State = States["Cochabamba"]},
+                        new City { Name = "Totora", State = States["Cochabamba"]},
+                        new City { Name = "Vacas", State = States["Cochabamba"]},
+                        new City { Name = "Vila Vila", State = States["Cochabamba"]},
+                        new City { Name = "Villa Rivero", State = States["Cochabamba"]},
+                        new City { Name = "Villa Tunari ", State = States["Cochabamba"]},
+                        new City { Name = "Vinto", State = States["Cochabamba"]},
+                        new City { Name = "Cocapata", State = States["Cochabamba"]},
+                        new City { Name = "Shinahota", State = States["Cochabamba"]},
+                        new City { Name = "Andamarca", State = States["Oruro"]},
+                        new City { Name = "Antequera", State = States["Oruro"]},
+                        new City { Name = "Belén de Andamarca", State = States["Oruro"]},
+                        new City { Name = "Caracollo", State = States["Oruro"]},
+                        new City { Name = "Carangas", State = States["Oruro"]},
+                        new City { Name = "Challapata", State = States["Oruro"]},
+                        new City { Name = "Chipaya", State = States["Oruro"]},
+                        new City { Name = "Choquecota", State = States["Oruro"]},
+                        new City { Name = "Coipasa", State = States["Oruro"]},
+                        new City { Name = "Corque", State = States["Oruro"]},
+                        new City { Name = "Cruz de Machacamarca", State = States["Oruro"]},
+                        new City { Name = "Curahuara de Carangas", State = States["Oruro"]},
+                        new City { Name = "El Choro", State = States["Oruro"]},
+                        new City { Name = "Escara", State = States["Oruro"]},
+                        new City { Name = "Esmeralda", State = States["Oruro"]},
+                        new City { Name = "Eucaliptus", State = States["Oruro"]},
+                        new City { Name = "Huachacalla", State = States["Oruro"]},
+                        new City { Name = "La Rivera", State = States["Oruro"]},
+                        new City { Name = "Machacamarca", State = States["Oruro"]},
+                        new City { Name = "Oruro", State = States["Oruro"]},
+                        new City { Name = "Pampa Aullagas", State = States["Oruro"]},
+                        new City { Name = "Pazña", State = States["Oruro"]},
+                        new City { Name = "Sabaya", State = States["Oruro"]},
+                        new City { Name = "Salinas de Garci Mendoza", State = States["Oruro"]},
+                        new City { Name = "Santiago de Huari", State = States["Oruro"]},
+                        new City { Name = "Santiago de Huayllamarca", State = States["Oruro"]},
+                        new City { Name = "Santuario de Quillacas", State = States["Oruro"]},
+                        new City { Name = "Soracachi", State = States["Oruro"]},
+                        new City { Name = "Todos Santos", State = States["Oruro"]},
+                        new City { Name = "Toledo", State = States["Oruro"]},
+                        new City { Name = "Totora Oruro", State = States["Oruro"]},
+                        new City { Name = "Turco", State = States["Oruro"]},
+                        new City { Name = "Villa Huanuni", State = States["Oruro"]},
+                        new City { Name = "Villa Poopó ", State = States["Oruro"]},
+                        new City { Name = "Yunguyo del Litora", State = States["Oruro"]},
+                        new City { Name = "Acasio", State = States["Potosi"]},
+                        new City { Name = "Arampampa", State = States["Potosi"]},
+                        new City { Name = "Atocha", State = States["Potosi"]},
+                        new City { Name = "Belén de Urmiri", State = States["Potosi"]},
+                        new City { Name = "Betanzos", State = States["Potosi"]},
+                        new City { Name = "Caiza D", State = States["Potosi"]},
+                        new City { Name = "Caripuyo", State = States["Potosi"]},
+                        new City { Name = "Chaquí", State = States["Potosi"]},
+                        new City { Name = "Chayanta", State = States["Potosi"]},
+                        new City { Name = "Colcha K", State = States["Potosi"]},
+                        new City { Name = "Colquechaca", State = States["Potosi"]},
+                        new City { Name = "Cotagaita", State = States["Potosi"]},
+                        new City { Name = "Llallagua", State = States["Potosi"]},
+                        new City { Name = "Llica", State = States["Potosi"]},
+                        new City { Name = "Mojinete", State = States["Potosi"]},
+                        new City { Name = "Ocurí", State = States["Potosi"]},
+                        new City { Name = "Pocoata", State = States["Potosi"]},
+                        new City { Name = "Porco", State = States["Potosi"]},
+                        new City { Name = "Potosí", State = States["Potosi"]},
+                        new City { Name = "Puna", State = States["Potosi"]},
+                        new City { Name = "Ravelo", State = States["Potosi"]},
+                        new City { Name = "Sacaca", State = States["Potosi"]},
+                        new City { Name = "San Agustín", State = States["Potosi"]},
+                        new City { Name = "San Antonio de Esmoruco", State = States["Potosi"]},
+                        new City { Name = "San Pablo de Lipez", State = States["Potosi"]},
+                        new City { Name = "San Pedro de Buena Vista", State = States["Potosi"]},
+                        new City { Name = "San Pedro de Quemes", State = States["Potosi"]},
+                        new City { Name = "Tacobamba", State = States["Potosi"]},
+                        new City { Name = "Tahua", State = States["Potosi"]},
+                        new City { Name = "Tinguipaya (4)", State = States["Potosi"]},
+                        new City { Name = "Tomave", State = States["Potosi"]},
+                        new City { Name = "Toro Toro", State = States["Potosi"]},
+                        new City { Name = "Tupiza", State = States["Potosi"]},
+                        new City { Name = "Uncía", State = States["Potosi"]},
+                        new City { Name = "Uyuni", State = States["Potosi"]},
+                        new City { Name = "Villa de Yocalla", State = States["Potosi"]},
+                        new City { Name = "Villazón", State = States["Potosi"]},
+                        new City { Name = "Vitichi", State = States["Potosi"]},
+                        new City { Name = "Chuquiuta", State = States["Potosi"]},
+                        new City { Name = "Ckochas", State = States["Potosi"]},
+                        new City { Name = "Bermejo", State = States["Tarija"]},
+                        new City { Name = "Caraparí", State = States["Tarija"]},
+                        new City { Name = "El Puente", State = States["Tarija"]},
+                        new City { Name = "Entre Ríos", State = States["Tarija"]},
+                        new City { Name = "Padcaya", State = States["Tarija"]},
+                        new City { Name = "San Lorenzo", State = States["Tarija"]},
+                        new City { Name = "Tarija", State = States["Tarija"]},
+                        new City { Name = "Uriondo", State = States["Tarija"]},
+                        new City { Name = "Villamontes", State = States["Tarija"]},
+                        new City { Name = "Yacuiba", State = States["Tarija"]},
+                        new City { Name = "Yunchará", State = States["Tarija"]},
+                        new City { Name = "Ascención de Guarayos", State = States["Santa Cruz"]},
+                        new City { Name = "Ayacucho - Porongo", State = States["Santa Cruz"]},
+                        new City { Name = "Boyuibe", State = States["Santa Cruz"]},
+                        new City { Name = "Buena Vista", State = States["Santa Cruz"]},
+                        new City { Name = "Cabezas", State = States["Santa Cruz"]},
+                        new City { Name = "Camiri", State = States["Santa Cruz"]},
+                        new City { Name = "Carmen Rivero Torres", State = States["Santa Cruz"]},
+                        new City { Name = "Charagua", State = States["Santa Cruz"]},
+                        new City { Name = "Colpa Bélgica", State = States["Santa Cruz"]},
+                        new City { Name = "Comarapa", State = States["Santa Cruz"]},
+                        new City { Name = "Concepción", State = States["Santa Cruz"]},
+                        new City { Name = "Cotoca", State = States["Santa Cruz"]},
+                        new City { Name = "Cuatro Cañadas", State = States["Santa Cruz"]},
+                        new City { Name = "Cuevo", State = States["Santa Cruz"]},
+                        new City { Name = "El Puente sc", State = States["Santa Cruz"]},
+                        new City { Name = "El Torno", State = States["Santa Cruz"]},
+                        new City { Name = "Gral. Saavedra", State = States["Santa Cruz"]},
+                        new City { Name = "Gutiérrez", State = States["Santa Cruz"]},
+                        new City { Name = "La Guardia ", State = States["Santa Cruz"]},
+                        new City { Name = "Lagunillas", State = States["Santa Cruz"]},
+                        new City { Name = "Mairana", State = States["Santa Cruz"]},
+                        new City { Name = "Mineros", State = States["Santa Cruz"]},
+                        new City { Name = "Montero", State = States["Santa Cruz"]},
+                        new City { Name = "Moro Moro", State = States["Santa Cruz"]},
+                        new City { Name = "Okinawa", State = States["Santa Cruz"]},
+                        new City { Name = "Pailón", State = States["Santa Cruz"]},
+                        new City { Name = "Pampa Grande", State = States["Santa Cruz"]},
+                        new City { Name = "Portachuelo", State = States["Santa Cruz"]},
+                        new City { Name = "Postrer Valle", State = States["Santa Cruz"]},
+                        new City { Name = "Pucara", State = States["Santa Cruz"]},
+                        new City { Name = "Puerto Fernández Alonso", State = States["Santa Cruz"]},
+                        new City { Name = "Puerto Quijarro", State = States["Santa Cruz"]},
+                        new City { Name = "Puerto Suárez", State = States["Santa Cruz"]},
+                        new City { Name = "Quirusillas", State = States["Santa Cruz"]},
+                        new City { Name = "Roboré", State = States["Santa Cruz"]},
+                        new City { Name = "Saipina", State = States["Santa Cruz"]},
+                        new City { Name = "Samaipata ", State = States["Santa Cruz"]},
+                        new City { Name = "San Antonio del Lomerío", State = States["Santa Cruz"]},
+                        new City { Name = "San Carlos", State = States["Santa Cruz"]},
+                        new City { Name = "San Ignacio", State = States["Santa Cruz"]},
+                        new City { Name = "San Javier", State = States["Santa Cruz"]},
+                        new City { Name = "San José", State = States["Santa Cruz"]},
+                        new City { Name = "San Juan", State = States["Santa Cruz"]},
+                        new City { Name = "San Julián", State = States["Santa Cruz"]},
+                        new City { Name = "San Matías", State = States["Santa Cruz"]},
+                        new City { Name = "San Miguel", State = States["Santa Cruz"]},
+                        new City { Name = "San Pedro", State = States["Santa Cruz"]},
+                        new City { Name = "San Rafae", State = States["Santa Cruz"]},
+                        new City { Name = "San Ramón", State = States["Santa Cruz"]},
+                        new City { Name = "Santa Cruz de la Sierra", State = States["Santa Cruz"]},
+                        new City { Name = "Santa Rosa del Sara", State = States["Santa Cruz"]},
+                        new City { Name = "Trigal ", State = States["Santa Cruz"]},
+                        new City { Name = "Urubichá", State = States["Santa Cruz"]},
+                        new City { Name = "Valle Grande", State = States["Santa Cruz"]},
+                        new City { Name = "Warnes", State = States["Santa Cruz"]},
+                        new City { Name = "Yapacaní", State = States["Santa Cruz"]},
+                        new City { Name = "Baures", State = States["Beni"]},
+                        new City { Name = "Exaltación", State = States["Beni"]},
+                        new City { Name = "Guayaramerín", State = States["Beni"]},
+                        new City { Name = "Huacaraje", State = States["Beni"]},
+                        new City { Name = "Loreto", State = States["Beni"]},
+                        new City { Name = "Magdalena", State = States["Beni"]},
+                        new City { Name = "Puerto Siles", State = States["Beni"]},
+                        new City { Name = "Reyes", State = States["Beni"]},
+                        new City { Name = "Riberalta", State = States["Beni"]},
+                        new City { Name = "Rurrenabaque ", State = States["Beni"]},
+                        new City { Name = "San Andrés", State = States["Beni"]},
+                        new City { Name = "San Borja", State = States["Beni"]},
+                        new City { Name = "San Ignacio Beni", State = States["Beni"]},
+                        new City { Name = "San Javier Beni", State = States["Beni"]},
+                        new City { Name = "San Joaquín", State = States["Beni"]},
+                        new City { Name = "San Ramón Beni", State = States["Beni"]},
+                        new City { Name = "Santa Ana", State = States["Beni"]},
+                        new City { Name = "Santa Rosa", State = States["Beni"]},
+                        new City { Name = "Trinidad", State = States["Beni"]},
+                        new City { Name = "Bella Flor", State = States["Pando"]},
+                        new City { Name = "Blanca Flor", State = States["Pando"]},
+                        new City { Name = "Bolpebra", State = States["Pando"]},
+                        new City { Name = "Cobija", State = States["Pando"]},
+                        new City { Name = "El Sena", State = States["Pando"]},
+                        new City { Name = "Filadelfia", State = States["Pando"]},
+                        new City { Name = "Humaita", State = States["Pando"]},
+                        new City { Name = "Nueva Esperanza", State = States["Pando"]},
+                        new City { Name = "Porvenir", State = States["Pando"]},
+                        new City { Name = "Puerto Gonzalo Moreno", State = States["Pando"]},
+                        new City { Name = "Puerto Rico", State = States["Pando"]},
+                        new City { Name = "San Pedro Pando", State = States["Pando"]},
+                        new City { Name = "Santa Rosa del Abuná", State = States["Pando"]},
+                        new City { Name = "Santos Mercado (Reserva)", State = States["Pando"]},
+                        new City { Name = "Villa Nueva (Loma Alta) ", State = States["Pando"]},
+                        new City { Name = "Camargo", State = States["Chuquisaca"]},
+                        new City { Name = "Camataqui", State = States["Chuquisaca"]},
+                        new City { Name = "Culpina ", State = States["Chuquisaca"]},
+                        new City { Name = "El Villar", State = States["Chuquisaca"]},
+                        new City { Name = "Huacaya", State = States["Chuquisaca"]},
+                        new City { Name = "Icla", State = States["Chuquisaca"]},
+                        new City { Name = "Incahuasi", State = States["Chuquisaca"]},
+                        new City { Name = "Las Carreras", State = States["Chuquisaca"]},
+                        new City { Name = "Macharetí", State = States["Chuquisaca"]},
+                        new City { Name = "Monteagudo", State = States["Chuquisaca"]},
+                        new City { Name = "Padilla", State = States["Chuquisaca"]},
+                        new City { Name = "Poroma", State = States["Chuquisaca"]},
+                        new City { Name = "Presto", State = States["Chuquisaca"]},
+                        new City { Name = "San Lucas", State = States["Chuquisaca"]},
+                        new City { Name = "San Pablo de Huacareta", State = States["Chuquisaca"]},
+                        new City { Name = "Sopachuy", State = States["Chuquisaca"]},
+                        new City { Name = "Sucre", State = States["Chuquisaca"]},
+                        new City { Name = "Tarabuco", State = States["Chuquisaca"]},
+                        new City { Name = "Tarvita", State = States["Chuquisaca"]},
+                        new City { Name = "Tomina", State = States["Chuquisaca"]},
+                        new City { Name = "Villa Alcalá", State = States["Chuquisaca"]},
+                        new City { Name = "Villa Azurduy", State = States["Chuquisaca"]},
+                        new City { Name = "Villa Mojocoya", State = States["Chuquisaca"]},
+                        new City { Name = "Villa Serrano", State = States["Chuquisaca"]},
+                        new City { Name = "Villa Vaca Guzmán", State = States["Chuquisaca"]},
+                        new City { Name = "Villa Zudáñez", State = States["Chuquisaca"]},
+                        new City { Name = "Yamparáez", State = States["Chuquisaca"]},
+
+
+
+
+
+
+
+                    };
+
+                    cities = new Dictionary<string, City>();
+
+                    foreach (City genre in genresList)
+                    {
+                        cities.Add(genre.Name, genre);
+                    }
+                }
+
+                return cities;
             }
         }
 
