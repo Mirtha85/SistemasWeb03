@@ -49,7 +49,7 @@ namespace SistemasWeb01.Controllers
                 //validation for duplicate names
                 catch (DbUpdateException dbUpdateException)
                 {
-                    if (dbUpdateException.InnerException.Message.Contains("UNIQUE constraint failed: Categories.Name"))
+                    if (dbUpdateException.InnerException!.Message.Contains("UNIQUE constraint failed: Categories.Name"))
                     {
                         ModelState.AddModelError(string.Empty, "Ya existe una categoría con el mismo nombre.");
                     }
@@ -116,7 +116,7 @@ namespace SistemasWeb01.Controllers
 
                 catch (DbUpdateException dbUpdateException)
                 {
-                    if (dbUpdateException.InnerException.Message.Contains("UNIQUE constraint failed: Categories.Name"))
+                    if (dbUpdateException.InnerException!.Message.Contains("UNIQUE constraint failed: Categories.Name"))
                     {
                         ModelState.AddModelError(string.Empty, "Ya existe una categoría con el mismo nombre.");
                     }
@@ -147,7 +147,7 @@ namespace SistemasWeb01.Controllers
         public IActionResult Delete(Category category)
         {
             if (category == null) return NotFound();
-            _formFileHelper.DeleteFile(category.ThumbnailImage);
+            _formFileHelper.DeleteFile(category.ThumbnailImage!);
 
             _categoryRepository.DeleteCategory(category);
             TempData["mensaje"] = "La categoría se eliminó correctamente";
@@ -195,7 +195,7 @@ namespace SistemasWeb01.Controllers
                 //validation for duplicate names
                 catch (DbUpdateException dbUpdateException)
                 {
-                    if (dbUpdateException.InnerException.Message.Contains("UNIQUE constraint failed: SubCategories.Name"))
+                    if (dbUpdateException.InnerException!.Message.Contains("UNIQUE constraint failed: SubCategories.Name"))
                     {
                         ModelState.AddModelError(string.Empty, "Ya existe una subcategoría con el mismo nombre.");
                     }
@@ -237,7 +237,7 @@ namespace SistemasWeb01.Controllers
                 }
                 catch (DbUpdateException dbUpdateException)
                 {
-                    if (dbUpdateException.InnerException.Message.Contains("UNIQUE constraint failed: SubCategories.Name"))
+                    if (dbUpdateException.InnerException!.Message.Contains("UNIQUE constraint failed: SubCategories.Name"))
                     {
                         ModelState.AddModelError(string.Empty, "Ya existe una subcategoría con el mismo nombre en esta sección.");
                     }
@@ -263,6 +263,7 @@ namespace SistemasWeb01.Controllers
             }
             return View(subcategory);
         }
+
         public IActionResult DeleteSubCategory(int id)
         {
             SubCategory? subcategory = _subCategoryRepository.GetSubCategoryById(id);
@@ -276,9 +277,9 @@ namespace SistemasWeb01.Controllers
         public IActionResult DeleteSubCategoryConfirm(int id)
         {
             SubCategory? subcategory = _subCategoryRepository.GetSubCategoryById(id);
-            _subCategoryRepository.DeleteSubCategory(subcategory);
+            _subCategoryRepository.DeleteSubCategory(subcategory!);
             TempData["mensaje"] = "La subcateogría se eliminó correctamente";
-            return RedirectToAction(nameof(Details), new { Id = subcategory.Category.Id });
+            return RedirectToAction(nameof(Details), new { Id = subcategory!.Category!.Id });
         }
     }
 }

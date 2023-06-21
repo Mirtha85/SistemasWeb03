@@ -17,6 +17,18 @@
             <dd class="col-sm-10">
                 @Html.DisplayFor(model => model.Name)
             </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.StatesNumber)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.StatesNumber)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.CitiesNumber)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.CitiesNumber)
+            </dd>
         </dl>
     </div>
     <div>
@@ -34,13 +46,14 @@
         <div class="col-md-12">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <h4 class="panel-title">Lista de departamentos de @Model.Name</h4>
+                    <h4 class="panel-title">Lista de departamentos de @Model!.Name</h4>
                 </div>
                 <div class="panel-body">
                     <table class="table table-hover table-responsive table-striped" id="StatesTable">
                         <thead>
                             <tr>
                                 <th>Nombre del Departamento</th>
+                                <th>Ciudades</th>
                                 <th></th>
                             </tr>
 
@@ -51,6 +64,9 @@
                                 <tr>
                                     <td>
                                         @Html.DisplayFor(modelItem => item.Name)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.CitiesNumber)
                                     </td>
                                     <td>
                                         <a asp-action="EditState" asp-route-id="@item.Id" class="btn btn-outline-warning"> <i class="bi bi-pencil"></i> Editar </a>
