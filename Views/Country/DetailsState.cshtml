@@ -1,7 +1,7 @@
-﻿@model Country
+﻿@model State
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "DetailsState";
 }
 
 <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css" />
@@ -9,7 +9,7 @@
     <h1>Detalle</h1>
 
     <div>
-        <h4>País</h4>
+        <h4>Departamento</h4>
         <hr />
         <dl class="row">
             <dt class="col-sm-2">
@@ -22,41 +22,41 @@
     </div>
     <div>
         <div class="form-group mt-5">
-            <a asp-action="AddState" asp-route-id="@Model?.Id" class="btn btn-outline-primary">Agregar Departamento</a>
-            <a asp-action="Edit" asp-route-id="@Model?.Id" class="btn btn-outline-secondary">Editar</a>
-            <a asp-action="Index" class="btn btn-outline-success"> Regresar</a>
+            <a asp-action="AddCity" asp-route-id="@Model?.Id" class="btn btn-outline-primary">Agregar Ciudad</a>
+            <a asp-action="EditState" asp-route-id="@Model?.Id" class="btn btn-outline-secondary">Editar Departamento</a>
+            <a asp-action="Details" asp-route-id="@Model?.Country!.Id" class="btn btn-outline-success"> Regresar</a>
         </div>
     </div>
 </section>
-
-<hr />
 <section class="container mt-4">
     <div class="row">
         <div class="col-md-12">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <h4 class="panel-title">Lista de departamentos de @Model.Name</h4>
+                    <h4 class="panel-title">Ciudades de @Model!.Name</h4>
                 </div>
                 <div class="panel-body">
-                    <table class="table table-hover table-responsive table-striped" id="StatesTable">
+                    <table class="table table-hover table-responsive table-striped" id="CityTable">
                         <thead>
                             <tr>
-                                <th>Nombre del Departamento</th>
+                                <th>
+                                    Nombre de ciudad @*@Html.DisplayNameFor(model => model.Cities.FirstOrDefault().Name)*@
+                                </th>
                                 <th></th>
                             </tr>
 
                         </thead>
                         <tbody>
-                            @foreach (var item in Model.States!)
+                            @foreach (var item in Model.Cities!)
                             {
                                 <tr>
                                     <td>
                                         @Html.DisplayFor(modelItem => item.Name)
                                     </td>
                                     <td>
-                                        <a asp-action="EditState" asp-route-id="@item.Id" class="btn btn-outline-warning"> <i class="bi bi-pencil"></i> Editar </a>
-                                        <a asp-action="DetailsState" asp-route-id="@item.Id" class="btn btn-outline-info"><i class="bi bi-eye"></i> Detalle </a>
-                                        <a asp-action="DeleteState" asp-route-id="@item.Id" class="btn btn-outline-danger"> <i class="bi bi-trash3"></i> Eliminar</a>
+                                        <a asp-action="EditCity" asp-route-id="@item.Id" class="btn btn-outline-warning"> <i class="bi bi-pencil"></i> Editar </a>
+                                        <a asp-action="DetailsCity" asp-route-id="@item.Id" class="btn btn-outline-info"><i class="bi bi-eye"></i> Detalle </a>
+                                        <a asp-action="DeleteCity" asp-route-id="@item.Id" class="btn btn-outline-danger"> <i class="bi bi-trash3"></i> Borrar</a>
                                     </td>
                                 </tr>
                             }
@@ -80,7 +80,7 @@
 
     <script type="text/javascript">
         $(document).ready(function () {
-            $('#StatesTable').DataTable({
+            $('#CityTable').DataTable({
                 "language": {
                     "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json"
                 },
