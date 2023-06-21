@@ -1,14 +1,23 @@
-﻿using SistemasWeb01.Models;
+﻿using SistemasWeb01.Enums;
+using SistemasWeb01.Models;
+using SistemasWeb01.Repository.Implementations;
+using SistemasWeb01.Repository.Interfaces;
 using System.IO.Pipelines;
 
 namespace SistemasWeb01.DataAccess
 {
     public class DbInitializer
     {
+
+        private readonly IUserRepository _userRepository;
+        public DbInitializer( IUserRepository userRepository)
+        {
+            _userRepository = userRepository;
+        }
         public static void Seed(IApplicationBuilder applicationBuilder)
         {
             ShoppingDbContext context = applicationBuilder.ApplicationServices.CreateScope().ServiceProvider.GetRequiredService<ShoppingDbContext>();
-
+            
             //Categories
             if (!context.Categories.Any())
             {
@@ -60,6 +69,39 @@ namespace SistemasWeb01.DataAccess
 
             context.SaveChanges();
         }
+
+
+        //User
+        private static Dictionary<string, User>? users;
+
+        public static Dictionary<string, User> Users
+        {
+
+            get
+            {
+                if (users == null)
+                {
+                    var genresList = new User[]
+                    {
+                        new User { UserName = "will" }
+                    };
+
+                    users = new Dictionary<string, User>();
+
+                    foreach (User genre in genresList)
+                    {
+                        users.Add(genre.UserName, genre);
+                    }
+                }
+
+                return users;
+            }
+        }
+
+
+
+
+
 
         private static Dictionary<string, Category>? categories;
 
@@ -138,6 +180,7 @@ namespace SistemasWeb01.DataAccess
                         new Brand { Name = "Chanel", ThumbnailImage = "brand_2.png" },
                         new Brand { Name = "LaCoste" , ThumbnailImage = "brand_6.png"},
                         new Brand { Name = "Gucci" , ThumbnailImage = "brand_3.png"},
+                        new Brand { Name = "Puma" , ThumbnailImage = "brand_7.png"}
                     };
 
                     brands = new Dictionary<string, Brand>();

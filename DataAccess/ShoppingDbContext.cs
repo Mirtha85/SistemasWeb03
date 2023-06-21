@@ -2,10 +2,11 @@
 using SistemasWeb01.Models;
 using static System.Collections.Specialized.BitVector32;
 using System.Drawing;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace SistemasWeb01.DataAccess
 {
-    public class ShoppingDbContext : DbContext
+    public class ShoppingDbContext : IdentityDbContext<User>
     {
         public ShoppingDbContext(DbContextOptions<ShoppingDbContext> options) : base(options)
         {
