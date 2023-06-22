@@ -10,7 +10,7 @@ using System.Security.Policy;
 
 namespace SistemasWeb01.Controllers
 {
-    //[Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Admin")]
     public class ProductController : Controller
     {
         private readonly IProductRepository _productRepository;

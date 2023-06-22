@@ -7,7 +7,7 @@ using System.Data;
 
 namespace SistemasWeb01.Controllers
 {
-    //[Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Admin")]
     public class TallaController : Controller
     {
         private readonly ITallaRepository _tallaRepository;

@@ -23,6 +23,9 @@ builder.Services.AddTransient<DatabaseInitializer>();
 builder.Services.AddIdentity<User, IdentityRole>(cfg =>
 {
     //
+    //cfg.Tokens.AuthenticatorTokenProvider = TokenOptions.DefaultAuthenticatorProvider;
+    //cfg.SignIn.RequireConfirmedEmail = true;
+
     cfg.User.RequireUniqueEmail = true;
     cfg.Password.RequireDigit = false; //no requiere numeros
     cfg.Password.RequiredUniqueChars = 0; //no requiere caracteres únicos
@@ -30,7 +33,9 @@ builder.Services.AddIdentity<User, IdentityRole>(cfg =>
     cfg.Password.RequireNonAlphanumeric = false; // no requiere al menos un caracter alfanumerico
     cfg.Password.RequireUppercase = false; // no requiere al menos una minuscula
     cfg.Password.RequiredLength = 4; // longitud minima 6 caracteres
-}).AddEntityFrameworkStores<ShoppingDbContext>();
+})
+    //.AddDefaultTokenProviders()
+    .AddEntityFrameworkStores<ShoppingDbContext>();
 
 
 builder.Services.AddScoped<IUserRepository, UserRepository>();

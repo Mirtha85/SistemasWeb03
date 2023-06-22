@@ -1,13 +1,16 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using SistemasWeb01.Enums;
 using SistemasWeb01.Helpers;
 using SistemasWeb01.Models;
 using SistemasWeb01.Repository.Implementations;
 using SistemasWeb01.Repository.Interfaces;
 using SistemasWeb01.ViewModels;
+using System.Data;
 
 namespace SistemasWeb01.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class UserController : Controller
     {
         private readonly IUserRepository _userRepository;
@@ -38,7 +41,7 @@ namespace SistemasWeb01.Controllers
                 Countries = await _combosHelper.GetComboCountriesAsync(),
                 States = await _combosHelper.GetComboStatesAsync(0),
                 Cities = await _combosHelper.GetComboCitiesAsync(0),
-                UserType = UserType.Admin,
+                UserType = UserType.Admin
             };
 
             return View(model);
@@ -58,6 +61,7 @@ namespace SistemasWeb01.Controllers
                 }
                 model.ImageName = ImageName;
                 User user = await _userRepository.AddUserAsync(model);
+                await _userRepository.AddUserToRole(user, "Admin");
                 if (user == null)
                 {
                     ModelState.AddModelError(string.Empty, "Este correo ya está siendo usado.");

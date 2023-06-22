@@ -67,7 +67,7 @@ namespace SistemasWeb01.Controllers
                 Countries = await _combosHelper.GetComboCountriesAsync(),
                 States = await _combosHelper.GetComboStatesAsync(0),
                 Cities = await _combosHelper.GetComboCitiesAsync(0),
-                UserType = UserType.User,
+                UserType = UserType.User
             };
 
             return View(model);
@@ -85,8 +85,10 @@ namespace SistemasWeb01.Controllers
                 {
                     ImageName = await _formFileHelper.UploadFile(model.ImageFile);
                 }
+
                 model.ImageName = ImageName;
                 User user = await _userRepository.AddUserAsync(model);
+                await _userRepository.AddUserToRole(user, "User");
                 if (user == null)
                 {
                     ModelState.AddModelError(string.Empty, "Este correo ya está siendo usado.");
