@@ -10,7 +10,7 @@ using System.Data;
 
 namespace SistemasWeb01.Controllers
 {
-    [Authorize(Roles = "Admin")]
+    //[Authorize(Roles = "Admin")]
     public class UserController : Controller
     {
         private readonly IUserRepository _userRepository;

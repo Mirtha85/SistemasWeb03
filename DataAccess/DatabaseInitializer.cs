@@ -26,8 +26,8 @@ namespace SistemasWeb01.DataAccess
 
             await CheckRolesAsync();
 
-            await CheckUserAsync("7210049", "Wilfredo", "Yelma", "yelma@yopmail.com", "64435282", "Calle 13, Plan 4 mil", "fotow.webp", UserType.Admin);
-            await CheckUserAsync("6525331", "Leonel", "Messi", "messi@yopmail.com", "78522456", "Calle Paris, Plan 3 mil", "messi.webp", UserType.User);
+            await CheckUserAsync("7210049", "Wilfredo", "Yelma", "yelma@yopmail.com", "64435282", "Calle 13, Plan 4 mil", "fotow.webp", UserType.Admin, "Admin");
+            await CheckUserAsync("6525331", "Leonel", "Messi", "messi@yopmail.com", "78522456", "Calle Paris, Plan 3 mil", "messi.webp", UserType.User, "User");
 
         }
 
@@ -37,17 +37,10 @@ namespace SistemasWeb01.DataAccess
             await _userRepository.CheckRoleAsync(UserType.User.ToString());
         }
 
-        private async Task<User> CheckUserAsync(
-            string document,
-            string firstName,
-            string lastName,
-            string email,
-            string phone,
-            string address,
-            string imageName,
-            UserType userType)
+        private async Task<User> CheckUserAsync(string document, string firstName, string lastName, string email, string phone, string address, string imageName, UserType userType, string type)
         {
             User user = await _userRepository.GetUserAsync(email);
+            
             if (user == null)
             {
                 user = new User
@@ -62,10 +55,11 @@ namespace SistemasWeb01.DataAccess
                     City = _shoppingDbContext.Cities.FirstOrDefault(),
                     ImageName = imageName,
                     UserType = userType,
+                    TypeUser = type
                 };
 
-                await _userRepository.AddUserAsync(user, "1234");
-                await _userRepository.AddUserToRoleAsync(user, userType.ToString());
+                await _userRepository.AddUserAsync(user, "123456");
+                await _userRepository.AddUserToRole(user, type);
             }
 
             return user;

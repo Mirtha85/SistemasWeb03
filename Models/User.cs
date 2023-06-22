@@ -45,6 +45,8 @@ namespace SistemasWeb01.Models
 
         [Display(Name = "Tipo de usuario")]
         public UserType UserType { get; set; }
+        [Display(Name = "Tipo de usuario")]
+        public string? TypeUser { get; set; }
 
         [Display(Name = "Usuario")]
         public string FullName => $"{FirstName} {LastName}";
