@@ -1,13 +1,16 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SistemasWeb01.Helpers;
 using SistemasWeb01.Models;
 using SistemasWeb01.Repository.Interfaces;
 using SistemasWeb01.ViewModels;
+using System.Data;
 using System.Security.Policy;
 
 namespace SistemasWeb01.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class ProductController : Controller
     {
         private readonly IProductRepository _productRepository;

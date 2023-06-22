@@ -27,7 +27,7 @@ namespace SistemasWeb01.DataAccess
             await CheckRolesAsync();
 
             await CheckUserAsync("7210049", "Wilfredo", "Yelma", "yelma@yopmail.com", "64435282", "Calle 13, Plan 4 mil", "fotow.webp", UserType.Admin);
-            //await CheckUserAsync("6525331", "Leonel", "Messi", "messi@yopmail.com", "78522456", "Calle Paris, Plan 3 mil", "messi.webp", UserType.User);
+            await CheckUserAsync("6525331", "Leonel", "Messi", "messi@yopmail.com", "78522456", "Calle Paris, Plan 3 mil", "messi.webp", UserType.User);
 
         }
 

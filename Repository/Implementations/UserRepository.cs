@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using SistemasWeb01.DataAccess;
 using SistemasWeb01.Models;
 using SistemasWeb01.Repository.Interfaces;
+using SistemasWeb01.ViewModels;
 
 namespace SistemasWeb01.Repository.Implementations
 {
@@ -11,12 +12,13 @@ namespace SistemasWeb01.Repository.Implementations
         private readonly ShoppingDbContext _shoppingDbContext;
         private readonly UserManager<User> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
-        public UserRepository(ShoppingDbContext shoppingDbContext, UserManager<User> userManager, RoleManager<IdentityRole> roleManager)
+        private readonly SignInManager<User> _signInManager;
+        public UserRepository(ShoppingDbContext shoppingDbContext, UserManager<User> userManager, RoleManager<IdentityRole> roleManager, SignInManager<User> signInManager)
         {
             _shoppingDbContext = shoppingDbContext;
             _userManager = userManager;
             _roleManager = roleManager;
-
+            _signInManager = signInManager;
         }
         public async Task AddUserToRole(User user, string roleName)
         {
@@ -53,6 +55,17 @@ namespace SistemasWeb01.Repository.Implementations
         public async Task<bool> AddUserToRoleAsync(User user, string roleName)
         {
             return await _userManager.IsInRoleAsync(user, roleName);
+        }
+
+        public async Task<SignInResult> LoginAsync(LoginViewModel model)
+        {
+            return await _signInManager.PasswordSignInAsync( model.Username, model.Password, model.RememberMe, false); //nro de intentos desabilitado
+
+        }
+
+        public async Task LogoutAsync()
+        {
+            await _signInManager.SignOutAsync();
         }
     }
 }

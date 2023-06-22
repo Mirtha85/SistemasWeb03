@@ -1,10 +1,13 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SistemasWeb01.Models;
 using SistemasWeb01.Repository.Interfaces;
+using System.Data;
 
 namespace SistemasWeb01.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class TallaController : Controller
     {
         private readonly ITallaRepository _tallaRepository;

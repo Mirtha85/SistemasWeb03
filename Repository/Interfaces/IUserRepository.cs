@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using SistemasWeb01.Models;
+using SistemasWeb01.ViewModels;
 
 namespace SistemasWeb01.Repository.Interfaces
 {
@@ -14,6 +15,11 @@ namespace SistemasWeb01.Repository.Interfaces
         Task AddUserToRole(User user, string roleName); //assign role to user
 
         Task<bool> AddUserToRoleAsync(User user, string roleName); //check user type
+
+        Task<SignInResult> LoginAsync(LoginViewModel model); //devuelve un signInResult, obj que dice si pudo o no logearse
+
+        Task LogoutAsync();
+
 
     }
 }

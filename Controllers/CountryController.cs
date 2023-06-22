@@ -1,13 +1,17 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SistemasWeb01.Models;
 using SistemasWeb01.Repository.Implementations;
 using SistemasWeb01.Repository.Interfaces;
+using System.Data;
 using System.Diagnostics.Metrics;
 using static System.Collections.Specialized.BitVector32;
 
 namespace SistemasWeb01.Controllers
+
 {
+    [Authorize(Roles = "Admin")]
     public class CountryController : Controller
     {
         private readonly ICountryRepository _countryRepository;

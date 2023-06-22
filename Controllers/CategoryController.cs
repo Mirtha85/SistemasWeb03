@@ -1,14 +1,17 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SistemasWeb01.Helpers;
 using SistemasWeb01.Models;
 using SistemasWeb01.Repository.Implementations;
 using SistemasWeb01.Repository.Interfaces;
 using SistemasWeb01.ViewModels;
+using System.Data;
 using static System.Collections.Specialized.BitVector32;
 
 namespace SistemasWeb01.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class CategoryController : Controller
     {
         private readonly ICategoryRepository _categoryRepository;

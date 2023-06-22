@@ -1,13 +1,16 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SistemasWeb01.Helpers;
 using SistemasWeb01.Models;
 using SistemasWeb01.Repository.Implementations;
 using SistemasWeb01.Repository.Interfaces;
 using SistemasWeb01.ViewModels;
+using System.Data;
 
 namespace SistemasWeb01.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class BrandController : Controller
     {
         private readonly IBrandRepository _brandRepository;
