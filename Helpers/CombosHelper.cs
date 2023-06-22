@@ -11,25 +11,7 @@ namespace SistemasWeb01.Helpers
         {
             _shoppingDbContext = shoppingDbContext;
         }
-        public async Task<IEnumerable<SelectListItem>> GetComboCategoriesAsync()
-        {
-            List<SelectListItem> list = await _shoppingDbContext.Categories.Select(x => new SelectListItem
-            {
-                Text = x.Name,
-                Value = $"{x.Id}"
-            })
-                .OrderBy(x => x.Text)
-                .ToListAsync();
-
-            list.Insert(0, new SelectListItem
-            {
-                Text = "[Seleccione una categoría...]",
-                Value = "0"
-            });
-
-            return list;
-        }
-
+        
         public async Task<IEnumerable<SelectListItem>> GetComboCitiesAsync(int stateId)
         {
             List<SelectListItem> list = await _shoppingDbContext.Cities

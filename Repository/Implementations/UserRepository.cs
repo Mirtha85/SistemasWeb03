@@ -67,5 +67,33 @@ namespace SistemasWeb01.Repository.Implementations
         {
             await _signInManager.SignOutAsync();
         }
+
+        public async Task<User> AddUserAsync(AddUserViewModel model)
+        {
+            User user = new User
+            {
+                Address = model.Address,
+                Document = model.Document,
+                Email = model.Username,
+                FirstName = model.FirstName,
+                LastName = model.LastName,
+                ImageName = model.ImageName,
+                PhoneNumber = model.PhoneNumber,
+                City = await _shoppingDbContext.Cities.FindAsync(model.CityId),
+                UserName = model.Username,
+                UserType = model.UserType
+            };
+
+            IdentityResult result = await _userManager.CreateAsync(user, model.Password);
+            if (result != IdentityResult.Success)
+            {
+                return null;
+            }
+
+            User newUser = await GetUserAsync(model.Username);
+            await AddUserToRoleAsync(newUser, user.UserType.ToString());
+            return newUser;
+        }
+
     }
 }

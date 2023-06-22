@@ -9,6 +9,7 @@ namespace SistemasWeb01.Repository.Interfaces
         Task<User> GetUserAsync(string email);
 
         Task<IdentityResult> AddUserAsync(User user, string password);
+        Task<User> AddUserAsync(AddUserViewModel model);
 
         Task CheckRoleAsync(string roleName); //check if a role exists, if not, create the role
 
