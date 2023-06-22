@@ -11,7 +11,7 @@ using static System.Collections.Specialized.BitVector32;
 
 namespace SistemasWeb01.Controllers
 {
-    [Authorize(Roles = "Admin")]
+    //[Authorize(Roles = "Admin")]
     public class CategoryController : Controller
     {
         private readonly ICategoryRepository _categoryRepository;

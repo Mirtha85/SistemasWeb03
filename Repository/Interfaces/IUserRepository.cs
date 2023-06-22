@@ -6,6 +6,7 @@ namespace SistemasWeb01.Repository.Interfaces
 {
     public interface IUserRepository
     {
+        IEnumerable<User> AllUsers { get; }
         Task<User> GetUserAsync(string email);
 
         Task<IdentityResult> AddUserAsync(User user, string password);

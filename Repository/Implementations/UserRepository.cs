@@ -13,6 +13,13 @@ namespace SistemasWeb01.Repository.Implementations
         private readonly UserManager<User> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
         private readonly SignInManager<User> _signInManager;
+
+        public IEnumerable<User> AllUsers => _shoppingDbContext.Users
+             .Include(u => u.City)
+             .ThenInclude(u => u.State)
+             .ThenInclude(u => u.Country)
+             .ToList();
+
         public UserRepository(ShoppingDbContext shoppingDbContext, UserManager<User> userManager, RoleManager<IdentityRole> roleManager, SignInManager<User> signInManager)
         {
             _shoppingDbContext = shoppingDbContext;
@@ -20,6 +27,8 @@ namespace SistemasWeb01.Repository.Implementations
             _roleManager = roleManager;
             _signInManager = signInManager;
         }
+
+
         public async Task AddUserToRole(User user, string roleName)
         {
             await _userManager.AddToRoleAsync(user, roleName);
