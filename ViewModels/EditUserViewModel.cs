@@ -42,7 +42,7 @@ namespace SistemasWeb01.ViewModels
             : $"{ImageName}";
 
         [Display(Name = "Image")]
-        public IFormFile ImageFile { get; set; }
+        public IFormFile? ImageFile { get; set; }
 
         [Display(Name = "País")]
         [Range(1, int.MaxValue, ErrorMessage = "Debes de seleccionar un país.")]

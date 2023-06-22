@@ -56,8 +56,20 @@ namespace SistemasWeb01.Repository.Implementations
         {
             User? user = await _shoppingDbContext.Users
              .Include(u => u.City)
+             .ThenInclude(c => c.State)
+             .ThenInclude(s => s.Country)
              .FirstOrDefaultAsync(u => u.Email == email);
             return user!;
+
+        }
+
+        public async Task<User> GetUserAsync(Guid userId)
+        {
+            return await _shoppingDbContext.Users
+           .Include(u => u.City)
+           .ThenInclude(c => c.State)
+           .ThenInclude(s => s.Country)
+           .FirstOrDefaultAsync(u => u.Id == userId.ToString());
 
         }
 
@@ -104,5 +116,17 @@ namespace SistemasWeb01.Repository.Implementations
             return newUser;
         }
 
+        public async Task<IdentityResult> ChangePasswordAsync(User user, string oldPassword, string newPassword)
+        {
+            return await _userManager.ChangePasswordAsync(user, oldPassword, newPassword);
+
+        }
+
+        public async Task<IdentityResult> UpdateUserAsync(User user)
+        {
+            return await _userManager.UpdateAsync(user);
+        }
+
+       
     }
 }

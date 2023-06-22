@@ -15,13 +15,15 @@ namespace SistemasWeb01.Controllers
         private readonly IFormFileHelper _formFileHelper;
         private readonly ICountryRepository _countryRepository;
         private readonly IStateRepository _stateRepository;
-        public AccountController(IUserRepository userRepository, IFormFileHelper formFileHelper, ICombosHelper combosHelper, ICountryRepository countryRepository, IStateRepository stateRepository)
+        private readonly ICityRepository _cityRepository;
+        public AccountController(IUserRepository userRepository, IFormFileHelper formFileHelper, ICombosHelper combosHelper, ICountryRepository countryRepository, IStateRepository stateRepository, ICityRepository cityRepository)
         {
             _userRepository = userRepository;
             _formFileHelper = formFileHelper;
             _combosHelper = combosHelper;
             _countryRepository = countryRepository;
             _stateRepository = stateRepository;
+            _cityRepository = cityRepository;   
         }
         public IActionResult Login()
         {
@@ -129,6 +131,102 @@ namespace SistemasWeb01.Controllers
             }
 
             return Json(state.Cities.OrderBy(c => c.Name));
+        }
+
+        public async Task<IActionResult> ChangeUser()
+        {
+            User user = await _userRepository.GetUserAsync(User.Identity.Name);
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            EditUserViewModel model = new()
+            {
+                Address = user.Address,
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                PhoneNumber = user.PhoneNumber,
+                ImageName = user.ImageName,
+                Cities = await _combosHelper.GetComboCitiesAsync(user.City.State.Id),
+                CityId = user.City.Id,
+                Countries = await _combosHelper.GetComboCountriesAsync(),
+                CountryId = user.City.State.Country.Id,
+                StateId = user.City.State.Id,
+                States = await _combosHelper.GetComboStatesAsync(user.City.State.Country.Id),
+                Id = user.Id,
+                Document = user.Document
+            };
+
+            return View(model);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> ChangeUser(EditUserViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                string ImageName = model.ImageName;
+
+                if (model.ImageFile != null)
+                {
+                    ImageName = await _formFileHelper.UploadFile(model.ImageFile);
+                }
+
+                User user = await _userRepository.GetUserAsync(User.Identity.Name);
+
+                user.FirstName = model.FirstName;
+                user.LastName = model.LastName;
+                user.Address = model.Address;
+                user.PhoneNumber = model.PhoneNumber;
+                user.ImageName = ImageName;
+                user.City = _cityRepository.GetCityById(model.CityId);
+                user.Document = model.Document;
+
+                await _userRepository.UpdateUserAsync(user);
+                return RedirectToAction("Index", "Home");
+            }
+
+            return View(model);
+        }
+
+        //Cambiar contraseña
+        public IActionResult ChangePassword()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> ChangePassword(ChangePasswordViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                if (model.OldPassword == model.NewPassword)
+                {
+                    ModelState.AddModelError(string.Empty, "Debe ingresar una contraseña diferente.");
+                    return View(model);
+                }
+                var user = await _userRepository.GetUserAsync(User.Identity.Name);
+                if (user != null)
+                {
+                    var result = await _userRepository.ChangePasswordAsync(user, model.OldPassword, model.NewPassword);
+                    if (result.Succeeded)
+                    {
+                        return RedirectToAction("ChangeUser");
+                    }
+                    else
+                    {
+                        ModelState.AddModelError(string.Empty, result.Errors.FirstOrDefault().Description);
+                    }
+                }
+                else
+                {
+                    ModelState.AddModelError(string.Empty, "Usuario no encontrado.");
+                }
+            }
+
+            return View(model);
         }
 
 
