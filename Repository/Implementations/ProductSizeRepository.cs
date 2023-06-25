@@ -13,7 +13,7 @@ namespace SistemasWeb01.Repository.Implementations
         {
             _shoppingDbContext = shoppingDbContext;
         }
-        public IEnumerable<ProductSize> AllProductSizes => _shoppingDbContext.ProductSizes.ToList();
+        public IEnumerable<ProductSize> AllProductSizes => _shoppingDbContext.ProductSizes.Include(ps => ps.Talla).ToList();
 
         public void CreateProductSize(ProductSize productSize)
         {
@@ -56,5 +56,11 @@ namespace SistemasWeb01.Repository.Implementations
                 .Include(p => p.Talla)
                 .FirstOrDefault(p => p.Id == id);
         }
+
+        public IEnumerable<ProductSize> GetSizesByProductId(int productId)
+        {
+            return _shoppingDbContext.ProductSizes.Include(p => p.Talla).Where(p => p.ProductId == productId).ToList();
+        }
+
     }
 }

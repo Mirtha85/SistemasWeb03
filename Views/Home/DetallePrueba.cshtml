@@ -1,0 +1,164 @@
+﻿@model DetailsProductViewModel
+
+<section class="container mb-4">
+    <section class="py-5">
+        <div class="container">
+            <div class="row gx-5 mb-5">
+                <aside class="col-lg-6">
+                    <div class="border rounded-4 mb-3 d-flex justify-content-center">
+                        <a data-fslightbox="mygalley" class="rounded-4" target="_blank" data-type="image" id="MainImg">
+                            <img style="max-width: 100%; max-height: 100vh; margin: auto;" id="MainImg" class="rounded-4 fit" src="~/images/@Model.Product.ImageFullPath" />
+                        </a>
+                    </div>
+                    <div class="d-flex justify-content-center mb-3">
+                        
+                        @foreach(Picture picture in Model.Product.Pictures!)
+                        {
+                            <a data-fslightbox="mygalley" class="border mx-1 rounded-2" target="_blank" data-type="image" class="item-thumb">
+                                <img width="60" height="60" class="small-img rounded-2" src="~/images/@picture.PictureName"/>
+                            </a>
+                        }
+                    </div>
+
+                </aside>
+                <main class="col-lg-6">
+                    <div class="ps-lg-3">
+                        <h4 class="title text-dark">
+                            @Model.Product.Name <br />
+                            
+                        </h4>
+                        <div class="d-flex flex-row my-3">
+                            <div class="text-warning mb-1 me-2">
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                                <i class="fas fa-star-half-alt"></i>
+                                @*<span class="ms-1">
+                                    4.5
+                                </span>*@
+                            </div>
+                            <span class="text-muted"><i class="fas fa-shopping-basket fa-sm mx-1"></i>@Model.Product.InStock</span>
+                            <span class="text-success ms-2">En stock</span>
+                        </div>
+
+                        <div class="mb-3">
+                            <span class="h5">@Model.Product.Price Bs.</span>
+                            <span class="text-muted">/Bolivianos</span>
+                        </div>
+
+                        <p>
+                            @Model.Product.Description
+                        </p>
+
+                        <div class="row">
+                            <dt class="col-4">Tallas Disponibles: </dt>
+                            <dd class="col-8">@Model.TallasDisponibles</dd>
+                        </div>
+
+                        <hr />
+
+                        <div class="row mb-4">
+                            <div class="col-md-4 col-6">
+                                <label class="control-label">Talla</label>
+                                <select asp-for="@Model.ProductSizeId" class="form-select sform-control" asp-items="@Model.ProductSizes">
+                                    <option value="">selecciona una talla</option>
+                                </select>
+
+                            </div>
+                            <!-- col.// -->
+                            <div class="col-md-4 col-6 mb-3">
+                                <label class="mb-2 d-block">Quantity</label>
+                                <div class="input-group mb-3" style="width: 170px;">
+                                    <button class="btn btn-white border border-secondary px-3" type="button" id="button-addon1" data-mdb-ripple-color="dark">
+                                        <i class="fas fa-minus"></i>
+                                    </button>
+                                    <input type="text" class="form-control text-center border border-secondary" placeholder="14" aria-label="Example text with button addon" aria-describedby="button-addon1" />
+                                    <button class="btn btn-white border border-secondary px-3" type="button" id="button-addon2" data-mdb-ripple-color="dark">
+                                        <i class="fas fa-plus"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <a href="#" class="boton boton-primary"> <i class="me-1 fa fa-shopping-basket"></i> Add to cart </a>
+                      
+                    </div>
+                </main>
+            </div>
+            <hr />
+            <div class="row gx-5">
+                <h2 class="display-6 py-5 text-center">
+                    Productos Relacionados
+                </h2>
+                <div class="d-flex justify-content-between align-items-center flex-column flex-lg-row my-5">
+                    <div class="card m-2">
+                        <a href="#">
+                            <img src="~/images/p11a.webp" class="card-img-top" height="300" alt="Product" />
+                        </a>
+                        <div class="card-body">
+                            <p class="card-text fw-bold"> Tara Dress</p>
+                            <small class="text-secondary">USD 445 $</small>
+                        </div>
+                    </div>
+
+                    <div class="card m-2">
+                        <a href="#">
+                            <img src="~/images/p11b.webp" class="card-img-top" height="300" alt="Product" />
+                        </a>
+                        <div class="card-body">
+                            <p class="card-text fw-bold"> Tara Dress</p>
+                            <small class="text-secondary">USD 445 $</small>
+                        </div>
+                    </div>
+
+                    <div class="card m-2">
+                        <a href="#">
+                            <img src="~/images/p11c.webp" class="card-img-top" height="300" alt="Product" />
+                        </a>
+                        <div class="card-body">
+                            <p class="card-text fw-bold"> Tara Dress</p>
+                            <small class="text-secondary">USD 445 $</small>
+                        </div>
+                    </div>
+
+                    <div class="card m-2">
+                        <a href="#">
+                            <img src="~/images/p15a.webp" class="card-img-top" height="300" alt="Product" />
+                        </a>
+                        <div class="card-body">
+                            <p class="card-text fw-bold"> Tara Dress</p>
+                            <small class="text-secondary">USD 445 $</small>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- content -->
+</section>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <script>
+        var MainImg = document.getElementById('MainImg');
+        var smallimg = document.getElementsByClassName('small-img');
+        //debugger
+        smallimg[0].onclick = function () {
+            MainImg.src = smallimg[0].src;
+        }
+        smallimg[1].onclick = function () {
+            MainImg.src = smallimg[1].src;
+        }
+        smallimg[2].onclick = function () {
+            MainImg.src = smallimg[2].src;
+        }
+        //smallimg[3].onclick = function () {
+        //    MainImg.src = smallimg[3].src;
+        //}
+
+    </script>
+}

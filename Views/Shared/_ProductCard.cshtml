@@ -1,6 +1,6 @@
 ﻿@model Product
 
-<div class="col-sm-12 col-md-6 col-lg-4 col-xl-3 mb-4">
+<div class="col-sm-12 col-md-6 col-lg-4 col-xl-3 mb-4 mt-4">
     <div class="product-card">
 
         <figure class="card-banner">
@@ -13,9 +13,9 @@
 
             <div class="card-actions">
 
-                <button class="card-action-btn" aria-label="Quick view">
+                <a asp-controller="Home" asp-action="DetailsProduct" asp-route-id="@Model.Id" class="card-action-btn" aria-label="Quick view">
                     <ion-icon name="eye-outline"></ion-icon>
-                </button>
+                </a>
 
                 <button class="card-action-btn cart-btn">
                     <ion-icon name="bag-handle-outline" aria-hidden="true"></ion-icon>
@@ -23,9 +23,9 @@
                     <p>AGREGAR</p>
                 </button>
 
-                <button class="card-action-btn" aria-label="Add to Whishlist">
+                <a asp-controller="Home" asp-action="DetallePrueba" asp-route-id="@Model.Id" class="card-action-btn" aria-label="Detalle">
                     <ion-icon name="heart-outline"></ion-icon>
-                </button>
+                </a>
 
             </div>
 

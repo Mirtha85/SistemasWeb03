@@ -20,3 +20,53 @@ html {
 body {
   margin-bottom: 60px;
 }
+
+/* PRODUCT DETAILS*/
+
+.small-img-group{
+ display: flex;
+ justify-content: center;
+}
+.small-img-col{
+    flex-basis: 24%;
+    cursor: pointer;
+    margin-right: 5px
+}
+
+.item-thumb{
+    cursor: pointer;
+}
+.sproduct select {
+    display: block;
+    padding: 5px 10px;
+}
+.sproduct input {
+    width: 50px;
+    height: 50px;
+    padding-left: 10px;
+    font-size: 18px;
+    margin-right: 10px;
+    border: solid 1px #7AB8B4;
+    border-radius: 5px;
+}
+.sproduct input:focus{
+    outline: none;
+}
+
+.by-btn {
+    background: #7AB8B4;
+    border: none;
+    font-size: 20px;
+    padding:10px 30px 10px 30px; /* arriba, derecha, abajo, izquierda */
+}
+
+.estrellas{
+    color: #7AB8B4;
+}
+.selector-talla{
+    height:40px;
+    font-size:16px;
+}
+.texto-boton{
+    margin-left:10px;
+}
