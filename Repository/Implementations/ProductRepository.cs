@@ -42,8 +42,11 @@ namespace SistemasWeb01.Repository.Implementations
             {
                 return _shoppingDbContext.Products
                     .Include(p => p.Pictures)
+                    .Include(p => p.Brand)
                     .Include(p => p.SubCategory)
                     .ThenInclude(p => p.Category)
+                    .Include(p => p.ProductSizes!)
+                    .ThenInclude(p => p.Talla)
                     .Where(p => p.IsBestSeller);
             }
         }

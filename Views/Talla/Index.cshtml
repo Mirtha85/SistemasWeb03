@@ -5,8 +5,8 @@
 
 }
 
-<section class="container seccion">
-    <h1>Listado de Tallas</h1>
+<section class="container">
+    
 
     @if (TempData["mensaje"] != null)
     {
@@ -14,6 +14,7 @@
             @TempData["mensaje"]
         </div>
     }
+    <h1>Listado de Tallas</h1>
     <div class="row">
         <p>
             <a asp-action="Create" class="btn btn-outline-success"> <i class="bi bi-plus-circle"></i> Crear nueva talla</a>

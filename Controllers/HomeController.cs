@@ -1,5 +1,7 @@
 ﻿using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
+using SistemasWeb01.Models;
+using SistemasWeb01.Repository.Interfaces;
 using SistemasWeb01.ViewModels;
 
 namespace SistemasWeb01.Controllers;
@@ -7,15 +9,23 @@ namespace SistemasWeb01.Controllers;
 public class HomeController : Controller
 {
     private readonly ILogger<HomeController> _logger;
-
-    public HomeController(ILogger<HomeController> logger)
+    private readonly IProductRepository _productRepository;
+    private readonly ICategoryRepository _categoryRepository;
+    private readonly ISubCategoryRepository _subCategoryRepository;
+    public HomeController(ILogger<HomeController> logger, IProductRepository productRepository, ICategoryRepository categoryRepository, ISubCategoryRepository subCategoryRepository)
     {
         _logger = logger;
+        _productRepository = productRepository;
+        _categoryRepository = categoryRepository;
+        _subCategoryRepository = subCategoryRepository;
     }
 
     public IActionResult Index()
     {
-        return View();
+        IEnumerable<Product> products = _productRepository.BestSellingProducts;
+        IEnumerable<Category> categories = _categoryRepository.AllCategories;
+        HomeViewModel model = new HomeViewModel(products, categories);
+        return View(model);
     }
 
     public IActionResult Privacy()

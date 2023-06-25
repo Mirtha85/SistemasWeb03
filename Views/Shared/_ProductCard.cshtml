@@ -1,0 +1,45 @@
+﻿@model Product
+
+<div class="col-sm-12 col-md-6 col-lg-4 col-xl-3 mb-4">
+    <div class="product-card">
+
+        <figure class="card-banner">
+
+            <a href="#">
+                <img src="~/images/@Model.ImageFullPath" alt="@Model.Name" loading="lazy" class="w-100">
+            </a>
+
+            <div class="card-badge green"> New</div>
+
+            <div class="card-actions">
+
+                <button class="card-action-btn" aria-label="Quick view">
+                    <ion-icon name="eye-outline"></ion-icon>
+                </button>
+
+                <button class="card-action-btn cart-btn">
+                    <ion-icon name="bag-handle-outline" aria-hidden="true"></ion-icon>
+
+                    <p>AGREGAR</p>
+                </button>
+
+                <button class="card-action-btn" aria-label="Add to Whishlist">
+                    <ion-icon name="heart-outline"></ion-icon>
+                </button>
+
+            </div>
+
+        </figure>
+
+        <div class="card-content">
+            <h3 class="h4 card-title">
+                <a href="#">@Model.Name</a>
+            </h3>
+
+            <div class="card-price">
+                <data value="62.00">@Model.Price Bs.</data>
+            </div>
+        </div>
+
+    </div>
+</div>

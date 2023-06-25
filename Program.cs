@@ -17,6 +17,9 @@ builder.Services.AddDbContext<ShoppingDbContext>(options => {
         builder.Configuration["ConnectionStrings:DbShoppingConnection"]);
 });
 
+//cambios en caliente
+builder.Services.AddRazorPages().AddRazorRuntimeCompilation();
+
 builder.Services.AddTransient<DatabaseInitializer>();
 
 //TODO: Make strongest password
