@@ -1,11 +1,11 @@
 ﻿@model DetailsProductViewModel
 
 <section class="container pt-3">
-    <div class="sproduct">
 
+    <div class="sproduct">
         <div class="row mt-5">
             <div class="col-lg-6 col-md-12 col-12 mb-5">
-                <img class="image-fluid w-100 pb-1" src="~/images/@Model.Product.ImageFullPath" id="MainImg" alt="" />
+                @*<img class="image-fluid w-100 pb-1" src="~/images/@Model.Product.ImageFullPath" id="MainImg" alt="" />
                 <div class="small-img-group">
 
                     @foreach (Picture picture in Model.Product.Pictures!)
@@ -14,7 +14,8 @@
                             <img src="~/images/@picture.PictureName" width="100%" class="small-img" alt="" />
                         </div>
                     }
-                </div>
+                </div>*@
+                <partial name="_CarouselProducts"></partial>
             </div>
             <div class="col-lg-6 col-md-12 col-12">
                 <div class="row">
@@ -49,18 +50,18 @@
                 <hr />
 
                 <div class="row mb-4">
-                    <div class="col-md-6 col-6">
+                    <div class="col-md-7 col-6">
                         
                         <label class="mb-2 d-block">Talla</label>
-                        <select asp-for="@Model.ProductSizeId" class="form-select sform-control selector-talla text-center border border-secondary" asp-items="@Model.ProductSizes">
-                            <option value="">selecciona una talla</option>
+                        <select asp-for="@Model.ProductSizeId" class="form-select sform-control selector-talla text-start border border-secondary" asp-items="@Model.ProductSizes">
+                            <option value="">seleccionar talla</option>
                         </select>
 
                     </div>
                     <!-- col.// -->
-                    <div class="col-md-6 col-6 mb-3">
+                    <div class="col-md-5 col-6 mb-3">
                         <label class="mb-2 d-block">Cantidad</label>
-                        <div class="input-group mb-3" style="width: 170px; height:40px;">
+                        <div class="input-group mb-3" style="width: 150px; height:40px;">
                             
                             @*<span id="contar">0</span>*@
                             <button class="btn btn-white border border-secondary px-3 " type="button" id="button-addon1" data-mdb-ripple-color="dark">
@@ -111,22 +112,6 @@
   </script>
 
   <script>
-      /*let contador = 1;
-      const valor = document.querySelector('#valor');
-        const botones = document.querySelectorAll('.boto');
-        botones.forEach(boto => {
-            boto.addEventListener('click', funtion(e){
-                const estilos = e.currentTarget.classList;
-                if(estilos.contains('disminuir')){
-                    contador--;
-                }
-                else(estilos.contains('aumentar')) {
-                contador++;
-                }
-                valor.textContent = contador;
-            })
-        })*/
-
         const contador = document.getElementById("contar");
         const sumar = document.getElementById("button-addon2");
         const restar = document.getElementById("button-addon1");
@@ -155,4 +140,51 @@
         //});
 
   </script>
+
+  <script>
+        (function ($) {
+
+            "use strict";
+
+            var fullHeight = function () {
+
+                $('.js-fullheight').css('height', $(window).height());
+                $(window).resize(function () {
+                    $('.js-fullheight').css('height', $(window).height());
+                });
+
+            };
+            fullHeight();
+
+            var carousel = function () {
+                $('.home-slider').owlCarousel({
+                    loop: true,
+                    autoplay: true,
+                    margin: 0,
+                    animateOut: 'fadeOut',
+                    animateIn: 'fadeIn',
+                    nav: true,
+                    dots: true,
+                    autoplayHoverPause: false,
+                    items: 1,
+                    navText: ["<span class='ion-ios-arrow-back'></span>", "<span class='ion-ios-arrow-forward'></span>"],
+                    responsive: {
+                        0: {
+                            items: 1
+                        },
+                        600: {
+                            items: 1
+                        },
+                        1000: {
+                            items: 1
+                        }
+                    }
+                });
+
+            };
+            carousel();
+
+        })(jQuery);
+  </script>
+
 }

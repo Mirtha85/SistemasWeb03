@@ -293,7 +293,7 @@ h3 > a {
     gap: 5px;
     padding-block: 16px 10px;
     box-shadow: 0 -2px 20px hsla(0, 0%, 0%, 0.1);
-    z-index: 1;
+    z-index: 700;
 }
 
 .header-action-btn {
@@ -391,7 +391,7 @@ overlay {
     opacity: 0;
     pointer-events: none;
     transition: var(--transition-1);
-    z-index: 2;
+    z-index: 705;
 }
 
     .overlay.active {

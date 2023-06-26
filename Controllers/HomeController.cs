@@ -90,6 +90,35 @@ public class HomeController : Controller
         return View(model);
     }
 
+    public IActionResult CarouselProducts(int id)
+    {
+        Product? product = _productRepository.GetProductById(id);
+
+        if (product == null)
+        {
+            return NotFound();
+        }
+        List<SelectListItem> tallas = _productSizeRepository.GetSizesByProductId(product.Id)
+                .OrderBy(t => t.Id)
+                     .Select(t =>
+                      new SelectListItem
+                      {
+                          Value = t.Id.ToString(),
+                          Text = t.Talla.ShortName
+                      }).ToList();
+        string tallasList = "";
+        foreach (ProductSize productSize in product.ProductSizes!)
+        {
+            tallasList += $"•  {productSize.Talla.ShortName}      ";
+        }
+        DetailsProductViewModel model = new DetailsProductViewModel(product, tallas);
+        model.TallasDisponibles = tallasList;
+
+        return View(model);
+    }
+
+
+
     public IActionResult Privacy()
     {
         return View();
