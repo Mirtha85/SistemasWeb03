@@ -17,7 +17,7 @@
                 </div>*@
                 <partial name="_CarouselProducts"></partial>
             </div>
-            <div class="col-lg-6 col-md-12 col-12">
+            <div class="col-lg-6 col-md-12 col-12" style="padding-left:20px; padding-right:20px;">
                 <div class="row">
                     <dt class="col-3">Categoría:</dt>
                     <dd class="col-9">@Model.Product.SubCategory.Category.Name   /    @Model.Product.SubCategory.Name</dd>
@@ -77,11 +77,11 @@
                     </div>
                 </div>
                 <div  class="row mb-5">
-                    <div class="col-md-6 col-6">
-                        <a href="#" class="boton boton-primary " style="font-size:18px;"> <i class="me-1 fa fa-shopping-basket"></i>  <span class="texto-boton">Agregar</span>   </a>
+                    <div class="col-sm-12 col-md-6 col-6">
+                        <a href="#" class="boton boton-primary"> <i class="me-1 fa fa-shopping-basket"></i>  <span class="texto-boton">Agregar</span>   </a>
                     </div>
-                    <div class="col-md-6 col-6">
-                        <a asp-action="Index" class="boton boton-outline " style="font-size:18px;"> <i class="fa fa-undo" aria-hidden="true"></i>  <span class="texto-boton">Regresar</span>  </a>
+                    <div class="col-sm-12 col-md-6 col-6">
+                        <a asp-action="Index" class="boton boton-outline "> <i class="fa fa-undo" aria-hidden="true"></i>  <span class="texto-boton">Regresar</span>  </a>
                     </div>
                 </div>
             </div>

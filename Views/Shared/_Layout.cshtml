@@ -3,7 +3,8 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - SistemasWeb01</title>
+    <title>@ViewData["Title"] - Beth Shop</title>
+    <link rel="icon" type="image/x-icon" href="~/logoBethIco.ico">
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/SistemasWeb01.styles.css" asp-append-version="true" />
@@ -11,7 +12,7 @@
 
     
     <!-- - favicon-->
-    <link rel="shortcut icon" href="~/favicon.svg" type="image/svg+xml">
+   @* <link rel="shortcut icon" href="~/favicon.svg" type="image/svg+xml">*@
     <!-- - custom css link-->
     <link rel="stylesheet" href="~/assets/css/estile.css">
     <!-- - google font link-->
@@ -184,19 +185,19 @@
                         <a class="navbar-link" asp-area="" asp-controller="Home" asp-action="Index">Inicio</a>
                     </li>
                     <li>
-                    <a href="#" class="navbar-link">Productos</a>
+                        <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-link">Productos</a>
                     </li>
 
                     <li>
-                    <a href="#" class="navbar-link">Acerca de nosotros</a>
+                        <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-link">Acerca de nosotros</a>
                     </li>
 
                     <li>
-                    <a href="#blog" class="navbar-link">Blog</a>
+                        <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-link">Blog</a>
                     </li>
 
                     <li>
-                    <a href="#" class="navbar-link">Contacto</a>
+                        <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-link">Contacto</a>
                     </li>
 
                     @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
@@ -219,34 +220,32 @@
 
                         <li class="navbar-link">
                             <a class="navbar-link" asp-area="" asp-controller="User" asp-action="Index">Usuarios</a>
-                        </li>
-                        
+                        </li> 
                     }
-                    
-                    <ul class="navbar-list navbar-right">
+
                         @if (User.Identity.IsAuthenticated)
                         {
                             @*<li class="navbar-link">
-                                <a class="navbar-link" asp-area="" asp-controller="Account" asp-action="ChangeUser"> <img src="/images/perfil.webp" alt="" style="max-width:30px;" /></a>
-                            </li>*@
+                        <a class="navbar-link" asp-area="" asp-controller="Account" asp-action="ChangeUser"> <img src="/images/perfil.webp" alt="" style="max-width:30px;" /></a>
+                        </li>*@
                             <li class="navbar-link">
-                                <a class="navbar-link" asp-area="" asp-controller="Account" asp-action="ChangeUser" style="font-size:16px">@User.Identity.Name</a>
+                                <a class="navbar-link" asp-area="" asp-controller="Account" asp-action="ChangeUser">@User.Identity.Name</a>
                             </li>
                             <li class="navbar-link">
-                                <a class="navbar-link" asp-area="" asp-controller="Account" style="font-size:16px" asp-action="Logout"> Cerrar Sesión</a>
+                                <a class="navbar-link" asp-area="" asp-controller="Account" asp-action="Logout"> Cerrar Sesión</a>
                             </li>
                         }
                         else
                         {
                             <li class="navbar-link">
-                                <a class="navbar-link" asp-area="" asp-controller="Account" asp-action="Login" style="font-size:16px"> Iniciar Sesión</a>
+                                <a class="navbar-link" asp-area="" asp-controller="Account" asp-action="Login"> Iniciar Sesión</a>
                             </li>
                         }
-                    </ul>
-
-                    
-
                 </ul>
+
+@*                <ul class="navbar-list navbar-right">
+                    
+                </ul>*@
 
             </nav>
 
@@ -263,167 +262,17 @@
         </main>
     </div>
 
-    @*<footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2023 - SistemasWeb01 - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-        </div>
-    </footer>*@
+  
 
     <!-- 
     - #FOOTER
   -->
 
-  <footer class="footer">
-
-    @*<div class="footer-top">
-      <div class="container">
-          <div class="contenedor">
-
-        <div class="footer-brand">
-
-          <a href="#" class="logo">
-            <img src="~/assets/images/logo130x31.png" alt="BethShop Logo">
-          </a>
-
-          <p class="footer-text">
-            Casmart is a fashion theme for presents a complete wardrobe of uniquely crafted Ethnic Wear, Casuals, Edgy
-            Denims, &
-            Accessories inspired from the most contemporary
-          </p>
-
-          <ul class="social-list">
-
-            <li>
-              <a href="#" class="social-link">
-                <ion-icon name="logo-facebook"></ion-icon>
-              </a>
-            </li>
-
-            <li>
-              <a href="#" class="social-link">
-                <ion-icon name="logo-twitter"></ion-icon>
-              </a>
-            </li>
-
-            <li>
-              <a href="#" class="social-link">
-                <ion-icon name="logo-instagram"></ion-icon>
-              </a>
-            </li>
-
-            <li>
-              <a href="#" class="social-link">
-                <ion-icon name="logo-pinterest"></ion-icon>
-              </a>
-            </li>
-
-          </ul>
-
+    <footer class="border-top footer text-muted mt-5">
+        <div class="container">
+            &copy; 2023 - Sistemas Web II - Wilfredo Yelma - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>
-
-        <ul class="footer-list">
-
-          <li>
-            <p class="footer-list-title">Information</p>
-          </li>
-
-          <li>
-            <a href="#" class="footer-link">About Company</a>
-          </li>
-
-          <li>
-            <a href="#" class="footer-link">Payment Type</a>
-          </li>
-
-          <li>
-            <a href="#" class="footer-link">Awards Winning</a>
-          </li>
-
-          <li>
-            <a href="#" class="footer-link">World Media Partner</a>
-          </li>
-
-          <li>
-            <a href="#" class="footer-link">Become an Agent</a>
-          </li>
-
-          <li>
-            <a href="#" class="footer-link">Refund Policy</a>
-          </li>
-
-        </ul>
-
-        <ul class="footer-list">
-
-          <li>
-            <p class="footer-list-title">Categorías</p>
-          </li>
-
-          <li>
-            <a href="#" class="footer-link">Ropa de mujer</a>
-          </li>
-
-          <li>
-            <a href="#" class="footer-link">Zapatos</a>
-          </li>
-
-          <li>
-            <a href="#" class="footer-link">Complementos</a>
-          </li>
-
-          <li>
-            <a href="#" class="footer-link">Accesorios</a>
-          </li>
-
-          <li>
-            <a href="#" class="footer-link">Belleza</a>
-          </li>
-
-          <li>
-            <a href="#" class="footer-link">Tips</a>
-          </li>
-
-        </ul>
-
-       
-
-      </div>
-      </div>
-    </div>*@
-
-    <div class="footer-bottom">
-      <div class="container">
-
-        <p class="copyright">
-          &copy; 2023 <a href="#">Sistemas Web II - Wilfredo Yelma</a>. All Rights Reserved
-        </p>
-
-        <ul class="footer-bottom-list">
-
-          <li>
-            <a href="#" class="footer-bottom-link">Privacy Policy</a>
-          </li>
-
-          <li>
-            <a href="#" class="footer-bottom-link">Terms & Conditions</a>
-          </li>
-
-          <li>
-            <a href="#" class="footer-bottom-link">Sitemap</a>
-          </li>
-
-        </ul>
-
-        <div class="payment">
-          <p class="payment-title">We Support</p>
-
-          <img src="~/assets/images/payment-img.png" alt="Online payment logos" class="img-fluid payment-img">
-        </div>
-
-      </div>
-    </div>
-
-  </footer>
+    </footer>
 
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
