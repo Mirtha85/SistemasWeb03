@@ -11,6 +11,12 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
+//add session shoping cart
+builder.Services.AddScoped<IShoppingCart, ShoppingCart>(sp => ShoppingCart.GetCart(sp));
+builder.Services.AddSession();
+builder.Services.AddHttpContextAccessor();
+
+
 //conexion
 builder.Services.AddDbContext<ShoppingDbContext>(options => {
     options.UseSqlite(
@@ -54,6 +60,7 @@ builder.Services.AddScoped<IBrandRepository, BrandRepository>();
 builder.Services.AddScoped<IFormFileHelper, FormFileHelper>();
 builder.Services.AddScoped<ICombosHelper, CombosHelper>();
 builder.Services.AddScoped<ISubCategoryRepository, SubCategoryRepository>();
+//builder.Services.AddScoped<IShoppingCart, ShoppingCart>();
 
 var app = builder.Build();
 
@@ -85,6 +92,8 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+
+app.UseSession();
 //
 app.UseAuthentication();
 

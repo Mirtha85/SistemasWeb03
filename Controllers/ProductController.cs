@@ -99,7 +99,7 @@ namespace SistemasWeb01.Controllers
                 //validation for duplicate names
                 catch (DbUpdateException dbUpdateException)
                 {
-                    if (dbUpdateException.InnerException.Message.Contains("UNIQUE constraint failed: Products.Name"))
+                    if (dbUpdateException.InnerException!.Message.Contains("UNIQUE constraint failed: Products.Name"))
                     {
                         ModelState.AddModelError(string.Empty, "Ya existe una producto con el mismo nombre.");
                     }
