@@ -5,7 +5,7 @@
 
         <figure class="card-banner">
 
-            <a href="#">
+            <a asp-controller="Home" asp-action="DetailsProduct" asp-route-id="@Model.Id">
                 <img src="~/images/@Model.ImageFullPath" alt="@Model.Name" loading="lazy" class="w-100">
             </a>
 
@@ -20,7 +20,7 @@
                 <button class="card-action-btn cart-btn">
                     <ion-icon name="bag-handle-outline" aria-hidden="true"></ion-icon>
 
-                    <p>AGREGAR</p>
+                    <p style="margin-bottom:0px;">AGREGAR</p>
                 </button>
 
                 <a href="#" class="card-action-btn" aria-label="Detalle">

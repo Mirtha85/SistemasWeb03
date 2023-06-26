@@ -346,7 +346,7 @@ h3 > a {
     width: 100%;
     height: 100%; /*cambie auto por 100%, pero lo volvi a 100*/
     padding: 30px 25px;
-    z-index: 3;
+    z-index: 702;
     visibility: hidden;
     transition: 0.25s var(--cubic-out);
 }
@@ -573,7 +573,7 @@ overlay {
     }
 
     .product-card .card-badge.green {
-        background: var(--ocean-green);
+        background: #80C2BD;
     }
 
 .product-card .card-actions {

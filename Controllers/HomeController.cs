@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics;
+using System.IO.Pipelines;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.CodeAnalysis;
@@ -63,61 +64,25 @@ public class HomeController : Controller
         return View(model);
     }
 
-    public IActionResult DetallePrueba(int id)
+    public ViewResult List(string category)
     {
-        Product? product = _productRepository.GetProductById(id);
+        IEnumerable<Product> product;
+        string? currentCategory;
 
-        if (product == null)
+        if (string.IsNullOrEmpty(category))
         {
-            return NotFound();
+            product = _productRepository.AllProducts.OrderBy(p => p.Id);
+            currentCategory = "Todos";
         }
-        List<SelectListItem> tallas = _productSizeRepository.GetSizesByProductId(product.Id)
-                .OrderBy(t => t.Id)
-                     .Select(t =>
-                      new SelectListItem
-                      {
-                          Value = t.Id.ToString(),
-                          Text = t.Talla.ShortName
-                      }).ToList();
-        string tallasList = "";
-        foreach (ProductSize productSize in product.ProductSizes!)
+        else
         {
-            tallasList += $"•  {productSize.Talla.ShortName}      ";
+            product = _productRepository.AllProducts.Where(p => p.SubCategory.Category.Name == category)
+                .OrderBy(p => p.Id);
+            currentCategory = _categoryRepository.AllCategories.FirstOrDefault(c => c.Name == category)?.Name;
         }
-        DetailsProductViewModel model = new DetailsProductViewModel(product, tallas);
-        model.TallasDisponibles = tallasList;
 
-        return View(model);
+        return View(new ProductListViewModel(product, currentCategory));
     }
-
-    public IActionResult CarouselProducts(int id)
-    {
-        Product? product = _productRepository.GetProductById(id);
-
-        if (product == null)
-        {
-            return NotFound();
-        }
-        List<SelectListItem> tallas = _productSizeRepository.GetSizesByProductId(product.Id)
-                .OrderBy(t => t.Id)
-                     .Select(t =>
-                      new SelectListItem
-                      {
-                          Value = t.Id.ToString(),
-                          Text = t.Talla.ShortName
-                      }).ToList();
-        string tallasList = "";
-        foreach (ProductSize productSize in product.ProductSizes!)
-        {
-            tallasList += $"•  {productSize.Talla.ShortName}      ";
-        }
-        DetailsProductViewModel model = new DetailsProductViewModel(product, tallas);
-        model.TallasDisponibles = tallasList;
-
-        return View(model);
-    }
-
-
 
     public IActionResult Privacy()
     {

@@ -128,19 +128,19 @@
                 <button class="header-action-btn">
                     <ion-icon name="person-outline" aria-hidden="true"></ion-icon>
 
-                    <p class="header-action-label">Sign in</p>
+                    <p style="margin-bottom:0px;" class="header-action-label">Sign in</p>
                 </button>
 
                 <button class="header-action-btn">
                     <ion-icon name="search-outline" aria-hidden="true"></ion-icon>
 
-                    <p class="header-action-label">Search</p>
+                    <p style="margin-bottom:0px;" class="header-action-label">Search</p>
                 </button>
 
                 <button class="header-action-btn">
                     <ion-icon name="cart-outline" aria-hidden="true"></ion-icon>
 
-                    <p class="header-action-label">Cart</p>
+                    <p style ="margin-bottom:0px;" class="header-action-label">Cart</p>
 
                     <div class="btn-badge green" aria-hidden="true">3</div>
                 </button>
@@ -148,7 +148,7 @@
                 <button class="header-action-btn">
                     <ion-icon name="heart-outline" aria-hidden="true"></ion-icon>
 
-                    <p class="header-action-label">Wishlisht</p>
+                    <p style="margin-bottom:0px;" class="header-action-label">Wishlisht</p>
 
                     <div class="btn-badge" aria-hidden="true">2</div>
                 </button>
@@ -183,11 +183,26 @@
                     <li class="navbar-link">
                         <a class="navbar-link" asp-area="" asp-controller="Home" asp-action="Index">Inicio</a>
                     </li>
+                    <li>
+                    <a href="#" class="navbar-link">Productos</a>
+                    </li>
+
+                    <li>
+                    <a href="#" class="navbar-link">Acerca de nosotros</a>
+                    </li>
+
+                    <li>
+                    <a href="#blog" class="navbar-link">Blog</a>
+                    </li>
+
+                    <li>
+                    <a href="#" class="navbar-link">Contacto</a>
+                    </li>
 
                     @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
                     {
                         <li class="navbar-link">
-                            <a class="navbar-link" asp-area="" asp-controller="Product" asp-action="Index">Productos</a>
+                            <a class="navbar-link" asp-area="" asp-controller="Product" asp-action="Index">Adm.Productos  </a>
                         </li>
                         <li class="navbar-link">
                             <a class="navbar-link" asp-area="" asp-controller="Category" asp-action="Index">Categorias</a>
@@ -215,35 +230,21 @@
                                 <a class="navbar-link" asp-area="" asp-controller="Account" asp-action="ChangeUser"> <img src="/images/perfil.webp" alt="" style="max-width:30px;" /></a>
                             </li>*@
                             <li class="navbar-link">
-                                <a class="navbar-link" asp-area="" asp-controller="Account" asp-action="ChangeUser">@User.Identity.Name</a>
+                                <a class="navbar-link" asp-area="" asp-controller="Account" asp-action="ChangeUser" style="font-size:16px">@User.Identity.Name</a>
                             </li>
                             <li class="navbar-link">
-                                <a class="navbar-link" asp-area="" asp-controller="Account" asp-action="Logout"> Cerrar Sesión</a>
+                                <a class="navbar-link" asp-area="" asp-controller="Account" style="font-size:16px" asp-action="Logout"> Cerrar Sesión</a>
                             </li>
                         }
                         else
                         {
                             <li class="navbar-link">
-                                <a class="navbar-link" asp-area="" asp-controller="Account" asp-action="Login"> Iniciar Sesión</a>
+                                <a class="navbar-link" asp-area="" asp-controller="Account" asp-action="Login" style="font-size:16px"> Iniciar Sesión</a>
                             </li>
                         }
                     </ul>
 
-                    @*<li>
-                        <a href="#" class="navbar-link">Shop</a>
-                    </li>
-
-                    <li>
-                        <a href="#" class="navbar-link">About</a>
-                    </li>
-
-                    <li>
-                        <a href="#blog" class="navbar-link">Blog</a>
-                    </li>
-
-                    <li>
-                        <a href="#" class="navbar-link">Contact</a>
-                    </li>*@
+                    
 
                 </ul>
 
