@@ -2,7 +2,7 @@
 
 <section class="container py-5">
     <h3 class="my-5">
-        Shopping cart
+        Carrito de compras
     </h3>
 
 
@@ -13,14 +13,15 @@
                 <div class="card shopping-cart-card mb-2">
                     <div class="row">
                         <div class="col-md-4">
-                            <img src="@line.Product.ImageFullPath" class="img-fluid rounded-start p-2" alt="@line.Product.Name">
+                            <img src="/images/@line.Product.ImageFullPath" class="img-fluid rounded-start p-2" style="max-width:200px" alt="@line.Product.Name">
                         </div>
                         <div class="col-md-8">
                             <div class="card-body">
-                                <h5 class="card-text">@line.Amount x @line.Product.Name</h5>
+                                <h4 class="card-text">@line.Amount x @line.Product.Name</h4>
+                                <br>
+                                <h5 class="card-text">Talla: @line.ProductSize.Talla.ShortName</h5>
                                 <div class="d-flex justify-content-between">
-                                    <h6>@line.Product.Description</h6>
-                                    <h2>@line.Product.Price.ToString("c")</h2>
+                                    <h2>@line.Product.Price.ToString() Bs.</h2>
                                 </div>
                             </div>
                         </div>
@@ -32,11 +33,11 @@
             <div class="card shopping-cart-card p-3">
                 <div class="row">
                     <h4 class="col">Total:</h4>
-                    <h4 class="col text-end">@Model.ShoppingCartTotal.ToString("c")</h4>
+                    <h4 class="col text-end">@Model.ShoppingCartTotal.ToString() Bs.</h4>
                 </div>
                 <hr />
                 <div class="text-center d-grid">
-                    <a class="btn btn-secondary" asp-controller="Order" asp-action="Checkout"><h4>Check out now!</h4></a>
+                    <a class="btn btn-secondary" asp-controller="Order" asp-action="Checkout"><h4>Confirmar Pedido</h4></a>
                 </div>
             </div>
         </div>

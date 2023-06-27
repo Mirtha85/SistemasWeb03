@@ -44,7 +44,7 @@ public class HomeController : Controller
         return View(model);
     }
 
-    public IActionResult AddToShoppingCart(int id) 
+    public IActionResult AddToShoppingCart(int id)
     {
         Product? product = _productRepository.GetProductById(id);
 
@@ -64,17 +64,69 @@ public class HomeController : Controller
         return View(model);
     }
 
+
     [HttpPost]
     public IActionResult AddToShoppingCart(DetailsProductViewModel model)
     {
-        if (ModelState.IsValid)
+        Product? product = _productRepository.GetProductById(model.Product.Id);
+        if (product == null)
         {
-            _shoppingCart.AddToCart(model);
-            return RedirectToAction(nameof(Index));
+            return NotFound();
         }
+        try
+        {
+            ProductSize productSize = model.productSize;
+            int Amount = model.Amount;
+            _shoppingCart.AddToCart(product, productSize, Amount);
+            return RedirectToAction("Index");
+        }
+        catch (Exception)
+        {
+
+            throw;
+        }
+
+    }
+
+
+    public IActionResult AddToCart(int id)
+    {
+        Product? product = _productRepository.GetProductById(id);
+
+        if (product == null)
+        {
+            return NotFound();
+        }
+        List<SelectListItem> tallas = _productSizeRepository.GetSizesByProductId(product.Id)
+                .OrderBy(t => t.Id)
+                     .Select(t =>
+                      new SelectListItem
+                      {
+                          Value = t.Id.ToString(),
+                          Text = t.Talla.ShortName
+                      }).ToList();
+        CartItemViewModel model = new()
+        {
+            Product = product,
+            ProductId = product.Id,
+            ProductSizes = tallas
+
+        };
         return View(model);
     }
 
+    [HttpPost]
+    public IActionResult AddToCart(CartItemViewModel model)
+    {
+        Product? product = _productRepository.GetProductById(model.ProductId);
+        if (product != null)
+        {
+            ProductSize? productSize = _productSizeRepository.GetProductSizeById(model.ProductSizeId);
+            _shoppingCart.AddToCart(product, productSize, model.Amount);
+            return RedirectToAction("Index");
+        }
+         return View(model);
+    }
 
 
     public ViewResult ShowCart()

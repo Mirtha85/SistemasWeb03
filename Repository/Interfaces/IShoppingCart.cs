@@ -5,7 +5,7 @@ namespace SistemasWeb01.Models
 {
     public interface IShoppingCart
     {
-        void AddToCart(DetailsProductViewModel model);
+        void AddToCart(Product product, ProductSize productSize, int amount);
         int RemoveFromCart(Product product);
         List<ShoppingCartItem> GetShoppingCartItems();
         void ClearCart();

@@ -29,6 +29,8 @@ namespace SistemasWeb01.DataAccess
             await CheckUserAsync("7210049", "Wilfredo", "Yelma", "yelma@gmail.com", "64435282", "Calle 13, B/ Plan 4 mil", "fotow.webp", UserType.Admin, "Admin");
             await CheckUserAsync("6525331", "Leonel", "Messi", "messi@yopmail.com", "78522456", "Calle Paris, Plan 3 mil", "messi.webp", UserType.User, "User");
 
+            await CheckShoppingCartItem();
+
         }
 
         private async Task CheckRolesAsync()
@@ -65,7 +67,16 @@ namespace SistemasWeb01.DataAccess
             return user;
         }
 
-
+        // crear shopping cart item
+        private async Task CheckShoppingCartItem()
+        {
+            if (!_shoppingDbContext.ShoppingCartItems.Any())
+            {
+                _shoppingDbContext.ShoppingCartItems.Add( new ShoppingCartItem { ProductId= 1, ProductSizeId = 1, Amount = 1, ShoppingCartId = "1a2b3c4d" });
+                _shoppingDbContext.ShoppingCartItems.Add( new ShoppingCartItem { ProductId = 2, ProductSizeId = 2, Amount = 2, ShoppingCartId = "4a3b2c1d" });
+            }
+            await _shoppingDbContext.SaveChangesAsync();
+        }
 
 
 

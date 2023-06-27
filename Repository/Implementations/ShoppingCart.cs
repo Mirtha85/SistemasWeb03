@@ -61,20 +61,20 @@ namespace SistemasWeb01.Repository.Implementations
         //    }
         //    _shoppingDbContext.SaveChanges();
         //}
-        public void AddToCart(DetailsProductViewModel model)
+        public void AddToCart(Product product, ProductSize productSize, int amount)
         {
             var shoppingCartItem =
                     _shoppingDbContext.ShoppingCartItems.SingleOrDefault(
-                        s => s.Product.Id == model.Product.Id && s.ShoppingCartId == ShoppingCartId);
+                        s => s.Product.Id == product.Id && s.ShoppingCartId == ShoppingCartId);
 
             if (shoppingCartItem == null)
             {
                 shoppingCartItem = new ShoppingCartItem
                 {
                     ShoppingCartId = ShoppingCartId,
-                    Product = model.Product,
-                    Amount = model.Amount,
-                    ProductSizeId = model.ProductSizeId
+                    Product = product,
+                    Amount = amount,
+                    ProductSize = productSize
                 };
 
                 _shoppingDbContext.ShoppingCartItems.Add(shoppingCartItem);
@@ -116,7 +116,9 @@ namespace SistemasWeb01.Repository.Implementations
             return ShoppingCartItems ??=
                        _shoppingDbContext.ShoppingCartItems.Where(c => c.ShoppingCartId == ShoppingCartId)
                             .Include(s => s.Product)
+                            .ThenInclude(sp => sp.Pictures)
                             .Include(s => s.ProductSize)
+                            .ThenInclude(sp => sp.Talla)
                             .ToList();
         }
 

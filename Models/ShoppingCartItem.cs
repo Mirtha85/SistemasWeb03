@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.IO.Pipelines;
+using System.Text.Json.Serialization;
 using System.Xml.Linq;
 
 namespace SistemasWeb01.Models
@@ -8,12 +9,17 @@ namespace SistemasWeb01.Models
     {
         public int ShoppingCartItemId { get; set; }
         public int ProductId { get; set; }
+
+        [JsonIgnore]
         public Product  Product { get; set; } = default!;
         
         [Display(Name = "Talla")]
         [Range(1, int.MaxValue, ErrorMessage = "Debes seleccionar una talla.")]
         [Required(ErrorMessage = "El campo {0} es obligatorio.")]
         public int ProductSizeId { get; set; }
+
+
+        [JsonIgnore]
         public ProductSize ProductSize { get; set; } = default!;
 
         [Display(Name = "Cantidad")]
