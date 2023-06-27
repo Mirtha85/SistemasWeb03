@@ -16,17 +16,16 @@ public class HomeController : Controller
     private readonly ICategoryRepository _categoryRepository;
     private readonly ISubCategoryRepository _subCategoryRepository;
     private readonly IProductSizeRepository _productSizeRepository;
-   
-    
-    public HomeController(ILogger<HomeController> logger, IProductRepository productRepository, ICategoryRepository categoryRepository, ISubCategoryRepository subCategoryRepository, IProductSizeRepository productSizeRepository)
+    private readonly IShoppingCart _shoppingCart;
+
+    public HomeController(ILogger<HomeController> logger, IProductRepository productRepository, ICategoryRepository categoryRepository, ISubCategoryRepository subCategoryRepository, IProductSizeRepository productSizeRepository, IShoppingCart shoppingCart)
     {
         _logger = logger;
         _productRepository = productRepository;
         _categoryRepository = categoryRepository;
         _subCategoryRepository = subCategoryRepository;
         _productSizeRepository = productSizeRepository;
-
-
+        _shoppingCart = shoppingCart;
     }
 
     public IActionResult Index()
@@ -37,7 +36,7 @@ public class HomeController : Controller
         return View(model);
     }
 
-    public IActionResult DetailsProduct(int id) 
+    public IActionResult AddToShoppingCart(int id) 
     {
         Product? product = _productRepository.GetProductById(id);
 
@@ -53,16 +52,60 @@ public class HomeController : Controller
                           Value = t.Id.ToString(),
                           Text = t.Talla.ShortName
                       }).ToList();
-        string tallasList = "";
-        foreach(ProductSize productSize in product.ProductSizes!)
-        {
-            tallasList += $"•  {productSize.Talla.ShortName}      ";
-        }
         DetailsProductViewModel model = new DetailsProductViewModel(product, tallas);
-        model.TallasDisponibles = tallasList;
-
         return View(model);
     }
+
+    [HttpPost]
+    public IActionResult AddToShoppingCart(DetailsProductViewModel model)
+    {
+        if (ModelState.IsValid)
+        {
+            _shoppingCart.AddToCart(model);
+            return RedirectToAction(nameof(Index));
+        }
+        return View(model);
+    }
+
+
+
+    public ViewResult ShowCart()
+    {
+        var items = _shoppingCart.GetShoppingCartItems();
+        _shoppingCart.ShoppingCartItems = items;
+
+        var shoppingCartViewModel = new ShoppingCartViewModel(_shoppingCart, _shoppingCart.GetShoppingCartTotal());
+
+        return View(shoppingCartViewModel);
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     public ViewResult List(string category)
     {

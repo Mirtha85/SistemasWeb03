@@ -27,28 +27,26 @@ namespace SistemasWeb01.Controllers
             return View(shoppingCartViewModel);
         }
 
-        //public RedirectToActionResult AddToShoppingCart(DetailsProductViewModel model)
+        //public RedirectToActionResult AddToShoppingCart(int productId)
         //{
-        //    var selectedProduct = _productRepository.AllProducts.FirstOrDefault(p => p.Id == model.Product.Id);
-        //    model.productSize = _
-        //    if (selectedProduct != null)
+        //    var selectedProduct = _productRepository.AllProducts.FirstOrDefault(p => p.Id == productId);
+
+        //    if (ModelState.IsValid)
         //    {
-                
-                
-        //        //_shoppingCart.AddToCart(selectedProduct);
+        //        _shoppingCart.AddToCart(model);
         //    }
         //    return RedirectToAction("Index");
         //}
 
-        //public RedirectToActionResult RemoveFromShoppingCart(int id)
-        //{
-        //    var selectedPie = _productRepository.AllProducts.FirstOrDefault(p => p.Id == id);
+        public RedirectToActionResult RemoveFromShoppingCart(int id)
+        {
+            var selectedPie = _productRepository.AllProducts.FirstOrDefault(p => p.Id == id);
 
-        //    if (selectedPie != null)
-        //    {
-        //        _shoppingCart.RemoveFromCart(selectedPie);
-        //    }
-        //    return RedirectToAction("Index");
-        //}
+            if (selectedPie != null)
+            {
+                _shoppingCart.RemoveFromCart(selectedPie);
+            }
+            return RedirectToAction("Index");
+        }
     }
 }

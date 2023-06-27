@@ -74,14 +74,10 @@ namespace SistemasWeb01.Repository.Implementations
                     ShoppingCartId = ShoppingCartId,
                     Product = model.Product,
                     Amount = model.Amount,
-                    //ProductSize = model.ProductSize
+                    ProductSizeId = model.ProductSizeId
                 };
 
                 _shoppingDbContext.ShoppingCartItems.Add(shoppingCartItem);
-            }
-            else
-            {
-                shoppingCartItem.Amount++;
             }
             _shoppingDbContext.SaveChanges();
         }

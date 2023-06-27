@@ -49,6 +49,11 @@
 
                 <hr />
 
+                <form asp-action="AddToShoppingCart" method="post">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <input type="hidden" asp-for="ProductSizeId" />
+                    <input id="amount" type="hidden" asp-for="Amount"/>
+                    <input type="hidden" asp-for="@Model.Product" />
                 <div class="row mb-4 contador-talla">
                     <div class="col-sm-12 col-md-7">
                         
@@ -70,6 +75,7 @@
                        
                             @*<input asp-for="Amount" type="text" id="contar" class="form-control text-center border border-secondary" placeholder="1" aria-label="Example text with button addon" aria-describedby="button-addon1" />*@
                             <label asp-for="Amount" type="text" id="contar" class="form-control text-center border border-secondary" aria-label="Example text with" aria-describedby="button-addonx" style="font-size:16px;">1</label>
+                            
                             <button class="btn btn-white border border-secondary px-3" type="button" id="button-addon2" data-mdb-ripple-color="dark">
                                 <i class="fas fa-plus"></i>
                             </button>
@@ -78,12 +84,15 @@
                 </div>
                 <div  class="row mb-5">
                     <div class="col-sm-12 col-md-6 col-6">
-                        <a href="#" class="boton boton-primary"> <i class="me-1 fa fa-shopping-basket"></i>  <span class="texto-boton">Agregar</span>   </a>
+                        <a asp-controller="Home" asp-action="AddToShoppingCart" class="boton boton-primary"> <i class="me-1 fa fa-shopping-basket"></i>  <span class="texto-boton">Agregar</span>   </a>
                     </div>
                     <div class="col-sm-12 col-md-6 col-6">
                         <a asp-action="Index" class="boton boton-outline "> <i class="fa fa-undo" aria-hidden="true"></i>  <span class="texto-boton">Regresar</span>  </a>
                     </div>
                 </div>
+                </form>
+
+
             </div>
         </div>
     </div>
@@ -115,6 +124,7 @@
         const contador = document.getElementById("contar");
         const sumar = document.getElementById("button-addon2");
         const restar = document.getElementById("button-addon1");
+        const cantidad = document.getElementById("amount");
         //const reset = document.getElementById("reset");
 
         let numero = 1;
@@ -122,6 +132,7 @@
         sumar.addEventListener("click", () => {
             numero++;
             contador.innerHTML = numero;
+            cantidad.innerHTML = numero;
         });
 
         restar.addEventListener("click", () => {
@@ -130,6 +141,7 @@
             else {
                 numero--;
                 contador.innerHTML = numero;
+                cantidad.innerHTML = parseInt(numero);
             }
 
         });

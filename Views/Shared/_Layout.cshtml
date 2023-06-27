@@ -25,86 +25,13 @@
 
     <!--Carousel-->
     <link rel="stylesheet" href="~/assets/css/owl.carousel.min.css">
-   @* <link rel="stylesheet" href="~/assets/css/owl.theme.default.min.css">*@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/4.5.6/css/ionicons.min.css">
     <link rel="stylesheet" href="~/assets/css/animate.css">
     <link rel="stylesheet" href="~/assets/css/carousel.css">
 
 </head>
 <body>
-    @*<header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">SistemasWeb01</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
-
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Category" asp-action="Index">Categorías</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Product" asp-action="Index">Productos</a>
-                        </li>
-                        
-                        
-                        @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
-                        {
-
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="Index">Usuarios</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Country" asp-action="Index">Paises</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Talla" asp-action="Index">Tallas</a>
-                            </li>
-                            
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Brand" asp-action="Index">Marcas</a>
-                            </li>
-                            
-                        }
-                        
-                    </ul>
-                    <!-- Par el login-->
-                    <ul class="nav navbar-nav navbar-right">
-                        @if (User.Identity.IsAuthenticated)
-                        {
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="ChangeUser"> <img src="/images/perfil.webp" alt="" style="max-width:30px;" /></a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="ChangeUser">@User.Identity.Name</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="Logout"> Cerrar Sesión</a>
-                            </li>
-                        }
-                        else
-                        {
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="Login"> Iniciar Sesión</a>
-                            </li>
-                        }
-                    </ul>
-
-
-                </div>
-            </div>
-        </nav>
-    </header>*@
-
+   
     <!-- - #HEADER-->
 
     <header class="header" data-header>
@@ -138,13 +65,13 @@
                     <p style="margin-bottom:0px;" class="header-action-label">Search</p>
                 </button>
 
-                <button class="header-action-btn">
+                <a asp-controller="ShoppingCart" asp-action="Index" class="header-action-btn" style="color: #171717">
                     <ion-icon name="cart-outline" aria-hidden="true"></ion-icon>
 
                     <p style ="margin-bottom:0px;" class="header-action-label">Cart</p>
 
                     <div class="btn-badge green" aria-hidden="true">3</div>
-                </button>
+                </a>
 
                 <button class="header-action-btn">
                     <ion-icon name="heart-outline" aria-hidden="true"></ion-icon>
@@ -178,9 +105,6 @@
 
                 <ul class="navbar-list" id="lista-menu">
 
-                    @*<li>
-                        <a href="#home" class="navbar-link">Home</a>
-                    </li>*@
                     <li class="navbar-link">
                         <a class="navbar-link" asp-area="" asp-controller="Home" asp-action="Index">Inicio</a>
                     </li>
@@ -189,7 +113,7 @@
                     </li>
 
                     <li>
-                        <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-link">Acerca de nosotros</a>
+                        <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-link">Nosotros</a>
                     </li>
 
                     <li>
@@ -243,10 +167,6 @@
                         }
                 </ul>
 
-@*                <ul class="navbar-list navbar-right">
-                    
-                </ul>*@
-
             </nav>
 
         </div>
@@ -288,9 +208,6 @@
     <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
 
     <!--para carousel-->
-    <script src="~/assets/js/jquery.min.js"></script>
-   @* <script src="~/assets/js/popper.js"></script>*@
-    @*<script src="~/assets/js/bootstrap.min.js"></script>*@
     <script src="~/assets/js/owl.carousel.min.js"></script>
     <script src="~/assets/js/main.js"></script>
     

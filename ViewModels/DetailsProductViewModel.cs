@@ -21,7 +21,7 @@ namespace SistemasWeb01.ViewModels
         {
             Product = product;
             ProductSizes = productSizes;
-          
+            Amount = 1;
         }
     }
 }

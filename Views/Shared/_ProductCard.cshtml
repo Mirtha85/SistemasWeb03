@@ -5,7 +5,7 @@
 
         <figure class="card-banner">
 
-            <a asp-controller="Home" asp-action="DetailsProduct" asp-route-id="@Model.Id">
+            <a asp-controller="Home" asp-action="AddToShoppingCart" asp-route-id="@Model.Id">
                 <img src="~/images/@Model.ImageFullPath" alt="@Model.Name" loading="lazy" class="w-100">
             </a>
 
@@ -13,15 +13,15 @@
 
             <div class="card-actions">
 
-                <a asp-controller="Home" asp-action="DetailsProduct" asp-route-id="@Model.Id" class="card-action-btn" aria-label="Quick view">
+                <a href="#" class="card-action-btn" aria-label="Quick view">
                     <ion-icon name="eye-outline"></ion-icon>
                 </a>
 
-                <button class="card-action-btn cart-btn">
+                <a asp-controller="Home" asp-action="AddToShoppingCart" asp-route-id="@Model.Id class="card-action-btn cart-btn">
                     <ion-icon name="bag-handle-outline" aria-hidden="true"></ion-icon>
 
                     <p style="margin-bottom:0px;">AGREGAR</p>
-                </button>
+                </a>
 
                 <a href="#" class="card-action-btn" aria-label="Detalle">
                     <ion-icon name="heart-outline"></ion-icon>
