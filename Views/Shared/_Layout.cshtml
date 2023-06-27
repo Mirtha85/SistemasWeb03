@@ -29,6 +29,10 @@
     <link rel="stylesheet" href="~/assets/css/animate.css">
     <link rel="stylesheet" href="~/assets/css/carousel.css">
 
+
+    <!--product card-->
+    <link rel="stylesheet" href="~/css/productCard.css">
+
 </head>
 <body>
    
@@ -52,34 +56,42 @@
             </a>
 
             <div class="header-actions">
+                @if (User.Identity.IsAuthenticated)
+                {
+                    <a asp-controller="Account" asp-action="Logout" class="header-action-btn" style="color: #171717">
+                        <ion-icon name="person-outline" aria-hidden="true"></ion-icon>
 
-                <button class="header-action-btn">
-                    <ion-icon name="person-outline" aria-hidden="true"></ion-icon>
-
-                    <p style="margin-bottom:0px;" class="header-action-label">Sign in</p>
-                </button>
+                        <p style="margin-bottom:0px;" class="header-action-label">Cerrar</p>
+                    </a>
+                }
+                else
+                {
+                    <a asp-controller="Account" asp-action="Login" class="header-action-btn" style="color: #171717">
+                        <ion-icon name="person-outline" aria-hidden="true"></ion-icon>
+                        <p style="margin-bottom:0px;" class="header-action-label">Iniciar</p>
+                    </a>
+                }
 
                 <button class="header-action-btn">
                     <ion-icon name="search-outline" aria-hidden="true"></ion-icon>
 
-                    <p style="margin-bottom:0px;" class="header-action-label">Search</p>
+                    <p style="margin-bottom:0px;" class="header-action-label">Buscar</p>
                 </button>
 
                 <a asp-controller="ShoppingCart" asp-action="Index" class="header-action-btn" style="color: #171717">
                     <ion-icon name="cart-outline" aria-hidden="true"></ion-icon>
 
-                    <p style ="margin-bottom:0px;" class="header-action-label">Cart</p>
+                    <p style ="margin-bottom:0px;" class="header-action-label">Carrito</p>
 
                     <div class="btn-badge green" aria-hidden="true">3</div>
                 </a>
 
-                <button class="header-action-btn">
-                    <ion-icon name="heart-outline" aria-hidden="true"></ion-icon>
+                <a asp-controller="ShoppingCart" asp-action="Index" class="header-action-btn" style="color: #171717">
+                    <ion-icon name="home-outline" aria-hidden="true"></ion-icon>
+                    <p style="margin-bottom:0px;" class="header-action-label">Inicio</p>
 
-                    <p style="margin-bottom:0px;" class="header-action-label">Wishlisht</p>
-
-                    <div class="btn-badge" aria-hidden="true">2</div>
-                </button>
+                    @*<div class="btn-badge" aria-hidden="true">2</div>*@
+                </a>
 
             </div>
 
@@ -109,7 +121,7 @@
                         <a class="navbar-link" asp-area="" asp-controller="Home" asp-action="Index">Inicio</a>
                     </li>
                     <li>
-                        <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-link">Productos</a>
+                        <a asp-area="" asp-controller="Home" asp-action="ListProducts" class="navbar-link">Productos</a>
                     </li>
 
                     <li>

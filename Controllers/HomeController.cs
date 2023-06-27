@@ -36,6 +36,14 @@ public class HomeController : Controller
         return View(model);
     }
 
+    public IActionResult ListProducts()
+    {
+        IEnumerable<Product> products = _productRepository.AllProducts;
+        IEnumerable<Category> categories = _categoryRepository.AllCategories;
+        HomeViewModel model = new HomeViewModel(products, categories);
+        return View(model);
+    }
+
     public IActionResult AddToShoppingCart(int id) 
     {
         Product? product = _productRepository.GetProductById(id);

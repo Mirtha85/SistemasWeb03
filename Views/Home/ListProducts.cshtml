@@ -1,0 +1,57 @@
+﻿@model HomeViewModel
+@{
+    ViewData["Title"] = "ListProducts";
+}
+
+<section class="section product">
+    <div class="container">
+
+
+
+        <section class="section-products mt-3 mb-4">
+            <div class="text-center mb-5">
+                <img src="/images/shop-min.png" class="logo-mark mx-auto mb-5" style="max-width: 200px" />
+                @*<div class="logo">
+                <i class="bi bi-cup-hot"></i>
+                </div>*@
+                @*<h1>Ropa de Mujer</h1>
+                <h5>Para todos los estilos</h5>*@
+
+                <div class="row">
+
+                    <h2 class="h2 section-title">Categorías de productos</h2>
+
+                    <ul class="filter-list">
+
+                        <li>
+                            <button class="filter-btn  active">Arrazando</button>
+                        </li>
+
+                        <li>
+                            <button class="filter-btn">Nueva colección</button>
+                        </li>
+
+                        <li>
+                            <button class="filter-btn">Ropa</button>
+                        </li>
+
+                        <li>
+                            <button class="filter-btn">Zapatos</button>
+                        </li>
+
+                    </ul>
+
+                    <div class="row row-cols-1 row-cols-md-3 g-4">
+                        @foreach (var product in Model.ProductsBestSellers)
+                        {
+                            <partial name="_ProductCard" model="product" />
+                        }
+                    </div>
+
+                </div>
+            </div>
+
+        </section>
+
+    </div>
+</section>

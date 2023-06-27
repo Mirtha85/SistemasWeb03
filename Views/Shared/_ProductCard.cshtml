@@ -1,6 +1,6 @@
 ﻿@model Product
 
-<div class="col-sm-12 col-md-6 col-lg-4 mb-4 mt-4">
+@*<div class="col-sm-12 col-md-6 col-lg-4 mb-4 mt-4">
     <div class="blog-card">
 
         <figure class="card-banner">
@@ -24,7 +24,7 @@
                     <ion-icon name="heart-outline"></ion-icon>
                 </a>
 
-            </div>*@
+            </div>
 
         </figure>
 
@@ -39,4 +39,47 @@
         </div>
 
     </div>
-</div>
+</div>*@
+
+
+
+
+@*<div class="row">*@
+    <div class="col-md-4 col-sm-6 col-lg-3">
+        <div class="product-grid">
+            <div class="product-image">
+            <a class="image">
+                @for (int i = 0; i <= 1; i++)
+            {
+                <img class="img-@(i+1)" src="~/images/@Model.Pictures![i].PictureName" />
+            }
+            </a>
+            @*<a href="#" class="image">
+                    <img class="img-1" src="images/img-1.jpg">
+                    <img class="img-2" src="images/img-2.jpg">
+                </a>*@
+                <ul class="product-links">
+                    <li><a href="#"><i class="fa fa-heart"></i></a></li>
+                    <li><a href="#"><i class="fa fa-random"></i></a></li>
+                    <li><a asp-controller="Home" asp-action="AddToShoppingCart" asp-route-id="@Model.Id"><i class="fa fa-shopping-cart"></i></a></li>
+                </ul>
+
+               <a asp-controller="Home" asp-action="AddToShoppingCart" asp-route-id="@Model.Id" class="product-view"><i class="fa fa-search"></i></a>
+            </div>
+            <div class="product-content">
+                @*<ul class="rating">
+                    <li class="fas fa-star"></li>
+                    <li class="fas fa-star"></li>
+                    <li class="fas fa-star"></li>
+                    <li class="fas fa-star"></li>
+                    <li class="fas fa-star disable"></li>
+                    <li class="disable">(1 reviews)</li>
+                </ul>*@
+                <span class="text-muted" style="font-size:12px;"> @Model.SubCategory.Category.Name   /   @Model.SubCategory.Name</span>
+                <h3 class="title"><a href="#">@Model.Name</a></h3>
+                <div class="price">@Model.Price Bs.</div>
+            </div>
+        </div>
+    </div>
+    
+@*</div>*@
