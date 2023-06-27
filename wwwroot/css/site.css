@@ -60,8 +60,8 @@ body {
     padding:10px 30px 10px 30px; /* arriba, derecha, abajo, izquierda */
 }
 
-.estrellas{
-    color: #7AB8B4;
+.estrellas {
+    color: hsl(148, 45%, 58%);
 }
 .selector-talla{
     height:40px;
@@ -71,9 +71,11 @@ body {
     margin-left:10px;
 }
 
+
+
 /******************************/
-/*------ CAROUSEL --------*/ 
+/*------ CAROUSEL --------*/
 /********************************/
-.caja{
+.caja {
     height: 500px;
 }
