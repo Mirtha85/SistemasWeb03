@@ -5,16 +5,7 @@
     <div class="sproduct">
         <div class="row mt-5">
             <div class="col-lg-6 col-md-12 col-12 mb-5">
-                @*<img class="image-fluid w-100 pb-1" src="~/images/@Model.Product.ImageFullPath" id="MainImg" alt="" />
-                <div class="small-img-group">
-
-                    @foreach (Picture picture in Model.Product.Pictures!)
-                    {
-                        <div class="small-img-col">
-                            <img src="~/images/@picture.PictureName" width="100%" class="small-img" alt="" />
-                        </div>
-                    }
-                </div>*@
+               
                 <partial name="_CarouselProducts"></partial>
             </div>
             <div class="col-lg-6 col-md-12 col-12" style="padding-left:20px; padding-right:20px;">
