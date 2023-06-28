@@ -3,6 +3,7 @@ using System.IO.Pipelines;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.CodeAnalysis;
+using Microsoft.EntityFrameworkCore;
 using SistemasWeb01.Models;
 using SistemasWeb01.Repository.Interfaces;
 using SistemasWeb01.ViewModels;
@@ -17,22 +18,34 @@ public class HomeController : Controller
     private readonly ISubCategoryRepository _subCategoryRepository;
     private readonly IProductSizeRepository _productSizeRepository;
     private readonly IShoppingCart _shoppingCart;
+    
 
-    public HomeController(ILogger<HomeController> logger, IProductRepository productRepository, ICategoryRepository categoryRepository, ISubCategoryRepository subCategoryRepository, IProductSizeRepository productSizeRepository, IShoppingCart shoppingCart)
+    private readonly IUserRepository _userRepository;
+    private readonly ITemporalSaleRepository _temporalSaleRepository;
+
+    public HomeController(IUserRepository userRepository, ILogger<HomeController> logger, IProductRepository productRepository, ICategoryRepository categoryRepository, ISubCategoryRepository subCategoryRepository, IProductSizeRepository productSizeRepository, IShoppingCart shoppingCart, ITemporalSaleRepository temporalSaleRepository)
     {
+        _userRepository = userRepository;
+
         _logger = logger;
         _productRepository = productRepository;
         _categoryRepository = categoryRepository;
         _subCategoryRepository = subCategoryRepository;
         _productSizeRepository = productSizeRepository;
         _shoppingCart = shoppingCart;
+        _temporalSaleRepository = temporalSaleRepository;
     }
 
-    public IActionResult Index()
+    public async Task<IActionResult> Index()
     {
         IEnumerable<Product> products = _productRepository.BestSellingProducts;
         IEnumerable<Category> categories = _categoryRepository.AllCategories;
         HomeViewModel model = new HomeViewModel(products, categories);
+        User user = await _userRepository.GetUserAsync(User.Identity.Name);
+        if(user != null)
+        {
+            model.Quantity = _temporalSaleRepository.GetTemporalSalesByUserId(user.Id).Count();
+        }
         return View(model);
     }
 
@@ -48,45 +61,101 @@ public class HomeController : Controller
     }
 
 
-    public IActionResult AddToCart(int id)
+    // ------ 2da FORMA ----------------
+    public async Task<IActionResult> AddToCart(int id)
     {
-        Product? product = _productRepository.GetProductById(id);
+        
+        if (!User.Identity.IsAuthenticated)
+        {
+            return RedirectToAction("Login", "Account");
+        }
 
+        Product? product =  _productRepository.GetProductById(id);
         if (product == null)
         {
             return NotFound();
         }
-        List<SelectListItem> tallas = _productSizeRepository.GetSizesByProductId(product.Id)
-                .OrderBy(t => t.Id)
-                     .Select(t =>
-                      new SelectListItem
-                      {
-                          Value = t.Id.ToString(),
-                          Text = t.Talla.ShortName
-                      }).ToList();
-        CartItemViewModel model = new()
+
+        User user = await _userRepository.GetUserAsync(User.Identity.Name); //siempre devuelve el correo del usuario logeado
+        if (user == null)
+        {
+            return NotFound();
+        }
+
+        TemporalSale temporalSale = new()
         {
             Product = product,
-            ProductId = product.Id,
-            ProductSizes = tallas,
-            Amount = 1
-
+            Quantity = 1,
+            User = user
         };
-        return View(model);
+
+        _temporalSaleRepository.CreateTempalSale(temporalSale);
+        return RedirectToAction(nameof(Index));
     }
 
-    [HttpPost]
-    public IActionResult AddToCart(CartItemViewModel model)
-    {
-        Product? product = _productRepository.GetProductById(model.ProductId);
-        if (product != null)
-        {
-            ProductSize? productSize = _productSizeRepository.GetProductSizeById(model.ProductSizeId);
-            _shoppingCart.AddToCart(product, productSize, model.Amount);
-            return RedirectToAction("Index");
-        }
-         return View(model);
-    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    //public IActionResult AddToCart(int id)
+    //{
+    //    Product? product = _productRepository.GetProductById(id);
+
+    //    if (product == null)
+    //    {
+    //        return NotFound();
+    //    }
+    //    List<SelectListItem> tallas = _productSizeRepository.GetSizesByProductId(product.Id)
+    //            .OrderBy(t => t.Id)
+    //                 .Select(t =>
+    //                  new SelectListItem
+    //                  {
+    //                      Value = t.Id.ToString(),
+    //                      Text = t.Talla.ShortName
+    //                  }).ToList();
+    //    CartItemViewModel model = new()
+    //    {
+    //        Product = product,
+    //        ProductId = product.Id,
+    //        ProductSizes = tallas,
+    //        Amount = 1
+
+    //    };
+    //    return View(model);
+    //}
+
+    //[HttpPost]
+    //public IActionResult AddToCart(CartItemViewModel model)
+    //{
+    //    Product? product = _productRepository.GetProductById(model.ProductId);
+    //    if (product != null)
+    //    {
+    //        ProductSize? productSize = _productSizeRepository.GetProductSizeById(model.ProductSizeId);
+    //        _shoppingCart.AddToCart(product, productSize, model.Amount);
+    //        return RedirectToAction("Index");
+    //    }
+    //     return View(model);
+    //}
 
 
     public ViewResult ShowCart()

@@ -4,14 +4,11 @@
     ViewData["Title"] = "Home Page";
 }
 
-@*<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-    <br />
-    <h4>Usuario Admin de prueba : </h4>
-    <h5>yelma@gmail.com   -  Contraseña: 123456</h5>
-</div>
-*@
+@if (Model.Quantity > 0)
+{
+    <a asp-action="ShowCart" class="btn btn-outline-primary">Ver Carro de Compras (@Model.Quantity)</a>
+}
+
 
 <article">
 

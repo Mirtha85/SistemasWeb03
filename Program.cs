@@ -60,7 +60,9 @@ builder.Services.AddScoped<IBrandRepository, BrandRepository>();
 builder.Services.AddScoped<IFormFileHelper, FormFileHelper>();
 builder.Services.AddScoped<ICombosHelper, CombosHelper>();
 builder.Services.AddScoped<ISubCategoryRepository, SubCategoryRepository>();
-//builder.Services.AddScoped<IShoppingCart, ShoppingCart>();
+//builder.Services.AddScoped<IShoppingCart, ShoppingCart>(); //? lo tenia comentado ver pq
+
+builder.Services.AddScoped<ITemporalSaleRepository, TemporalSaleRepository>();
 
 var app = builder.Build();
 

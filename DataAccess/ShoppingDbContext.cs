@@ -26,6 +26,9 @@ namespace SistemasWeb01.DataAccess
         public DbSet<City> Cities { get; set; } 
         public DbSet<ShoppingCartItem> ShoppingCartItems { get; set; }
 
+        public DbSet<TemporalSale> TemporalSales { get; set; }
+
+
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

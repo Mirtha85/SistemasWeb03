@@ -8,6 +8,8 @@ namespace SistemasWeb01.ViewModels
         public IEnumerable<Product> ProductsBestSellers { get; }
         public IEnumerable<Category> Categories { get; }
 
+        public int Quantity { get; set; }
+
         public HomeViewModel(IEnumerable<Product> productsBestSellers, IEnumerable<Category> categories) { 
 
             ProductsBestSellers = productsBestSellers;
