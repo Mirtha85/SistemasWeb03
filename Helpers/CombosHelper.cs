@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using SistemasWeb01.DataAccess;
+using SistemasWeb01.Models;
+using System.Collections.Generic;
 
 namespace SistemasWeb01.Helpers
 {
@@ -11,7 +13,28 @@ namespace SistemasWeb01.Helpers
         {
             _shoppingDbContext = shoppingDbContext;
         }
-        
+
+        public async Task<IEnumerable<SelectListItem>> GetAllProductSizeByProductId( int productId)
+        {
+            List<SelectListItem> list = _shoppingDbContext.ProductSizes
+                .Where(ps => ps.ProductId == productId)
+                .OrderBy(t => t.Id)
+                     .Select(t =>
+                      new SelectListItem
+                      {
+                          Value = $"{t.Id}",
+                          Text = t.Talla.ShortName
+                      }).ToList();
+
+            list.Insert(0, new SelectListItem
+            {
+                Text = "[Seleccione una talla...]",
+                Value = "0"
+            });
+
+            return list;
+        }
+
         public async Task<IEnumerable<SelectListItem>> GetComboCitiesAsync(int stateId)
         {
             List<SelectListItem> list = await _shoppingDbContext.Cities

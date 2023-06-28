@@ -11,6 +11,7 @@ namespace SistemasWeb01.Helpers
         Task<IEnumerable<SelectListItem>> GetComboStatesAsync(int countryId);
 
         Task<IEnumerable<SelectListItem>> GetComboCitiesAsync(int stateId);
+        Task<IEnumerable<SelectListItem>> GetAllProductSizeByProductId(int productId);
 
     }
 }

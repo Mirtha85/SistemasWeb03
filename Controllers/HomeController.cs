@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.CodeAnalysis;
 using Microsoft.EntityFrameworkCore;
+using SistemasWeb01.Helpers;
 using SistemasWeb01.Models;
 using SistemasWeb01.Repository.Interfaces;
 using SistemasWeb01.ViewModels;
@@ -18,12 +19,13 @@ public class HomeController : Controller
     private readonly ISubCategoryRepository _subCategoryRepository;
     private readonly IProductSizeRepository _productSizeRepository;
     private readonly IShoppingCart _shoppingCart;
+    private readonly ICombosHelper _combosHelper;
     
 
     private readonly IUserRepository _userRepository;
     private readonly ITemporalSaleRepository _temporalSaleRepository;
 
-    public HomeController(IUserRepository userRepository, ILogger<HomeController> logger, IProductRepository productRepository, ICategoryRepository categoryRepository, ISubCategoryRepository subCategoryRepository, IProductSizeRepository productSizeRepository, IShoppingCart shoppingCart, ITemporalSaleRepository temporalSaleRepository)
+    public HomeController(IUserRepository userRepository, ILogger<HomeController> logger, IProductRepository productRepository, ICategoryRepository categoryRepository, ISubCategoryRepository subCategoryRepository, IProductSizeRepository productSizeRepository, IShoppingCart shoppingCart, ITemporalSaleRepository temporalSaleRepository, ICombosHelper combosHelper)
     {
         _userRepository = userRepository;
 
@@ -34,6 +36,7 @@ public class HomeController : Controller
         _productSizeRepository = productSizeRepository;
         _shoppingCart = shoppingCart;
         _temporalSaleRepository = temporalSaleRepository;
+        _combosHelper = combosHelper;
     }
 
     public async Task<IActionResult> Index()
@@ -93,6 +96,66 @@ public class HomeController : Controller
         return RedirectToAction(nameof(Index));
     }
 
+
+    // ------ PRODUCT DETAILS  ----------------
+    public async Task<IActionResult> Details(int id)
+    {
+        Product? product = _productRepository.GetProductById(id);
+        if (product == null)
+        {
+            return NotFound();
+        }
+
+        string tallas = string.Empty;
+        foreach (ProductSize? talla in product.ProductSizes!)
+        {
+            tallas += $"{talla.Talla.ShortName}, ";
+        }
+        tallas = tallas.Substring(0, tallas.Length - 2);
+
+        AddProductToCartViewModel model = new()
+        {
+            Product = product,
+            ProductId = product.Id,
+            ProductSizes = await _combosHelper.GetAllProductSizeByProductId(product.Id),
+            Amount = 1
+        };
+
+        return View(model);
+    }
+
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> Details(AddProductToCartViewModel model)
+    {
+        if (!User.Identity.IsAuthenticated)
+        {
+            return RedirectToAction("Login", "Account");
+        }
+
+        Product? product =  _productRepository.GetProductById(model.ProductId);
+        if (product == null)
+        {
+            return NotFound();
+        }
+
+        User? user = await _userRepository.GetUserAsync(User.Identity.Name);
+        if (user == null)
+        {
+            return NotFound();
+        }
+
+        TemporalSale temporalSale = new()
+        {
+            Product = product,
+            Quantity = model.Amount,
+            Remarks = model.Remarks,
+            User = user
+        };
+
+        _temporalSaleRepository.CreateTempalSale(temporalSale);
+        return RedirectToAction(nameof(Index));
+    }
 
 
 
