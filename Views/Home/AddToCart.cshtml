@@ -1,38 +1,181 @@
 ﻿@model CartItemViewModel
 
-<section class="container py-5">
- 
-    
-    <div class="row">
-        <div class="col-md-6">
-            <h4 class="mb-2 mt-5">@Model.Product.Name</h4>
-            <h5>@Model.Product.Price Bs.</h5>
-            <form asp-action="AddToCart" method="post" >
-                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                <input type="hidden" asp-for="Product" />
-                <input type="hidden" asp-for="ProductId" />
- 
+<section class="container pt-3 py-5">
 
-                <div class="form-group">
-                    <label asp-for="ProductSizeId" class="control-label"> Selecciona una Talla</label>
-                    <select asp-for="ProductSizeId" asp-items="Model.ProductSizes" class="form-control">
-                        <option value=""> --Selecciona una talla--</option>
-                    </select>
-                    <span asp-validation-for="ProductSizeId" class="text-danger"></span>
+    <div class="sproduct">
+        <div class="row mt-5">
+            <div class="col-lg-6 col-md-12 col-12 mb-5">
+               
+                <partial name="_CarouselProducts"></partial>
+            </div>
+            <div class="col-lg-6 col-md-12 col-12" style="padding-left:20px; padding-right:20px;">
+                <div class="row">
+                    <dt class="col-3">Categoría:</dt>
+                    <dd class="col-9">@Model.Product.SubCategory.Category.Name   /    @Model.Product.SubCategory.Name</dd>
+                </div>
+                <h3 class="mt-1">@Model.Product.Name</h3>
+                <div class="d-flex flex-row my-3">
+                    <div class="text-warning mb-1 me-2">
+                        <i class="fa fa-star estrellas"></i>
+                        <i class="fa fa-star estrellas"></i>
+                        <i class="fa fa-star estrellas"></i>
+                        <i class="fa fa-star estrellas"></i>
+                        <i class="fas fa-star-half-alt estrellas"></i>
+                        @*<span class="ms-1">
+                        4.5
+                        </span>*@
+                    </div>
+                    <span class="text-muted"><i class="fas fa-shopping-basket fa-sm mx-1"></i>@Model.Product.InStock</span>
+                    <span class="textStock ms-2" style="color: hsl(148, 45%, 58%);">En stock</span>
                 </div>
 
-                <div class="form-group mb-3">
-                    <label asp-for="Amount" class="control-label">Ingresa una cantidad</label>
-                    <input asp-for="Amount" class="form-control" />
-                    <span asp-validation-for="Amount" class="text-danger"></span>
+                <div class="mb-3">
+                    <span class="h5">@Model.Product.Price Bs.</span>
+                    <span class="text-muted">/Bolivianos</span>
                 </div>
 
-                <input type="submit" value="Agregar al carrito" class="btn btn-outline-primary" />
-                <a class="btn btn-outline-success" asp-action="Index"> Regresar</a>
-            </form>
-        </div>
-        <div class="col-md-6">
-            <img src="~/images/@Model.Product.ImageFullPath" style="max-width:300px;" />
+                <p>
+                    @Model.Product.Description
+                </p>
+
+                <hr />
+                <form  asp-action="AddToCart" method="post">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <input type="hidden" asp-for="Product" />
+                    <input type="hidden" asp-for="ProductId" />
+                    
+                   
+                <div class="row mb-4 contador-talla">
+                    <div class="col-sm-12 col-md-7">
+                        <label asp-for="ProductSizeId" class="mb-2 d-block control-label"> Selecciona una Talla</label>
+                        <select asp-for="ProductSizeId" asp-items="Model.ProductSizes" class="form-select sform-control selector-talla text-start border border-secondary">
+                           <option value=""> --Selecciona una talla--</option>
+                        </select>
+                        <span asp-validation-for="ProductSizeId" class="text-danger"></span>
+                    </div>
+                    <!-- col.// -->
+                    <div class="col-sm-12 col-md-5  mb-3">
+                            <div class="form-group mb-3" style="width: 150px; height:40px;">
+                                <label asp-for="Amount" class="control-label">Cantidad</label>
+                                <input asp-for="Amount" class="form-control" />
+                                <span asp-validation-for="Amount" class="text-danger"></span>
+                            </div>
+                    </div>
+                    
+                </div>
+                <div  class="row mb-5">
+                    <div class="col-sm-12 col-md-6  mb-3">
+                       <input type="submit" value="Agregar" class="boton boton-primary" />
+                    </div>
+                    <div class="col-sm-12 col-md-6 ">
+                        <a asp-action="Index" class="boton boton-outline "> <i class="fa fa-undo" aria-hidden="true"></i>  <span class="texto-boton">Regresar</span>  </a>
+                    </div>
+                </div>
+                </form>
+            </div>
         </div>
     </div>
 </section>
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+  <script>
+      var MainImg = document.getElementById('MainImg');
+        var smallimg = document.getElementsByClassName('small-img');
+
+        smallimg[0].onclick = function(){
+            MainImg.src = smallimg[0].src;
+        }
+        smallimg[1].onclick = function () {
+            MainImg.src = smallimg[1].src;
+        }
+        smallimg[2].onclick = function () {
+            MainImg.src = smallimg[2].src;
+        }
+        smallimg[3].onclick = function () {
+            MainImg.src = smallimg[3].src;
+        }
+
+  </script>
+
+  @*<script>
+        const contador = document.getElementById("contar");
+        const sumar = document.getElementById("button-addon2");
+        const restar = document.getElementById("button-addon1");
+        const cantidad = document.getElementById("amount");
+        //const reset = document.getElementById("reset");
+
+        let numero = 1;
+
+        sumar.addEventListener("click", () => {
+            numero++;
+            contador.innerHTML = numero;
+            cantidad.innerHTML = numero;
+        });
+
+        restar.addEventListener("click", () => {
+
+            if (numero == 0) { }
+            else {
+                numero--;
+                contador.innerHTML = numero;
+                cantidad.innerHTML = parseInt(numero);
+            }
+
+        });
+
+        //reset.addEventListener("click", () => {
+        //    numero = 0;
+        //    contador.innerHTML = numero;
+        //});
+
+  </script>*@
+
+  <script>
+        (function ($) {
+
+            "use strict";
+
+            var fullHeight = function () {
+
+                $('.js-fullheight').css('height', $(window).height());
+                $(window).resize(function () {
+                    $('.js-fullheight').css('height', $(window).height());
+                });
+
+            };
+            fullHeight();
+
+            var carousel = function () {
+                $('.home-slider').owlCarousel({
+                    loop: true,
+                    autoplay: true,
+                    margin: 0,
+                    animateOut: 'fadeOut',
+                    animateIn: 'fadeIn',
+                    nav: true,
+                    dots: true,
+                    autoplayHoverPause: false,
+                    items: 1,
+                    navText: ["<span class='ion-ios-arrow-back'></span>", "<span class='ion-ios-arrow-forward'></span>"],
+                    responsive: {
+                        0: {
+                            items: 1
+                        },
+                        600: {
+                            items: 1
+                        },
+                        1000: {
+                            items: 1
+                        }
+                    }
+                });
+
+            };
+            carousel();
+
+        })(jQuery);
+  </script>
+
+}

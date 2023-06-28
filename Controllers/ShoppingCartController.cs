@@ -27,16 +27,12 @@ namespace SistemasWeb01.Controllers
             return View(shoppingCartViewModel);
         }
 
-        //public RedirectToActionResult AddToShoppingCart(int productId)
-        //{
-        //    var selectedProduct = _productRepository.AllProducts.FirstOrDefault(p => p.Id == productId);
+        //index2
+        public IActionResult Index2()
+        {
+            return View();
+        }
 
-        //    if (ModelState.IsValid)
-        //    {
-        //        _shoppingCart.AddToCart(model);
-        //    }
-        //    return RedirectToAction("Index");
-        //}
 
         public RedirectToActionResult RemoveFromShoppingCart(int id)
         {

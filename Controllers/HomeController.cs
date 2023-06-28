@@ -36,56 +36,15 @@ public class HomeController : Controller
         return View(model);
     }
 
+    
+
+
     public IActionResult ListProducts()
     {
         IEnumerable<Product> products = _productRepository.AllProducts;
         IEnumerable<Category> categories = _categoryRepository.AllCategories;
         HomeViewModel model = new HomeViewModel(products, categories);
         return View(model);
-    }
-
-    public IActionResult AddToShoppingCart(int id)
-    {
-        Product? product = _productRepository.GetProductById(id);
-
-        if (product == null)
-        {
-            return NotFound();
-        }
-        List<SelectListItem> tallas = _productSizeRepository.GetSizesByProductId(product.Id)
-                .OrderBy(t => t.Id)
-                     .Select(t =>
-                      new SelectListItem
-                      {
-                          Value = t.Id.ToString(),
-                          Text = t.Talla.ShortName
-                      }).ToList();
-        DetailsProductViewModel model = new DetailsProductViewModel(product, tallas);
-        return View(model);
-    }
-
-
-    [HttpPost]
-    public IActionResult AddToShoppingCart(DetailsProductViewModel model)
-    {
-        Product? product = _productRepository.GetProductById(model.Product.Id);
-        if (product == null)
-        {
-            return NotFound();
-        }
-        try
-        {
-            ProductSize productSize = model.productSize;
-            int Amount = model.Amount;
-            _shoppingCart.AddToCart(product, productSize, Amount);
-            return RedirectToAction("Index");
-        }
-        catch (Exception)
-        {
-
-            throw;
-        }
-
     }
 
 
@@ -109,7 +68,8 @@ public class HomeController : Controller
         {
             Product = product,
             ProductId = product.Id,
-            ProductSizes = tallas
+            ProductSizes = tallas,
+            Amount = 1
 
         };
         return View(model);

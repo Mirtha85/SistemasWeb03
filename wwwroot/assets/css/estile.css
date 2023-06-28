@@ -96,6 +96,7 @@ button {
 
 input {
     /*width: 100%;*/ /*hace que los botones ocupen todo el ancho*/
+    
     outline-color: var(--middle-blue-green);
 }
 
