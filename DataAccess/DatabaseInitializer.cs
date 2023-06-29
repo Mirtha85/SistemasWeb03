@@ -137,11 +137,12 @@ namespace SistemasWeb01.DataAccess
         {
             if (!_shoppingDbContext.Tallas.Any())
             {
-                _shoppingDbContext.Tallas.Add(new Talla { Name = "Pequeña", ShortName = "S/P", SizeNumber = "36" }); //1
+                _shoppingDbContext.Tallas.Add(new Talla { Name = "Pequeña", ShortName = "P", SizeNumber = "36" }); //1
                 _shoppingDbContext.Tallas.Add(new Talla { Name = "Mediana", ShortName = "M", SizeNumber = "38" });  //2
-                _shoppingDbContext.Tallas.Add(new Talla { Name = "Grande", ShortName = "L/G", SizeNumber = "40" }); //3
+                _shoppingDbContext.Tallas.Add(new Talla { Name = "Grande", ShortName = "L", SizeNumber = "40" }); //3
                 _shoppingDbContext.Tallas.Add(new Talla { Name = "Extra Grande", ShortName = "XL", SizeNumber = "42" }); //4
                 _shoppingDbContext.Tallas.Add(new Talla { Name = "Extra Extra Grande", ShortName = "XXL", SizeNumber = "44" }); //5
+                _shoppingDbContext.Tallas.Add(new Talla { Name = "Ninguna", ShortName = "Z", SizeNumber = "Z" }); //5
 
             }
             await _shoppingDbContext.SaveChangesAsync();

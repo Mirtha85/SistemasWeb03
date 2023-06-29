@@ -20,6 +20,7 @@ namespace SistemasWeb01.Repository.Implementations
             .ThenInclude(p => p.Talla)
             .Include(p => p.SubCategory)
             .ThenInclude(p => p.Category)
+            .Where(p => p.InStock > 0)
             .OrderBy(p => p.Id)
             .ToList();
 

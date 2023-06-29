@@ -5,6 +5,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.CodeAnalysis;
 using Microsoft.EntityFrameworkCore;
+using SistemasWeb01.DataAccess;
+using SistemasWeb01.Enums;
 using SistemasWeb01.Helpers;
 using SistemasWeb01.Models;
 using SistemasWeb01.Repository.Interfaces;
@@ -26,8 +28,9 @@ public class HomeController : Controller
     private readonly IUserRepository _userRepository;
     private readonly ITemporalSaleRepository _temporalSaleRepository;
     private readonly ITemporalCartItemRepository _temporalCartItemRepository;
+    private readonly IOrderRepository _orderRepository;
 
-    public HomeController(IUserRepository userRepository, ILogger<HomeController> logger, IProductRepository productRepository, ICategoryRepository categoryRepository, ISubCategoryRepository subCategoryRepository, IProductSizeRepository productSizeRepository, IShoppingCart shoppingCart, ITemporalSaleRepository temporalSaleRepository, ICombosHelper combosHelper, ITemporalCartItemRepository temporalCartItemRepository)
+    public HomeController(IUserRepository userRepository, ILogger<HomeController> logger, IProductRepository productRepository, ICategoryRepository categoryRepository, ISubCategoryRepository subCategoryRepository, IProductSizeRepository productSizeRepository, IShoppingCart shoppingCart, ITemporalSaleRepository temporalSaleRepository, ICombosHelper combosHelper, ITemporalCartItemRepository temporalCartItemRepository, IOrderRepository orderRepository)
     {
         _userRepository = userRepository;
 
@@ -40,6 +43,7 @@ public class HomeController : Controller
         _temporalSaleRepository = temporalSaleRepository;
         _combosHelper = combosHelper;
         _temporalCartItemRepository = temporalCartItemRepository;
+        _orderRepository = orderRepository;
     }
 
 
@@ -133,7 +137,6 @@ public class HomeController : Controller
     }
 
     [HttpPost]
-    [ValidateAntiForgeryToken]
     public async Task<IActionResult> Details(AddProductToCartViewModel model)
     {
         if (!User.Identity.IsAuthenticated)
@@ -190,6 +193,33 @@ public class HomeController : Controller
 
 		return View(model);
 	}
+
+    //ShowCartPost
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> ShowCart(ShowCartViewModel model)
+    {
+        User? user = await _userRepository.GetUserAsync(User.Identity.Name);
+        if (user == null)
+        {
+            return NotFound();
+        }
+
+        model.User = user;
+        model.TemporalCartItems =  _temporalCartItemRepository.GetTemporalCartItemsByUserId(user.Id);
+
+        bool response = ProcessOrderAsync(model);
+        if (response == true)
+        {
+            return RedirectToAction(nameof(OrderSuccess));
+        }
+
+        TempData["mensaje"] = "Lo sentimos su pedido no pudo completarse por falta de inventario";
+        return View(model);
+    }
+
+
+
 
 
     //Metodos para aumentar y disminuir la cantidad de items
@@ -375,16 +405,84 @@ public class HomeController : Controller
                 ModelState.AddModelError(string.Empty, exception.Message);
                 return View(model);
             }
-
-            return RedirectToAction(nameof(ShowCart));
         }
 
         return View(model);
-
-
-
     }
 
+
+
+
+    [Authorize]
+    public IActionResult OrderSuccess()
+    {
+        return View();
+    }
+
+
+    /// <summary>
+    /// PROCESAR ORDER
+
+    public bool ProcessOrderAsync(ShowCartViewModel model)
+    {
+        bool response =  CheckInventoryAsync(model);
+        if (response == false)
+        {
+            TempData["mensaje"] = "Lo sentimos su pedido no pudo completarse por falta de inventario";
+        }
+
+        Order order = new()
+        {
+            Date = DateTime.UtcNow,
+            User = model.User,
+            Remarks = model.Remarks,
+            OderDetails = new List<OrderDetail>(),
+            OrderStatus = OrderStatus.Nuevo
+        };
+
+        foreach (TemporalCartItem item in model.TemporalCartItems)
+        {
+            order.OderDetails.Add(new OrderDetail
+            {
+                Product = item.Product,
+                Quantity = item.Quantity,
+                Remarks = item.Remarks,
+            });
+
+            Product? product = _productRepository.GetProductById(item.Product.Id);
+            if (product != null)
+            {
+                product.InStock -= item.Quantity;
+                _productRepository.EditProduct(product);
+            }
+            _temporalCartItemRepository.DeleteTemporalCartItem(item);
+        }
+
+        _orderRepository.CreateOrder(order);
+        return response;
+    }
+
+    private bool CheckInventoryAsync(ShowCartViewModel model)
+    {
+        bool response = true;
+        foreach (TemporalCartItem item in model.TemporalCartItems)
+        {
+            Product? product =  _productRepository.GetProductById(item.Product.Id);
+            if (product == null)
+            {
+                response = false;
+                TempData["mensaje"] = "El producto ya no está disponible";
+                return response;
+            }
+            if (product.InStock < item.Quantity)
+            {
+                response = false;
+                TempData["mensaje"] = $"Lo sentimos no tenemos existencias suficiente del producto {item.Product.Name}, para tomar su pedido. Por favor disminuir la cantidad o cambiarlo por otro";
+                return response;
+            }
+        }
+        return response;
+    }
 
 
 

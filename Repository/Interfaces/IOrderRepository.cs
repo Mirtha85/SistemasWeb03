@@ -5,8 +5,13 @@ namespace SistemasWeb01.Repository.Interfaces
 {
     public interface IOrderRepository
     {
-        //Task<bool> CheckInventoryAsync(ShowCartViewModel model);
-        void ProcessOrderAsync(ShowCartViewModel model);
+        IEnumerable<Order> AllOrders { get; }
+        Order? GetOrderById(int id);
+        void CreateOrder(Order order);
+
+        void EditOrder(Order order);
+
+        void DeleteOrder(Order order);
 
     }
 }
