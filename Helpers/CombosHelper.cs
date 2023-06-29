@@ -25,13 +25,6 @@ namespace SistemasWeb01.Helpers
                           Value = $"{t.Id}",
                           Text = t.Talla.ShortName
                       }).ToList();
-
-            list.Insert(0, new SelectListItem
-            {
-                Text = "[Seleccione una talla...]",
-                Value = "0"
-            });
-
             return list;
         }
 

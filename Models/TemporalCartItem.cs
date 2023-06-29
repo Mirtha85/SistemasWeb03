@@ -4,16 +4,21 @@ using System.Xml.Linq;
 
 namespace SistemasWeb01.Models
 {
-    public class TemporalSale
+    public class TemporalCartItem
     {
         public int Id { get; set; }
+        
         public User User { get; set; }
 
-        //[JsonIgnore]
+        public int ProductId { get; set; }
+
+        [JsonIgnore]
         public Product Product { get; set; }
 
+        public int ProductSizeId { get; set; }
+
         [Display(Name = "Talla")]
-        //[JsonIgnore]
+        [JsonIgnore]
         public ProductSize? ProductSize { get; set; }
 
         [Display(Name = "Cantidad")]
@@ -24,10 +29,8 @@ namespace SistemasWeb01.Models
         [Display(Name = "Comentarios")]
         public string? Remarks { get; set; }
 
-		
-		[Display(Name = "Valor")]
-		public decimal Value => Product == null ? 0 : Quantity * Product.Price;
 
-	}
-
+        [Display(Name = "Valor")]
+        public int Value => (int)(Product == null ? 0 : Quantity * Product.Price);
+    }
 }

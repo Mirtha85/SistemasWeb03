@@ -27,6 +27,7 @@ namespace SistemasWeb01.DataAccess
         public DbSet<ShoppingCartItem> ShoppingCartItems { get; set; }
 
         public DbSet<TemporalSale> TemporalSales { get; set; }
+        public DbSet<TemporalCartItem> TemporalCartItems { get; set; }
 
 
 

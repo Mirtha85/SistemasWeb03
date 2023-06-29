@@ -7,6 +7,7 @@ namespace SistemasWeb01.ViewModels
 {
     public class AddProductToCartViewModel
     {
+        //public int Id { get; set; }
         public int ProductId { get; set; }
         public Product? Product { get; set; }
         public IEnumerable<SelectListItem>? ProductSizes { get; set; }

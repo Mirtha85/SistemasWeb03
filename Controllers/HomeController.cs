@@ -1,5 +1,6 @@
 ﻿using System.Diagnostics;
 using System.IO.Pipelines;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.CodeAnalysis;
@@ -144,11 +145,16 @@ public class HomeController : Controller
         {
             return NotFound();
         }
-
+        ProductSize? productSize = _productSizeRepository.GetProductSizeById(model.ProductSizeId);
+        if (productSize == null)
+        {
+            return NotFound();
+        }
         TemporalSale temporalSale = new()
         {
             Product = product,
             Quantity = model.Amount,
+            ProductSize = productSize,
             Remarks = model.Remarks,
             User = user
         };
@@ -156,6 +162,147 @@ public class HomeController : Controller
         _temporalSaleRepository.CreateTempalSale(temporalSale);
         return RedirectToAction(nameof(Index));
     }
+
+
+	[Authorize]
+	public async Task<IActionResult> ShowCart()
+	{
+		User? user = await _userRepository.GetUserAsync(User.Identity.Name);
+		if (user == null)
+		{
+			return NotFound();
+		}
+
+		IEnumerable<TemporalSale> temporalSales =  _temporalSaleRepository.GetTemporalSalesByUserId(user.Id);
+
+		ShowCartViewModel model = new()
+		{
+			User = user,
+			TemporalSales = temporalSales,
+		};
+
+		return View(model);
+	}
+
+
+    //Metodos para aumentar y disminuir la cantidad de items
+    public async Task<IActionResult> DecreaseQuantity(int id)
+    {
+        if (id == null)
+        {
+            return NotFound();
+        }
+
+        TemporalSale? temporalSale =  _temporalSaleRepository.GetTemporalSaleById(id);
+        if (temporalSale == null)
+        {
+            return NotFound();
+        }
+
+        if (temporalSale.Quantity > 1)
+        {
+            temporalSale.Quantity--;
+            _temporalSaleRepository.EditTemporalSale(temporalSale);
+        }
+
+        return RedirectToAction(nameof(ShowCart));
+    }
+
+    public async Task<IActionResult> IncreaseQuantity(int id)
+    {
+        if (id == null)
+        {
+            return NotFound();
+        }
+
+        TemporalSale? temporalSale = _temporalSaleRepository.GetTemporalSaleById(id);
+        if (temporalSale == null)
+        {
+            return NotFound();
+        }
+
+        temporalSale.Quantity++;
+        _temporalSaleRepository.EditTemporalSale(temporalSale);
+
+        return RedirectToAction(nameof(ShowCart));
+    }
+
+    public async Task<IActionResult> Delete(int id)
+    {
+        TemporalSale? temporalSale = _temporalSaleRepository.GetTemporalSaleById(id);
+        if (temporalSale == null)
+        {
+            return NotFound();
+        }
+
+        _temporalSaleRepository.DeleteTemporalSale(temporalSale);
+        return RedirectToAction(nameof(ShowCart));
+    }
+
+    //Metodo editar el temporalSale o shopping cart items
+    public async Task<IActionResult> Edit(int id)
+    {
+
+        TemporalSale? temporalSale =  _temporalSaleRepository.GetTemporalSaleById(id);
+        if (temporalSale == null)
+        {
+            return NotFound();
+        }
+
+        Product? product = _productRepository.GetProductById(temporalSale.Product.Id);
+        if (product == null)
+        {
+            return NotFound();
+        }
+
+        EditTemporalSaleViewModel model = new()
+        {
+            Id = temporalSale.Id,
+            ProductSizes = _productSizeRepository.GetSizesByProductId(product.Id),
+            Quantity = temporalSale.Quantity,
+            ProductSizeId = temporalSale.ProductSize.Id,
+            Remarks = temporalSale.Remarks,
+          
+        };
+
+        return View(model);
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> Edit(int id, EditTemporalSaleViewModel model)
+    {
+
+        if (id != model.Id)
+        {
+            return NotFound();
+        }
+
+        if (ModelState.IsValid)
+        {
+            try
+            {
+                TemporalSale temporalSale =  _temporalSaleRepository.GetTemporalSaleById(id); 
+                
+                temporalSale.Quantity = model.Quantity;
+                temporalSale.ProductSize = model.ProductSize;
+                temporalSale.Remarks = model.Remarks;
+                _temporalSaleRepository.EditTemporalSale(temporalSale);
+            }
+            catch (Exception exception)
+            {
+                ModelState.AddModelError(string.Empty, exception.Message);
+                return View(model);
+            }
+
+            return RedirectToAction(nameof(ShowCart));
+        }
+      
+        return View(model);
+
+
+
+    }
+
 
 
 
@@ -221,15 +368,15 @@ public class HomeController : Controller
     //}
 
 
-    public ViewResult ShowCart()
-    {
-        var items = _shoppingCart.GetShoppingCartItems();
-        _shoppingCart.ShoppingCartItems = items;
+    //public ViewResult ShowCart()
+    //   {
+    //       var items = _shoppingCart.GetShoppingCartItems();
+    //       _shoppingCart.ShoppingCartItems = items;
 
-        var shoppingCartViewModel = new ShoppingCartViewModel(_shoppingCart, _shoppingCart.GetShoppingCartTotal());
+    //       var shoppingCartViewModel = new ShoppingCartViewModel(_shoppingCart, _shoppingCart.GetShoppingCartTotal());
 
-        return View(shoppingCartViewModel);
-    }
+    //       return View(shoppingCartViewModel);
+    //   }
 
 
 
