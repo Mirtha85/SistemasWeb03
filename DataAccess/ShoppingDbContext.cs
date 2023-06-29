@@ -24,10 +24,15 @@ namespace SistemasWeb01.DataAccess
         public DbSet<Country> Countries { get; set; }
         public DbSet<State> States { get; set; }
         public DbSet<City> Cities { get; set; } 
-        public DbSet<ShoppingCartItem> ShoppingCartItems { get; set; }
 
+        public DbSet<ShoppingCartItem> ShoppingCartItems { get; set; }
         public DbSet<TemporalSale> TemporalSales { get; set; }
+       
+        
         public DbSet<TemporalCartItem> TemporalCartItems { get; set; }
+        public DbSet<Order> Orders { get; set; }
+        public DbSet<OrderDetail> OrderDetails { get; set; }
+
 
 
 

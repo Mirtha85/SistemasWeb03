@@ -54,7 +54,7 @@ namespace SistemasWeb01.Models
         [Display(Name = "Usuario")]
         public string FullNameWithDocument => $"{FirstName} {LastName} - C.I. {Document}";
 
-
+        public List<Order>? Oders { get; set; }
     }
 
 }

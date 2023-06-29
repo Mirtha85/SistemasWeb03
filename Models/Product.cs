@@ -65,5 +65,7 @@ namespace SistemasWeb01.Models
         public string ImageFullPath => Pictures == null || Pictures.Count == 0
             ? $"noimage.png"
             : Pictures.FirstOrDefault().PictureName;
+
+        public List<OrderDetail>? OderDetail { get; set; }
     }
 }
