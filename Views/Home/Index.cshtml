@@ -4,14 +4,18 @@
     ViewData["Title"] = "Home Page";
 }
 
+
 @if (Model.Quantity > 0)
 {
-    <a asp-action="ShowCart" class="btn btn-outline-primary">Ver Carro de Compras (@Model.Quantity)</a>
+    <a asp-action="ShowCart" class="btn btn-outline-primary" id="btncarrito">Ver Carro de Compras (@Model.Quantity)</a>
 }
 
 
 <article">
 
+
+
+    
     <!--
       - #HERO
     -->

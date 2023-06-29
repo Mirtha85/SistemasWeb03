@@ -78,3 +78,12 @@ body {
 .caja {
     height: 500px;
 }
+
+
+/*botn carrito*/
+#btncarrito{
+    position: absolute;
+    margin-top: 10%;
+    margin-left: 5%;
+    z-index:3;
+}
