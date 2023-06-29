@@ -20,19 +20,19 @@ namespace SistemasWeb01.Models
 
         public OrderStatus OrderStatus { get; set; }
 
-        public List<OrderDetail> OderDetail { get; set; }
+        public List<OrderDetail> OderDetails { get; set; }
 
         [DisplayFormat(DataFormatString = "{0:N0}")]
         [Display(Name = "Líneas")]
-        public int Lines => OderDetail == null ? 0 : OderDetail.Count;
+        public int Lines => OderDetails == null ? 0 : OderDetails.Count;
 
         
         [Display(Name = "Cantidad")]
-        public int Quantity => OderDetail == null ? 0 : OderDetail.Sum(sd => sd.Quantity);
+        public int Quantity => OderDetails == null ? 0 : OderDetails.Sum(sd => sd.Quantity);
 
         
         [Display(Name = "Valor")]
-        public decimal Value => OderDetail == null ? 0 : OderDetail.Sum(sd => sd.Value);
+        public decimal Value => OderDetails == null ? 0 : OderDetails.Sum(sd => sd.Value);
     }
 
 }
