@@ -12,15 +12,15 @@ namespace SistemasWeb01.ViewModels
 		[Display(Name = "Comentarios")]
 		public string? Remarks { get; set; }
 
-		public IEnumerable<TemporalSale> TemporalSales { get; set; }
+		public IEnumerable<TemporalCartItem> TemporalCartItems { get; set; }
 
 		
 		[Display(Name = "Cantidad")]
-		public int Quantity => TemporalSales == null ? 0 : TemporalSales.Sum(ts => ts.Quantity);
+		public int Quantity => TemporalCartItems == null ? 0 : TemporalCartItems.Sum(ts => ts.Quantity);
 
 		//[DisplayFormat(DataFormatString = "{0:C2}")]
 		[Display(Name = "Valor")]
-		public decimal Value => TemporalSales == null ? 0 : TemporalSales.Sum(ts => ts.Value);
+		public decimal Value => TemporalCartItems == null ? 0 : TemporalCartItems.Sum(ts => ts.Value);
 	}
 
 }

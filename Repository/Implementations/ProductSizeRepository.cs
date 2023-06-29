@@ -59,7 +59,10 @@ namespace SistemasWeb01.Repository.Implementations
 
         public IEnumerable<ProductSize> GetSizesByProductId(int productId)
         {
-            return _shoppingDbContext.ProductSizes.Include(p => p.Talla).Where(p => p.ProductId == productId).ToList();
+            return _shoppingDbContext.ProductSizes
+                .Include(p => p.Talla)
+                .Include(p => p.Product)
+                .Where(p => p.ProductId == productId).ToList();
         }
 
     }

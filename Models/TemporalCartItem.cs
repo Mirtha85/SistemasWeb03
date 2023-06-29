@@ -31,6 +31,6 @@ namespace SistemasWeb01.Models
 
 
         [Display(Name = "Valor")]
-        public int Value => (int)(Product == null ? 0 : Quantity * Product.Price);
+        public decimal Value => Product == null ? 0 : Quantity * Product.Price;
     }
 }

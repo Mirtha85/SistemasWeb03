@@ -63,6 +63,7 @@ builder.Services.AddScoped<ISubCategoryRepository, SubCategoryRepository>();
 //builder.Services.AddScoped<IShoppingCart, ShoppingCart>(); //? lo tenia comentado ver pq
 
 builder.Services.AddScoped<ITemporalSaleRepository, TemporalSaleRepository>();
+builder.Services.AddScoped<ITemporalCartItemRepository, TemporalCartItemRepository>();
 
 var app = builder.Build();
 

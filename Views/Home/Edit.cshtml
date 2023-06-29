@@ -14,21 +14,22 @@
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                 <input type="hidden" asp-for="Id"/>
                 <input type="hidden" asp-for="ProductSizeId" />
-                <input type="hidden" asp-for="Product" />
+                <input type="hidden" asp-for="ProductId" />
+                <input type="hidden" asp-for="ProductSizes" />
                 
-                @*<div class="form-group">
+                <div class="form-group">
                     <label asp-for="ProductSizeId" class="mb-2 d-block control-label"> Selecciona una Talla</label>
                     <select asp-for="ProductSizeId" asp-items="Model.ProductSizes" class="form-select sform-control selector-talla text-start border border-secondary">
                         <option value=""> --Selecciona una talla--</option>
                     </select>
                     <span asp-validation-for="ProductSizeId" class="text-danger"></span>
-                </div>*@
-                <div class="form-group mb-3">
+                </div>
+                @*<div class="form-group mb-3">
                     <label asp-for="ProductSizeId"></label>
-                    <select class="form-select mb-3" asp-for="ProductSizeId" asp-items="@(new SelectList(Model.ProductSizes,"Id","ShortName"))">
+                    <select  asp-for="ProductSizeId" asp-items="@(new SelectList(Model.ProductSizes,"Id","ShortName"))" class="form-select  form-select mb-3">
                         <option value=""> --Seleccionar SubCategoría--</option>
                     </select>
-                </div>
+                </div>*@
 
                 <div class="form-group">
                     <label asp-for="Remarks" class="control-label"></label>

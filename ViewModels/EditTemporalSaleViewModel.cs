@@ -16,9 +16,8 @@ namespace SistemasWeb01.ViewModels
         public int? ProductId { get; set; }
         public Product? Product { get; set; }
 
-        public int? ProductSizeId { get; set; }
-        public ProductSize? ProductSize { get; set; }
-        public IEnumerable<ProductSize>? ProductSizes { get; set; } = new List<ProductSize>();
+        public int ProductSizeId { get; set; }
+        public IEnumerable<SelectListItem>? ProductSizes { get; set; } 
 
         [DataType(DataType.MultilineText)]
         [Display(Name = "Comentarios")]

@@ -54,32 +54,32 @@
                         <thead>
                             <tr>
                                 <th>
-                                    @Html.DisplayNameFor(model => model.TemporalSales.FirstOrDefault().Product.ImageFullPath)
+                                    @Html.DisplayNameFor(model => model.TemporalCartItems.FirstOrDefault().Product.ImageFullPath)
                                 </th>
                                 <th>
-                                    @Html.DisplayNameFor(model => model.TemporalSales.FirstOrDefault().Product.Name)
+                                    @Html.DisplayNameFor(model => model.TemporalCartItems.FirstOrDefault().Product.Name)
                                 </th>
                                 <th>
-                                    @Html.DisplayNameFor(model => model.TemporalSales.FirstOrDefault().ProductSize.Talla.Name)
+                                    @Html.DisplayNameFor(model => model.TemporalCartItems.FirstOrDefault().ProductSize.Talla.Name)
                                 </th>
                                 <th>
-                                    @Html.DisplayNameFor(model => model.TemporalSales.FirstOrDefault().Remarks)
+                                    @Html.DisplayNameFor(model => model.TemporalCartItems.FirstOrDefault().Remarks)
                                 </th>
                                 <th>
-                                    @Html.DisplayNameFor(model => model.TemporalSales.FirstOrDefault().Product.Price)
+                                    @Html.DisplayNameFor(model => model.TemporalCartItems.FirstOrDefault().Product.Price)
                                 </th>
                                 <th>
-                                    @Html.DisplayNameFor(model => model.TemporalSales.FirstOrDefault().Quantity)
+                                    @Html.DisplayNameFor(model => model.TemporalCartItems.FirstOrDefault().Quantity)
                                 </th>
                                 <th></th>
                                 <th>
-                                    @Html.DisplayNameFor(model => model.TemporalSales.FirstOrDefault().Value)
+                                    @Html.DisplayNameFor(model => model.TemporalCartItems.FirstOrDefault().Value)
                                 </th>
                                 <th></th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach (var item in Model.TemporalSales)
+                            @foreach (var item in Model.TemporalCartItems)
                             {
                                 <tr>
                                     <td>

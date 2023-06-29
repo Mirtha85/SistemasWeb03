@@ -25,8 +25,9 @@ public class HomeController : Controller
 
     private readonly IUserRepository _userRepository;
     private readonly ITemporalSaleRepository _temporalSaleRepository;
+    private readonly ITemporalCartItemRepository _temporalCartItemRepository;
 
-    public HomeController(IUserRepository userRepository, ILogger<HomeController> logger, IProductRepository productRepository, ICategoryRepository categoryRepository, ISubCategoryRepository subCategoryRepository, IProductSizeRepository productSizeRepository, IShoppingCart shoppingCart, ITemporalSaleRepository temporalSaleRepository, ICombosHelper combosHelper)
+    public HomeController(IUserRepository userRepository, ILogger<HomeController> logger, IProductRepository productRepository, ICategoryRepository categoryRepository, ISubCategoryRepository subCategoryRepository, IProductSizeRepository productSizeRepository, IShoppingCart shoppingCart, ITemporalSaleRepository temporalSaleRepository, ICombosHelper combosHelper, ITemporalCartItemRepository temporalCartItemRepository)
     {
         _userRepository = userRepository;
 
@@ -38,7 +39,9 @@ public class HomeController : Controller
         _shoppingCart = shoppingCart;
         _temporalSaleRepository = temporalSaleRepository;
         _combosHelper = combosHelper;
+        _temporalCartItemRepository = temporalCartItemRepository;
     }
+
 
     public async Task<IActionResult> Index()
     {
@@ -46,14 +49,14 @@ public class HomeController : Controller
         IEnumerable<Category> categories = _categoryRepository.AllCategories;
         HomeViewModel model = new HomeViewModel(products, categories);
         User user = await _userRepository.GetUserAsync(User.Identity.Name);
-        if(user != null)
+        if (user != null)
         {
-            model.Quantity = _temporalSaleRepository.GetTemporalSalesByUserId(user.Id).Count();
+            model.Quantity = _temporalCartItemRepository.GetTemporalCartItemsByUserId(user.Id).Count();
         }
         return View(model);
     }
 
-    
+
 
 
     public IActionResult ListProducts()
@@ -66,15 +69,17 @@ public class HomeController : Controller
 
 
     // ------ 2da FORMA ----------------
+    
+
     public async Task<IActionResult> AddToCart(int id)
     {
-        
+
         if (!User.Identity.IsAuthenticated)
         {
             return RedirectToAction("Login", "Account");
         }
 
-        Product? product =  _productRepository.GetProductById(id);
+        Product? product = _productRepository.GetProductById(id);
         if (product == null)
         {
             return NotFound();
@@ -86,19 +91,21 @@ public class HomeController : Controller
             return NotFound();
         }
 
-        TemporalSale temporalSale = new()
+        TemporalCartItem temporalCartItem = new()
         {
             Product = product,
             Quantity = 1,
             User = user
         };
 
-        _temporalSaleRepository.CreateTempalSale(temporalSale);
+        _temporalCartItemRepository.CreateTemporalCartItem(temporalCartItem);
         return RedirectToAction(nameof(Index));
     }
 
 
     // ------ PRODUCT DETAILS  ----------------
+    
+
     public async Task<IActionResult> Details(int id)
     {
         Product? product = _productRepository.GetProductById(id);
@@ -134,7 +141,7 @@ public class HomeController : Controller
             return RedirectToAction("Login", "Account");
         }
 
-        Product? product =  _productRepository.GetProductById(model.ProductId);
+        Product? product = _productRepository.GetProductById(model.ProductId);
         if (product == null)
         {
             return NotFound();
@@ -150,7 +157,7 @@ public class HomeController : Controller
         {
             return NotFound();
         }
-        TemporalSale temporalSale = new()
+        TemporalCartItem temporalCartItem = new()
         {
             Product = product,
             Quantity = model.Amount,
@@ -159,12 +166,12 @@ public class HomeController : Controller
             User = user
         };
 
-        _temporalSaleRepository.CreateTempalSale(temporalSale);
+        _temporalCartItemRepository.CreateTemporalCartItem(temporalCartItem);
         return RedirectToAction(nameof(Index));
     }
 
 
-	[Authorize]
+    [Authorize]
 	public async Task<IActionResult> ShowCart()
 	{
 		User? user = await _userRepository.GetUserAsync(User.Identity.Name);
@@ -173,12 +180,12 @@ public class HomeController : Controller
 			return NotFound();
 		}
 
-		IEnumerable<TemporalSale> temporalSales =  _temporalSaleRepository.GetTemporalSalesByUserId(user.Id);
+		IEnumerable<TemporalCartItem> temporalCartItems =  _temporalCartItemRepository.GetTemporalCartItemsByUserId(user.Id);
 
 		ShowCartViewModel model = new()
 		{
 			User = user,
-			TemporalSales = temporalSales,
+			TemporalCartItems = temporalCartItems,
 		};
 
 		return View(model);
@@ -193,16 +200,16 @@ public class HomeController : Controller
             return NotFound();
         }
 
-        TemporalSale? temporalSale =  _temporalSaleRepository.GetTemporalSaleById(id);
-        if (temporalSale == null)
+        TemporalCartItem? temporalCartItem =  _temporalCartItemRepository.GetTemporalCartItemById(id);
+        if (temporalCartItem == null)
         {
             return NotFound();
         }
 
-        if (temporalSale.Quantity > 1)
+        if (temporalCartItem.Quantity > 1)
         {
-            temporalSale.Quantity--;
-            _temporalSaleRepository.EditTemporalSale(temporalSale);
+            temporalCartItem.Quantity--;
+            _temporalCartItemRepository.EditTemporalCartItem(temporalCartItem);
         }
 
         return RedirectToAction(nameof(ShowCart));
@@ -215,41 +222,113 @@ public class HomeController : Controller
             return NotFound();
         }
 
-        TemporalSale? temporalSale = _temporalSaleRepository.GetTemporalSaleById(id);
-        if (temporalSale == null)
+        TemporalCartItem? temporalCartItem = _temporalCartItemRepository.GetTemporalCartItemById(id);
+        if (temporalCartItem == null)
         {
             return NotFound();
         }
 
-        temporalSale.Quantity++;
-        _temporalSaleRepository.EditTemporalSale(temporalSale);
+        temporalCartItem.Quantity++;
+        _temporalCartItemRepository.EditTemporalCartItem(temporalCartItem);
 
         return RedirectToAction(nameof(ShowCart));
     }
 
     public async Task<IActionResult> Delete(int id)
     {
-        TemporalSale? temporalSale = _temporalSaleRepository.GetTemporalSaleById(id);
-        if (temporalSale == null)
+        TemporalCartItem? temporalCartItem = _temporalCartItemRepository.GetTemporalCartItemById(id);
+        if (temporalCartItem == null)
         {
             return NotFound();
         }
 
-        _temporalSaleRepository.DeleteTemporalSale(temporalSale);
+        _temporalCartItemRepository.DeleteTemporalCartItem(temporalCartItem);
         return RedirectToAction(nameof(ShowCart));
     }
 
+
+
+
+
+
+
+
+
     //Metodo editar el temporalSale o shopping cart items
+    //public async Task<IActionResult> Edit(int id)
+    //{
+
+    //    TemporalSale? temporalSale =  _temporalSaleRepository.GetTemporalSaleById(id);
+    //    if (temporalSale == null)
+    //    {
+    //        return NotFound();
+    //    }
+
+    //    Product? product = _productRepository.GetProductById(temporalSale.Product.Id);
+    //    if (product == null)
+    //    {
+    //        return NotFound();
+    //    }
+
+    //    EditTemporalSaleViewModel model = new()
+    //    {
+    //        Id = temporalSale.Id,
+    //        ProductSizes = _productSizeRepository.GetSizesByProductId(product.Id),
+    //        Quantity = temporalSale.Quantity,
+    //        ProductSizeId = temporalSale.ProductSize.Id,
+    //        Remarks = temporalSale.Remarks,
+          
+    //    };
+
+    //    return View(model);
+    //}
+
+    //[HttpPost]
+    //public async Task<IActionResult> Edit(int id, EditTemporalSaleViewModel model)
+    //{
+
+    //    if (id != model.Id)
+    //    {
+    //        return NotFound();
+    //    }
+
+    //    if (ModelState.IsValid)
+    //    {
+    //        try
+    //        {
+    //            TemporalSale temporalSale =  _temporalSaleRepository.GetTemporalSaleById(id); 
+                
+    //            temporalSale.Quantity = model.Quantity;
+    //            temporalSale.ProductSize = model.ProductSize;
+    //            temporalSale.Remarks = model.Remarks;
+    //            _temporalSaleRepository.EditTemporalSale(temporalSale);
+    //        }
+    //        catch (Exception exception)
+    //        {
+    //            ModelState.AddModelError(string.Empty, exception.Message);
+    //            return View(model);
+    //        }
+
+    //        return RedirectToAction(nameof(ShowCart));
+    //    }
+      
+    //    return View(model);
+
+
+
+    //}
+
+
     public async Task<IActionResult> Edit(int id)
     {
 
-        TemporalSale? temporalSale =  _temporalSaleRepository.GetTemporalSaleById(id);
-        if (temporalSale == null)
+        TemporalCartItem? temporalCartItem = _temporalCartItemRepository.GetTemporalCartItemById(id);
+        if (temporalCartItem == null)
         {
             return NotFound();
         }
 
-        Product? product = _productRepository.GetProductById(temporalSale.Product.Id);
+        Product? product = _productRepository.GetProductById(temporalCartItem.ProductSizeId);
         if (product == null)
         {
             return NotFound();
@@ -257,12 +336,14 @@ public class HomeController : Controller
 
         EditTemporalSaleViewModel model = new()
         {
-            Id = temporalSale.Id,
-            ProductSizes = _productSizeRepository.GetSizesByProductId(product.Id),
-            Quantity = temporalSale.Quantity,
-            ProductSizeId = temporalSale.ProductSize.Id,
-            Remarks = temporalSale.Remarks,
-          
+            Id = temporalCartItem.Id,
+            ProductId = product.Id,
+            Product = product,
+            ProductSizes = await _combosHelper.GetAllProductSizeByProductId(product.Id),
+            Quantity = temporalCartItem.Quantity,
+            ProductSizeId = temporalCartItem.ProductSizeId,
+            Remarks = temporalCartItem.Remarks,
+
         };
 
         return View(model);
@@ -281,12 +362,13 @@ public class HomeController : Controller
         {
             try
             {
-                TemporalSale temporalSale =  _temporalSaleRepository.GetTemporalSaleById(id); 
-                
-                temporalSale.Quantity = model.Quantity;
-                temporalSale.ProductSize = model.ProductSize;
-                temporalSale.Remarks = model.Remarks;
-                _temporalSaleRepository.EditTemporalSale(temporalSale);
+                TemporalCartItem? temporalCartItem = _temporalCartItemRepository.GetTemporalCartItemById(id);
+
+                temporalCartItem.Quantity = model.Quantity;
+                temporalCartItem.ProductSizeId = model.ProductSizeId;
+                temporalCartItem.Remarks = model.Remarks;
+                _temporalCartItemRepository.EditTemporalCartItem(temporalCartItem);
+                return RedirectToAction(nameof(ShowCart));
             }
             catch (Exception exception)
             {
@@ -296,7 +378,7 @@ public class HomeController : Controller
 
             return RedirectToAction(nameof(ShowCart));
         }
-      
+
         return View(model);
 
 
