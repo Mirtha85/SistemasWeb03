@@ -488,7 +488,13 @@ public class HomeController : Controller
 
 
 
-
+    public IActionResult Roulette()
+    {
+        List<User> users = new List<User>();
+        users = _userRepository.AllUsers.ToList();
+        
+        return View(users);
+    }
 
 
 

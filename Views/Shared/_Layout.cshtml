@@ -33,6 +33,12 @@
     <!--product card-->
     <link rel="stylesheet" href="~/css/productCard.css">
 
+    <!--Ruleta-->
+    <link rel="stylesheet" href="~/assets/css/styleRule.css">
+    <link rel="stylesheet" href="~/assets/css/roulette.css">
+    <link rel="stylesheet" href="~/assets/css/roulette-rotations.css">
+    <link rel="stylesheet" href="~/assets/css/roulette-colors.css">
+
 </head>
 <body>
    
@@ -160,7 +166,11 @@
                         <li>
                             <a class="navbar-link" asp-area="" asp-controller="Order" asp-action="Index">Pedidos</a>
                         </li>
+                        <li>
+                            <a class="navbar-link" asp-area="" asp-controller="Home" asp-action="Roulette">Ruleta</a>
+                        </li>
                     }
+
 
                     @if (User.Identity.IsAuthenticated && User.IsInRole("User"))
                     {
@@ -230,6 +240,9 @@
     <!--para carousel-->
     <script src="~/assets/js/owl.carousel.min.js"></script>
     <script src="~/assets/js/main.js"></script>
+
+    <!--ruleta-->
+    <script src="~/assets/js/scriptRule.js"></script>
     
 
 </body>
