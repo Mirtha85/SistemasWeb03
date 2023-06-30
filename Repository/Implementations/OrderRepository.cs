@@ -58,6 +58,14 @@ namespace SistemasWeb01.Repository.Implementations
                 .FirstOrDefault(p => p.Id == id);
         }
 
+        public Order? OrderById(int id)
+        {
+            return _shoppingDbContext.Orders
+               .Include(o => o.OderDetails)
+               .ThenInclude(od => od.Product)
+               .FirstOrDefault(p => p.Id == id);
+        }
+
         //public void ProcessOrderAsync(ShowCartViewModel model)
         //{
         //    Order order = new()

@@ -5,6 +5,7 @@ using SistemasWeb01.Helpers;
 using SistemasWeb01.Models;
 using SistemasWeb01.Repository.Implementations;
 using SistemasWeb01.Repository.Interfaces;
+using Vereyon.Web;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,6 +17,8 @@ builder.Services.AddScoped<IShoppingCart, ShoppingCart>(sp => ShoppingCart.GetCa
 builder.Services.AddSession();
 builder.Services.AddHttpContextAccessor();
 
+//message toast
+builder.Services.AddFlashMessage();
 
 //conexion
 builder.Services.AddDbContext<ShoppingDbContext>(options => {
