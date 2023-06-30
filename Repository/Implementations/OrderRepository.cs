@@ -19,6 +19,7 @@ namespace SistemasWeb01.Repository.Implementations
         public IEnumerable<Order> AllOrders => _shoppingDbContext.Orders
             .Include(o => o.User)
             .Include(o => o.OderDetails)
+            .ThenInclude(od => od.Product)
             .ToList();
 
         public void CreateOrder(Order order)
@@ -51,6 +52,8 @@ namespace SistemasWeb01.Repository.Implementations
         {
             return _shoppingDbContext.Orders
                 .Include(o => o.OderDetails)
+                .ThenInclude(od => od.Product)
+                .ThenInclude(op =>op.Pictures)
                 .Include(o => o.User)
                 .FirstOrDefault(p => p.Id == id);
         }

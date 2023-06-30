@@ -156,7 +156,10 @@
 
                         <li >
                             <a class="navbar-link" asp-area="" asp-controller="User" asp-action="Index">Usuarios</a>
-                        </li> 
+                        </li>
+                        <li>
+                            <a class="navbar-link" asp-area="" asp-controller="Order" asp-action="Index">Pedidos</a>
+                        </li>
                     }
 
                     @if (User.Identity.IsAuthenticated)

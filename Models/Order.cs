@@ -18,6 +18,7 @@ namespace SistemasWeb01.Models
         [Display(Name = "Comentarios")]
         public string? Remarks { get; set; }
 
+        [Display(Name = "Estado")]
         public OrderStatus OrderStatus { get; set; }
 
         public List<OrderDetail> OderDetails { get; set; }

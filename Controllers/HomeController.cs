@@ -94,12 +94,13 @@ public class HomeController : Controller
         {
             return NotFound();
         }
-
+        ProductSize sizeDefault = new() { ProductId = product.Id, TallaId = 6, Quantity = 1 };
         TemporalCartItem temporalCartItem = new()
         {
             Product = product,
             Quantity = 1,
-            User = user
+            User = user,
+            ProductSize = sizeDefault
         };
 
         _temporalCartItemRepository.CreateTemporalCartItem(temporalCartItem);
@@ -358,23 +359,23 @@ public class HomeController : Controller
             return NotFound();
         }
 
-        Product? product = _productRepository.GetProductById(temporalCartItem.ProductSizeId);
+        Product product = _productRepository.GetProductById(temporalCartItem.ProductSizeId);
         if (product == null)
         {
             return NotFound();
         }
 
-        EditTemporalSaleViewModel model = new()
-        {
-            Id = temporalCartItem.Id,
-            ProductId = product.Id,
-            Product = product,
-            ProductSizes = await _combosHelper.GetAllProductSizeByProductId(product.Id),
-            Quantity = temporalCartItem.Quantity,
-            ProductSizeId = temporalCartItem.ProductSizeId,
-            Remarks = temporalCartItem.Remarks,
+        EditTemporalSaleViewModel model = new EditTemporalSaleViewModel();
 
-        };
+        model.Id = temporalCartItem.Id;
+        model.ProductId = product.Id;
+        model.Product = product;
+        model.ProductSizes = await _combosHelper.GetAllProductSizeByProductId(product.Id);
+        model.Quantity = temporalCartItem.Quantity;
+        model.ProductSizeId = temporalCartItem.ProductSizeId;
+        model.Remarks = temporalCartItem.Remarks;
+
+      
 
         return View(model);
     }

@@ -27,7 +27,7 @@ namespace SistemasWeb01.DataAccess
             await CheckRolesAsync();
 
             await CheckUserAsync("7210049", "Wilfredo", "Yelma", "yelma@gmail.com", "64435282", "Calle 13, B/ Plan 4 mil", "fotow.webp", UserType.Admin, "Admin");
-            await CheckUserAsync("6525331", "Leonel", "Messi", "messi@yopmail.com", "78522456", "Calle Paris, Plan 3 mil", "messi.webp", UserType.User, "User");
+            await CheckUserAsync("6525331", "Beth", "Shop", "beth@gmail.com", "78522456", "Calle Paris, B/ San Pedro", "beth.webp", UserType.User, "User");
 
             await CheckShoppingCartItem();
 
@@ -142,7 +142,7 @@ namespace SistemasWeb01.DataAccess
                 _shoppingDbContext.Tallas.Add(new Talla { Name = "Grande", ShortName = "L", SizeNumber = "40" }); //3
                 _shoppingDbContext.Tallas.Add(new Talla { Name = "Extra Grande", ShortName = "XL", SizeNumber = "42" }); //4
                 _shoppingDbContext.Tallas.Add(new Talla { Name = "Extra Extra Grande", ShortName = "XXL", SizeNumber = "44" }); //5
-                _shoppingDbContext.Tallas.Add(new Talla { Name = "Ninguna", ShortName = "Z", SizeNumber = "Z" }); //5
+                _shoppingDbContext.Tallas.Add(new Talla { Name = "Ninguna", ShortName = "-", SizeNumber = "-" }); //5
 
             }
             await _shoppingDbContext.SaveChangesAsync();
