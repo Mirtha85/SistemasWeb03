@@ -10,9 +10,11 @@ namespace SistemasWeb01.Repository.Implementations
     public class OrderRepository : IOrderRepository
     {
         private readonly ShoppingDbContext _shoppingDbContext;
-        public OrderRepository(ShoppingDbContext shoppingDbContext)
+        private readonly IUserRepository _userRepository;
+        public OrderRepository(ShoppingDbContext shoppingDbContext, IUserRepository userRepository)
         {
             _shoppingDbContext = shoppingDbContext;
+            _userRepository = userRepository;
 
         }
 

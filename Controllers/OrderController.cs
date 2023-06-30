@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using SistemasWeb01.DataAccess;
 using SistemasWeb01.Enums;
 using SistemasWeb01.Models;
 using SistemasWeb01.Repository.Implementations;
@@ -10,25 +11,31 @@ using Vereyon.Web;
 
 namespace SistemasWeb01.Controllers
 {
-    [Authorize(Roles = "Admin")]
+    
 
     public class OrderController : Controller
     {
+        private readonly ShoppingDbContext _shoppingDbContext;
         private readonly IOrderRepository _orderRepository;
         private readonly IFlashMessage _flashMessage;
         private readonly IProductRepository _productRepository;
-        public OrderController(IOrderRepository orderRepository, IFlashMessage flashMessage, IProductRepository productRepository)
+        public OrderController(IOrderRepository orderRepository, IFlashMessage flashMessage, IProductRepository productRepository, ShoppingDbContext shoppingDbContext)
         {
             _orderRepository = orderRepository;
             _flashMessage = flashMessage;
             _productRepository = productRepository;
+            _shoppingDbContext = shoppingDbContext;
         }
+
+
+        [Authorize(Roles = "Admin")]
         public IActionResult Index()
         {
             IEnumerable<Order> orders = _orderRepository.AllOrders;
             return View(orders);
         }
 
+        [Authorize(Roles = "Admin")]
         public IActionResult Details(int id)
         {
             Order? order = _orderRepository.GetOrderById(id);
@@ -40,6 +47,7 @@ namespace SistemasWeb01.Controllers
             return View(order);
         }
 
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Dispatch(int id)
         {
 
@@ -63,6 +71,8 @@ namespace SistemasWeb01.Controllers
             return RedirectToAction(nameof(Details), new { Id = order.Id });
         }
 
+        [Authorize(Roles = "Admin")]
+
         public async Task<IActionResult> Send(int id)
         {
 
@@ -85,6 +95,9 @@ namespace SistemasWeb01.Controllers
 
             return RedirectToAction(nameof(Details), new { Id = order.Id });
         }
+
+
+        [Authorize(Roles = "Admin")]
 
         public async Task<IActionResult> Confirm(int id)
         {
@@ -114,6 +127,8 @@ namespace SistemasWeb01.Controllers
         }
 
 
+        [Authorize(Roles = "Admin")]
+
         public async Task<IActionResult> Cancel(int id)
         {
             Order? order = _orderRepository.OrderById(id);
@@ -135,7 +150,7 @@ namespace SistemasWeb01.Controllers
             return RedirectToAction(nameof(Details), new { Id = order.Id });
         }
 
-
+        [Authorize(Roles = "Admin")]
         public bool CancelOrderAsync(int id)
         {
             Order? order = _orderRepository.OrderById(id);
@@ -153,6 +168,39 @@ namespace SistemasWeb01.Controllers
             _orderRepository.EditOrder(order);
             return true;
         }
+
+
+        [Authorize(Roles = "User")]
+        public async Task<IActionResult> MyOrders()
+        {
+            return View(await _shoppingDbContext.Orders
+               .Include(s => s.User)
+               .Include(s => s.OderDetails)
+               .ThenInclude(sd => sd.Product)
+               .Where(s => s.User.UserName == User.Identity.Name)
+               .ToListAsync());
+        }
+
+
+        [Authorize(Roles = "User")]
+        public async Task<IActionResult> MyDetails(int id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            Order? order = _orderRepository.GetOrderById(id);
+            if (order == null)
+            {
+                return NotFound();
+            }
+
+            return View(order);
+        }
+
+
+
     }
 
 }

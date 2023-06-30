@@ -5,6 +5,7 @@ using SistemasWeb01.Helpers;
 using SistemasWeb01.Models;
 using SistemasWeb01.Repository.Interfaces;
 using SistemasWeb01.ViewModels;
+using Vereyon.Web;
 
 namespace SistemasWeb01.Controllers
 {
@@ -16,14 +17,16 @@ namespace SistemasWeb01.Controllers
         private readonly ICountryRepository _countryRepository;
         private readonly IStateRepository _stateRepository;
         private readonly ICityRepository _cityRepository;
-        public AccountController(IUserRepository userRepository, IFormFileHelper formFileHelper, ICombosHelper combosHelper, ICountryRepository countryRepository, IStateRepository stateRepository, ICityRepository cityRepository)
+        private readonly IFlashMessage _flashMessage;
+        public AccountController(IUserRepository userRepository, IFormFileHelper formFileHelper, ICombosHelper combosHelper, ICountryRepository countryRepository, IStateRepository stateRepository, ICityRepository cityRepository, IFlashMessage flashMessage)
         {
             _userRepository = userRepository;
             _formFileHelper = formFileHelper;
             _combosHelper = combosHelper;
             _countryRepository = countryRepository;
             _stateRepository = stateRepository;
-            _cityRepository = cityRepository;   
+            _cityRepository = cityRepository;  
+            _flashMessage = flashMessage;
         }
         public IActionResult Login()
         {
@@ -45,8 +48,7 @@ namespace SistemasWeb01.Controllers
                 {
                     return RedirectToAction("Index", "Home");
                 }
-
-                ModelState.AddModelError(string.Empty, "Email o contraseña incorrectos.");
+                _flashMessage.Danger("Email o contraseña incorrectos.");
             }
 
             return View(model);
@@ -91,7 +93,7 @@ namespace SistemasWeb01.Controllers
                 await _userRepository.AddUserToRole(user, "User");
                 if (user == null)
                 {
-                    ModelState.AddModelError(string.Empty, "Este correo ya está siendo usado.");
+                    _flashMessage.Danger("Este correo ya está siendo usado.");
                     return View(model);
                 }
 

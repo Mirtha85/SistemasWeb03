@@ -1,4 +1,5 @@
 ﻿@model IEnumerable<SistemasWeb01.Models.Order>
+
 @{
     ViewData["Title"] = "Index";
 }
@@ -10,7 +11,7 @@
         <div class="col-md-12">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <h3 class="panel-title">Pedidos</h3>
+                    <h3 class="panel-title">Mis Pedidos</h3>
                 </div>
                 <div class="panel-body">
                     <table class="table table-hover table-responsive table-striped mb-5" id="MyTable">
@@ -20,13 +21,13 @@
                                     @Html.DisplayNameFor(model => model.Date)
                                 </th>
                                 <th>
-                                    @Html.DisplayNameFor(model => model.User.FullName)
-                                </th>
-                                <th>
                                     @Html.DisplayNameFor(model => model.Remarks)
                                 </th>
                                 <th>
                                     @Html.DisplayNameFor(model => model.OrderStatus)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Lines)
                                 </th>
                                 <th>
                                     @Html.DisplayNameFor(model => model.Quantity)
@@ -45,22 +46,22 @@
                                         @Html.DisplayFor(modelItem => item.Date)
                                     </td>
                                     <td>
-                                        @Html.DisplayFor(modelItem => item.User.FullName)
-                                    </td>
-                                    <td>
                                         @Html.DisplayFor(modelItem => item.Remarks)
                                     </td>
                                     <td>
                                         @Html.DisplayFor(modelItem => item.OrderStatus)
                                     </td>
                                     <td>
+                                        @Html.DisplayFor(modelItem => item.Lines)
+                                    </td>
+                                    <td>
                                         @Html.DisplayFor(modelItem => item.Quantity)
                                     </td>
                                     <td>
-                                        @Html.DisplayFor(modelItem => item.Value) Bs.
+                                        @Html.DisplayFor(modelItem => item.Value)
                                     </td>
                                     <td>
-                                        <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-outline-info"><ion-icon name="eye-outline"></ion-icon></a>
+                                        <a asp-action="MyDetails" asp-route-id="@item.Id" class="btn btn-outline-info">Detalles</a>
                                     </td>
                                 </tr>
                             }
